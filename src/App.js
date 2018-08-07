@@ -4,6 +4,7 @@ import './App.css';
 import Navigation from './components/Navigation'
 import Books from './components/Books'
 import Readers from './components/Readers'
+import Home from './Home'
 
 class App extends Component {
   render() {
@@ -16,10 +17,11 @@ class App extends Component {
                   <Route exact path='/readers' component={Readers} />
                   <Route exact path='/books' component={Books} />
             </Switch>
+            <Home />
           </div>
         </div>
       </Router>
-    
+  
     );
   }
 }
