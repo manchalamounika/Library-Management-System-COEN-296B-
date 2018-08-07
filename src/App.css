@@ -1,5 +1,6 @@
 .App {
   text-align: center;
+  color:g;
 }
 
 .App-logo {
@@ -20,6 +21,63 @@
 
 .App-intro {
   font-size: large;
+}
+
+.home-container{
+  text-align: center;
+  margin-top: 15px;
+
+}
+
+.home-grid{
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.home-grid li {
+  padding: 15px 15px;
+  /* text-align: left; */
+}
+
+
+
+.modal-container {
+  font-size: 12px;
+}
+.more-info-container > .header {
+  width: 100%;
+  border-bottom: 1px solid gray;
+  font-size: 18px;
+  text-align: center;
+  padding: 5px;
+}
+.more-info-container > .content {
+  width: 100%;
+  padding: 10px 5px;
+}
+.modal-container > .actions {
+  width: 100%;
+  padding: 10px 5px;
+  margin: auto;
+  text-align: center;
+}
+.modal-container > .close {
+  cursor: pointer;
+  position: absolute;
+  display: block;
+  padding: 2px 5px;
+  line-height: 20px;
+  right: -10px;
+  top: -10px;
+  font-size: 24px;
+  background: #ffffff;
+  border-radius: 18px;
+  border: 1px solid #cfcece;
 }
 
 @keyframes App-logo-spin {
