@@ -16,10 +16,10 @@ class Navigation extends React.Component {
                   <a class="nav-link" href="#">librarians</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/books">Books</a>
+                  <a class="nav-link" href="/books/index">Books</a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="/readers" onclick>Readers</a>
+                  <a class="nav-link" href="/readers/index" onclick>Readers</a>
                 </li>
                 <li class="nav-item dropdown">
                   <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
