@@ -7,6 +7,7 @@ import Readers from './components/Readers/Index'
 import EditReader from './components/Readers/EditReader'
 import AddReader from './components/Readers/AddReader'
 import Home from './Home'
+import Admin from './components/Admin/Admin'
 
 class App extends Component {
   render() {
@@ -15,6 +16,7 @@ class App extends Component {
         <div>
           <Navigation />
           <div className="container">
+          <Admin />
             <Switch>
                   <Route exact path='/Readers/index' component={Readers} />
                   <Route exact path='/Readers/edit' component={EditReader} />
