@@ -7,6 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import {  red900, blue100 } from 'material-ui/styles/colors';
 import Button from '@material-ui/core/Button';
 
+import { withStyles } from '@material-ui/core/styles';
+import Modal from '@material-ui/core/Modal';
+
 
 const styles = {
     card: {
@@ -21,11 +24,20 @@ const styles = {
     }
   }
 
+
+
 class HomeCard extends Component {
+
     render() {
         const { library } = this.props
+        
+
         return (
-            <div>
+            <div >
+                
+      
+                
+
                 <Popup
                     trigger={                        
                         <Card style={styles.card} >
@@ -58,10 +70,11 @@ class HomeCard extends Component {
                             </Button>
                         </div>
                     )}
-                </Popup>
+                </Popup> 
             </div>
         )
     }
 }
+const SimpleModalWrapped = withStyles(styles)(HomeCard);
 
 export default HomeCard;
