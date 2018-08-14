@@ -1,9 +1,11 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+
 class Navigation extends React.Component {
     render() {
         return(
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">SCAN</a>
+            <a class="navbar-brand" href="/">SCAN</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
               <span class="navbar-toggler-icon"></span>
             </button>
@@ -31,6 +33,10 @@ class Navigation extends React.Component {
                     <a class="dropdown-item" href="#">Something else here</a>
                   </div>
                 </li>
+                <li class="nav-item">
+                  <a class="nav-link" href="/addnewadmin" onclick>Add New Admin</a>
+                </li>               
+                {/* <Link to='/addnewadmin' className='add-new-admin'>Add New Admin</Link>*/}
               </ul>
             </div>
           </nav>

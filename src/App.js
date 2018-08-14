@@ -15,13 +15,14 @@ class App extends Component {
      <Router>
         <div>
           <Navigation />
-          <div className="container">
-          <Admin />
+          <div className="container" >          
             <Switch>
+                  <Route exact path='/' render={() => (<Home/>)}/>
                   <Route exact path='/Readers/index' component={Readers} />
                   <Route exact path='/Readers/edit' component={EditReader} />
                   <Route exact path='/Readers/add' component={AddReader} />
                   <Route exact path='/Books/index' component={Books} />
+                  <Route exact path='/addnewadmin' render={() => (<Admin/>)}/>                  
             </Switch>
           </div>
         </div>
