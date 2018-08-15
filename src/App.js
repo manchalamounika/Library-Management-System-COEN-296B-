@@ -22,6 +22,7 @@ class App extends Component {
                   <Route exact path='/Readers/edit' component={EditReader} />
                   <Route exact path='/Readers/add' component={AddReader} />
                   <Route exact path='/Books/index' component={Books} />
+                  <Route exact path = '/Statistics' component={graph} />
                   <Route exact path='/addnewadmin' render={() => (<Admin/>)}/>                  
             </Switch>
           </div>
