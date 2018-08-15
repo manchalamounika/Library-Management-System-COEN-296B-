@@ -8,7 +8,7 @@ import EditReader from './components/Readers/EditReader'
 import AddReader from './components/Readers/AddReader'
 import Home from './Home'
 import Admin from './components/Admin/Admin'
-
+import graph from './components/Graph/graph'
 class App extends Component {
   render() {
     return (

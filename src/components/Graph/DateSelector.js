@@ -3,6 +3,10 @@ import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-dropdown/style.css'
 import 'react-datepicker/dist/react-datepicker.css';
+
+import Dropdown from 'react-dropdown'
+
+
 const options = [
   { value: 'Library 1', label: 'Library 1' },
   { value: 'Library 2', label: 'Library 2'},
@@ -32,20 +36,19 @@ export default class DateSelector extends Component {
     
     return (
       <div>
-    DatePicker 
+    <DatePicker 
         selected={this.state.startDate}
         onChange={this.handleChange}
-       
-        
-        <Dropdown 
-
+       />     
+  <Dropdown 
 options={options} 
 onChange={this._onSelect} 
 value={defaultOption} 
 placeholder="Select an option" />
-<div className="dateSelector">
+
+
       <DateSelector  /> 
-</div>
+
 </div>
     );
   }
