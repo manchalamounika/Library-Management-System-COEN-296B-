@@ -3,7 +3,7 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import axios from 'axios';
 
-class Index extends Component{
+class BookList extends Component{
     constructor(){
         super();
         this.state={
@@ -11,47 +11,44 @@ class Index extends Component{
         }
         this.makeData = this.makeData.bind(this);
     }
-
-    makeData= (state,instance)=>{
-        let self = this;
-        axios.get('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader',{
-             mode: 'no-cors',
-        method: 'GET',
-        })
-        .then((response)=> {
-                console.log(response);
-                this.setState({data:response.data});
-        })
-
+    makeData = (state,instance) =>{        
+        axios.get('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book',{
+            mode: 'no-cors',
+            method: 'GET',
+       })
+       .then((response)=> {
+               console.log(response);
+               this.setState({data:response.data});
+       })
     }
     render(){
         return(
             <div className='admin-table-container'>
             <div className='admin-table'>
-                <ReactTable
+                <ReactTable 
                 data={this.state.data}
                 columns={[
+                    {Header: 'Title',
+                    accessor: 'Title'},
                     {Header: 'First Name',
                     accessor: 'FirstName'},
                     {Header: 'Last Name',
                     accessor: 'LastName'},
-                    {Header:'Community',
+                    {Header: 'Library ',
                     accessor: 'LibraryName'},
                     {Header: 'Barcode ',
-                    accessor: 'BarCode'},
-                    {Header: 'Checkouts ',
-                    accessor: 'Checkouts'},
-                ]} className="-striped -highlight"
+                    accessor: 'BookBarcode'},
+                ]} 
+                className="-striped -highlight"
                 showPagination={false}
                 defaultPageSize={10}
                 minRows={5}
-                onFetchData={this.makeData}
-                />
+                onFetchData={this.makeData}/>
             </div>
             </div>
         )
-
+         
     }
 }
 
-export default Index;
+export default BookList;

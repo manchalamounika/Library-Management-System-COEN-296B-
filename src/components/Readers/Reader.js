@@ -1,14 +1,14 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
-import BookList from './BookList'
-import AddBook from './AddBook';
+import Index from './Index'
+import AddReader from './AddReader';
 
-class Book extends Component {
+class Admin extends Component {
     state = {
         splitPane: false,
     }
 
-    addBookBtnHandler = () => {
+    addReaderBtnHandler = () => {
         this.setState({
             splitPane: true,
         })
@@ -23,10 +23,10 @@ class Book extends Component {
         let imgUrl = '/Users/saishree/reactWorkspace/library_managementsystem/src/Backdrop.png'
         return (
             <div style={{backgroundImage: `url(${imgUrl})`}}>
-                <button onClick={this.addBookBtnHandler}>Add Book</button>                
+                <button onClick={this.addReaderBtnHandler}>Add Reader</button>                
                 {this.state.splitPane ? 
-                    (<AddBook closeBtnHandler={this.closeBtnHandler}/>) :
-                    (<BookList />)}
+                    (<AddReader closeBtnHandler={this.closeBtnHandler}/>) :
+                    (<Index />)}
 
 
             </div>
@@ -34,4 +34,4 @@ class Book extends Component {
     }
 }
 
-export default Book;
+export default Admin;
