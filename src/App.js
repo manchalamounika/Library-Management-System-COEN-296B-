@@ -11,10 +11,18 @@ import Admin from './components/Admin/Admin'
 
 class App extends Component {
   render() {
+    var bg=require('/Users/saishree/reactWorkspace/library_managementsystem/src/images/Backdrop.png')
     return (
      <Router>
-        <div>
+       
+        <div 
+      //   style ={ { backgroundImage: "url("+bg+")",backgroundposition: 'center',
+			// backgroundrepeat:  'no-repeat',
+			// backgroundattachment: 'fixed',
+			// backgroundsize:  'cover', height: '120vh'}}
+      >
           <Navigation />
+          
           <div className="container" >          
             <Switch>
                   <Route exact path='/' render={() => (<Home/>)}/>

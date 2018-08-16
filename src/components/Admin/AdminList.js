@@ -34,7 +34,7 @@ class AdminList extends Component{
     //     - setSate to the result of makeDAta
     // }
 
-    //on cloumn hover should display delete and edit option
+    //on cloumn hover should display delete option
 
     
     render(){

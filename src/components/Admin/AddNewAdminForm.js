@@ -12,35 +12,10 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
 
-
-// const styles = theme => ( {
-//     root: {
-//         flexGrow: 1,        
-//     },   
-//     textField: {
-//         marginLeft: 'theme.spacing.unit',
-//         marginRight: 'theme.spacing.unit',
-//         width: 200,
-//         flexBasis: 200,
-//         // margin: theme.spacing.unit,
-//         // marginTop: theme.spacing.unit * 3,
-//       },
-//       margin: {
-//         margin: theme.spacing.unit,
-//       },
-//       withoutLabel: {
-//         marginTop: theme.spacing.unit * 3,
-//       },
-// });
-
-
-
 const styles = theme => ({
   root: {
-    // justifyContent: 'center',
     padding: '30px',
     paddingTop: '20px',
-    // alignContent: 'center',
   },
   margin: {
     margin: theme.spacing.unit,

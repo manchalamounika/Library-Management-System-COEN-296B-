@@ -8,8 +8,8 @@ import { BrowserRouter } from 'react-router-dom'
 
 
 ReactDOM.render(
-    <BrowserRouter>        
-        <App className='App'/>
+    <BrowserRouter>
+        <App />
     </BrowserRouter>
 , document.getElementById('root'));
 registerServiceWorker();
