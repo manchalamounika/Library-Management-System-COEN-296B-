@@ -11,7 +11,7 @@ import Reader from './components/Readers/Reader';
 
 class App extends Component {
   render() {
-    var bg=require('/Users/saishree/reactWorkspace/library_managementsystem/src/images/Backdrop.png')
+//    var bg=require('/src/images/Backdrop.png')
     return (
      <Router>
        
@@ -26,7 +26,6 @@ class App extends Component {
           <div className="container" >          
             <Switch>
                   <Route exact path='/' render={() => (<Home/>)}/>
-                  <Route exact path='/Books/index' component={Books} />
                   <Route exact path = '/Statistics' component={graph} />
                   <Route exact path='/Readers/index' render={() => (<Reader/>)} />
                   <Route exact path='/Books/index' render={() => (<Book/>)} />
