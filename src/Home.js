@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import HomeCard from './HomeCard';
+import HomeCardWrapped from './HomeCard';
 
 
 
@@ -12,13 +12,13 @@ class Home extends Component {
   }
 
   render() {
-    
+
     return (
       <div className='home-container'>
         <ol className='home-grid'>
           {this.state.libraries.map((library) => (
-            <li key={library}>
-              <HomeCard library={library}/>
+            <li key={library}>            
+              <HomeCardWrapped library={library}/>
             </li>
           ))}
         </ol>       

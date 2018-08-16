@@ -21,9 +21,9 @@ class Admin extends Component {
         })
     }
     render() {
-        let imgUrl = '/Users/saishree/reactWorkspace/library_managementsystem/src/Backdrop.png'
+        
         return (
-            <div style={{ backgroundImage: `url(${imgUrl})` }}>
+            <div>
                 <div className="add-admin-btn">
                 <Button size="small" variant="contained" color="secondary"onClick={this.addAdminBtnHandler}>
                     Add Admin
