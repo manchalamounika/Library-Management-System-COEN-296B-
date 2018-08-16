@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
-import Index from './Index';
-import AddNewReaderForm from './AddNewReaderForm'
+import BookList from './BookList';
+import AddNewBookForm from './AddNewBookForm'
 
 
 const divStyle = {
@@ -9,21 +9,21 @@ const divStyle = {
 };
 
 
-const AddReader = (props) => {   
+const AddBook = (props) => {   
     return (
         <div>
             <SplitPane split="vertical" minSize={500} defaultSize={800}>
                 <div>
                     <div style={divStyle}>
-                        <Index />
+                        <BookList />
                     </div>
                 </div>
                 <div>
-                    <AddNewReaderForm closeBtnHandler={props.closeBtnHandler}/>
+                    <AddNewBookForm closeBtnHandler={props.closeBtnHandler}/>
                 </div>
             </SplitPane>
         </div>
     )
 
 }
-export default AddReader;
+export default AddBook;
