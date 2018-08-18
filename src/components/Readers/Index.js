@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import axios from 'axios';
+import EditReader from './EditReader';
 
 class Index extends Component{
     constructor(){
@@ -25,9 +26,7 @@ class Index extends Component{
 
     }
     render(){
-        return(
-            <div className='admin-table-container'>
-            <div className='admin-table'>
+        const list = (
                 <ReactTable
                 data={this.state.data}
                 columns={[
@@ -41,12 +40,51 @@ class Index extends Component{
                     accessor: 'BarCode'},
                     {Header: 'Checkouts ',
                     accessor: 'Checkouts'},
+                    {expander:true, 
+                        width: 65,
+                        Expander: ({ isExpanded, ...rest}) =>
+                        <div>
+                           <button onClick={this.editBookBtnHandler}>Edit
+                             </button> 
+                             </div>,
+                        style: {
+                            cursor: "pointer",
+                            fontSize: 15,
+                            padding: "10",
+                            textAlign: "center",
+                            userSelect: "none"
+                          },
+                    },
+                    {   expander:true,
+                        width: 65,
+                        Expander: ({ isExpanded, ...rest}) =>
+                        <div>
+                           <button >Delete
+                            </button> 
+                           </div>, 
+                             style: {
+                            cursor: "pointer",
+                            fontSize: 15,
+                            padding: "10",
+                            textAlign: "center",
+                            userSelect: "none"
+                          }, 
+                    }
                 ]} className="-striped -highlight"
                 showPagination={false}
                 defaultPageSize={10}
                 minRows={5}
                 onFetchData={this.makeData}
                 />
+
+        );
+        return(
+            <div className='admin-table-container'>
+            <div className='admin-table'>
+            {this.editReaderBtnHandler} {
+                this.state.splitPane ? 
+    (<EditReader closeBtnHandler={this.closeBtnHandler}/>) :
+    list}
             </div>
             </div>
         )
