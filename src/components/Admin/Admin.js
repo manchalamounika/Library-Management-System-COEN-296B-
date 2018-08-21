@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
-import SplitPane from 'react-split-pane';
 import AdminList from './AdminList'
 import AddAdmin from './AddAdmin';
 import Button from '@material-ui/core/Button';
+import SnackBarForAdminVerification from './SnackBarForAdminVerification.js';
 
 class Admin extends Component {
     state = {
         splitPane: false,
+        open:false,
+        email:'',
     }
 
     addAdminBtnHandler = () => {
@@ -20,6 +22,14 @@ class Admin extends Component {
             splitPane: false,
         })
     }
+    
+      handleClose = (event, reason) => {
+        this.setState({ open: false });
+      };
+
+      getEmail = (email) => {
+         this.setState({email, open:true});         
+      }
     render() {
         
         return (
@@ -30,8 +40,11 @@ class Admin extends Component {
                 </Button>                    
                 </div>
                 {this.state.splitPane ?
-                    (<AddAdmin closeBtnHandler={this.closeBtnHandler} />) :
+                    (<AddAdmin closeBtnHandler={this.closeBtnHandler} getEmail={this.getEmail}/>) :
                     (<AdminList />)}
+                {this.state.email.length>0 && <SnackBarForAdminVerification handleClose={this.handleClose} open={this.state.open}
+                email={this.state.email}/>}
+
             </div>
         )
     }

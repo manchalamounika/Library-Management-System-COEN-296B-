@@ -19,7 +19,7 @@ const AddAdmin = (props) => {
                     </div>
                 </div>
                 <div>
-                    <AddNewAdminForm closeBtnHandler={props.closeBtnHandler}/>
+                    <AddNewAdminForm closeBtnHandler={props.closeBtnHandler} getEmail={props.getEmail}/>
                 </div>
             </SplitPane>
         </div>
