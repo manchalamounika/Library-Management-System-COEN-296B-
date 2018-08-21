@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
@@ -12,12 +11,8 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-import {
-    CognitoUserPool,
-    CognitoUserAttribute,  
-  } from "amazon-cognito-identity-js";
+import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js";
 import appConfig from "../../config.js";
-import * as AWS from 'aws-sdk';
 
 const userPool = new CognitoUserPool({
     UserPoolId: appConfig.UserPoolId,
@@ -45,7 +40,7 @@ const styles = theme => ({
 });
 
 
-class AddNewAdminForm extends React.Component {
+class AddNewAdminForm extends Component {
 state = {
     firstname: '',
     middlename: '',
@@ -58,6 +53,7 @@ state = {
     showConfirmPassword: false,
     showFormValidation:false,
     formErrorMessage:'',
+    open: false,
 }
 
 componentDidMount(){
@@ -98,6 +94,7 @@ handleSubmit=(e) =>{
     const name = this.state.firstname.trim();
     const family_name = this.state.lastname.trim();
     const middle_name = this.state.middlename.trim();
+    const username = this.state.username.trim();
     
     const attributeList = [
       new CognitoUserAttribute({
@@ -117,8 +114,8 @@ handleSubmit=(e) =>{
         Value: email,
       })
     ];
-    var hasErr;
-    userPool.signUp(email, password, attributeList, null, (err, result) => {
+    
+    userPool.signUp(username, password, attributeList, null, (err, result) => {
         let errorMessage;
       if (err) {          
         errorMessage = err.message.includes(':')?err.message.split(":")[1]:err.message;
@@ -127,24 +124,29 @@ handleSubmit=(e) =>{
         return;
       }
       else{
-        this.setState({formErrorMessage:'',showFormValidation:false},
-            () => (!this.state.showFormValidation && this.props.closeBtnHandler())
+        this.setState({formErrorMessage:'',showFormValidation:false, open: true},
+            () => {
+                !this.state.showFormValidation && this.props.closeBtnHandler()
+                
+            }
         )
-      }
+        this.props.getEmail(this.state.email);
+    }
       console.log('user name is ' + result.user.getUsername());
       console.log('call result: ' + JSON.stringify(result));         
     });
-    
+     
   }
 
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
+
+
+
   render() {
     const { classes } = this.props;
-
-    return (
-      
+    return (      
     <div>
         <div >
             <AppBar position="static" color="default" >
@@ -164,18 +166,15 @@ closeHandler=() =>{
         <ValidatorForm
                 ref="form"
                 onSubmit={this.handleSubmit}>
-            <TextValidator  
-                
+            <TextValidator                  
                 className={classNames(classes.margin, classes.textField)}
                 label="First Name"
-                id="margin-normal"
-                // id="simple-start-adornment"
+                id="margin-normal"                
                 placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
                 onChange={this.handleChange('firstname')} 
                 validators={['required']}
                 errorMessages={['this field is required']}
                 />
-
             <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Middle Name"
@@ -254,16 +253,10 @@ closeHandler=() =>{
                 >            
                     Add 
             </Button>   
-            {this.state.showFormValidation&& <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}           
+            {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
         </ValidatorForm>
-        </div>
-        
-           
-        
-
-    </div>
-       
-      
+        </div>                        
+    </div>             
     );
   }
 }
