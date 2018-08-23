@@ -3,6 +3,7 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import * as AWS from 'aws-sdk';
 import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js";
+import MyTrComponent from './MyTrComponent';
 
 
 
@@ -166,7 +167,9 @@ class AdminList extends Component{
 
                 {Header: 'Email ',
                 accessor: 'email'},               
-            ]} className="-striped -highlight"
+            ]}
+            TrComponent={MyTrComponent}
+             className="-striped -highlight"
             showPagination={true}
             defaultPageSize={10}
             minRows={5}/>}               
