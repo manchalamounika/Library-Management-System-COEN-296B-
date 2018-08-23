@@ -13,13 +13,13 @@ class SnackBarForAdminVerification extends Component{
               vertical: 'bottom',
               horizontal: 'left',
             }}
-            open={this.props.open}
+            open={open}
             autoHideDuration={4000}
             onClose={handleClose}
             ContentProps={{
               'aria-describedby': 'message-id',
             }}
-            message={<span id="message-id">{`Verification link has been sent to ${this.props.email}`} </span>}
+            message={<span id="message-id">{`Verification link has been sent to ${email}`} </span>}
             action={[            
               <IconButton
                 key="close"

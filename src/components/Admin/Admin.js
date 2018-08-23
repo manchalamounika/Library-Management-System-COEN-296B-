@@ -7,7 +7,7 @@ import SnackBarForAdminVerification from './SnackBarForAdminVerification.js';
 class Admin extends Component {
     state = {
         splitPane: false,
-        open:false,
+        openSnackBar:false,
         email:'',
     }
 
@@ -42,7 +42,7 @@ class Admin extends Component {
                 {this.state.splitPane ?
                     (<AddAdmin closeBtnHandler={this.closeBtnHandler} getEmail={this.getEmail}/>) :
                     (<AdminList />)}
-                {this.state.email.length>0 && <SnackBarForAdminVerification handleClose={this.handleClose} open={this.state.open}
+                {this.state.email.length>0 && <SnackBarForAdminVerification handleClose={this.handleClose} open={this.state.openSnackBar}
                 email={this.state.email}/>}
 
             </div>
