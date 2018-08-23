@@ -7,29 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-
-// const styles = theme => ( {
-//     root: {
-//         flexGrow: 1,        
-//     },   
-//     textField: {
-//         marginLeft: 'theme.spacing.unit',
-//         marginRight: 'theme.spacing.unit',
-//         width: 200,
-//         flexBasis: 200,
-//         // margin: theme.spacing.unit,
-//         // marginTop: theme.spacing.unit * 3,
-//       },
-//       margin: {
-//         margin: theme.spacing.unit,
-//       },
-//       withoutLabel: {
-//         marginTop: theme.spacing.unit * 3,
-//       },
-// });
-
-
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -55,23 +33,30 @@ const styles = theme => ({
 
 
 class AddNewReaderForm extends React.Component {
-     state = {
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    library: '',
-    barcode: ''
-    }
+     state = {};
 
 
 handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+    console.log(prop);
+    //var temp= "\""+prop+"\"";
+    //console.log(temp);
+    this.setState({ [prop] : event.target.value });
 }
 
-handleAddReaderBtn =() =>{
-    //should convert the state fields to json and make api call
-    //should handle error cases (if form is empty shouldn't submit)
-    this.props.closeBtnHandler();
+handleAddReaderBtn =(event,state) =>{
+    event.preventDefault();
+    let self = this;
+   // this.props.closeBtnHandler();
+   console.log(self.state);
+   let user = self.state;
+    console.log("User:::",user);
+    axios.post('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader', user)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      }).catch(e=>{
+          console.log(e);
+      })
 }
 
 closeHandler=() =>{
@@ -105,7 +90,7 @@ closeHandler=() =>{
                 id="margin-normal"
                 // id="simple-start-adornment"
                 placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
-                onChange={this.handleChange('firstname')} 
+                onChange={this.handleChange("firstName")} 
                 />
 
             <TextField
@@ -113,25 +98,25 @@ closeHandler=() =>{
                 label="Middle Name"
                 id="margin-normal"
                 placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('middlename')} />
+                onChange={this.handleChange("middleName")} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Last Name"
                 id="margin-normal"
                 placeholder="Last Name" type="text" name="lastname" value={this.state.lastname}
-                onChange={this.handleChange('lastname')} />
+                onChange={this.handleChange("lastName")} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="library"
                 id="margin-normal"
                 placeholder="Library" type="text" name="library" value={this.state.library}
-                onChange={this.handleChange('library')} />
+                onChange={this.handleChange("libraryName")} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Bar Code"
                 id="margin-normal"
-                placeholder="User Name" type="text" name="barcode" value={this.state.barcode}
-                onChange={this.handleChange('barcode')} />
+                placeholder="Bar Code" type="text" name="barcode" value={this.state.barcode}
+                onChange={this.handleChange("barCode")} />
         </form>
         </div>
         
@@ -143,11 +128,7 @@ closeHandler=() =>{
                 onClick={this.handleAddReaderBtn}>
                     Add Reader
             </Button>
-        
-
-    </div>
-       
-      
+    </div>     
     );
   }
 }

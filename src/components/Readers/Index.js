@@ -43,7 +43,7 @@ class Index extends Component{
                     accessor: 'Checkouts'},
                 ]} className="-striped -highlight"
                 showPagination={false}
-                defaultPageSize={10}
+                defaultPageSize={50}
                 minRows={5}
                 onFetchData={this.makeData}
                 />
