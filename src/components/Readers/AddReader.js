@@ -3,11 +3,9 @@ import SplitPane from 'react-split-pane';
 import Index from './Index';
 import AddNewReaderForm from './AddNewReaderForm'
 
-
 const divStyle = {
     padding: '30px',
 };
-
 
 const AddReader = (props) => {   
     return (
