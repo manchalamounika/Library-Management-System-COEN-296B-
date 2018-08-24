@@ -4,6 +4,7 @@ import SplitPane from 'react-split-pane';
 import "react-table/react-table.css";
 import axios from 'axios';
 import EditBook from './EditBook';
+import './test.css';
 
 class BookList extends Component{
     constructor(){
@@ -104,7 +105,7 @@ class BookList extends Component{
         
             
         return(
-           <div>
+           <div className = "div1">
             {this.editBookBtnHandler} {
                 this.state.splitPane ? 
     (<EditBook closeBtnHandler={this.closeBtnHandler}/>) :
