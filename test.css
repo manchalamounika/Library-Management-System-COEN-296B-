@@ -1,0 +1,23 @@
+body {
+ background-image: url('../background.png');
+}
+.React-Table {
+    border: 2px black;
+    
+}
+
+.ReactTable .rt-thead.-header {
+    background-color: rgb(51,63,80);
+    color: white;
+    align-content: flex-start;
+} 
+.div1 {
+height: 245px;
+width: 750px;
+background-color: rgb(242,242,242);
+align-content: center;
+}
+button {
+    background-color: rgb(51,63,80);
+    color: white;
+}
