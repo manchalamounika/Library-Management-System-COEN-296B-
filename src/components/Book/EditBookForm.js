@@ -55,25 +55,29 @@ const styles = theme => ({
 
 
 class EditBookForm extends React.Component {
-     state = {
-    title: '',
-    authorfirstname: '',
-    authormiddlename:'',
-    authoutlastname: '',
-    library: '',
-    barcode: '',
-    }
+    constructor() {
+        super();
+        this.state = {
+          fields: {},
+          errors: {}
+        }
+    
+        this.handleChange = this.handleChange.bind(this);
+        this.submitEditBook = this.submitEditBook.bind(this);
+    
+      };
+        handleChange(e) {
+        let fields = this.state.fields;
+        fields[e.target.name] = e.target.value;
+        this.setState({
+        fields
+        });
 
-
-handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-}
+        }
 
 handleMouseDownPassword = event => {
     event.preventDefault();
 };
-
-
 
 
 handleEditBtn =() =>{
@@ -85,6 +89,89 @@ handleEditBtn =() =>{
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
+submitEditBook(e) {
+    e.preventDefault();
+        if (this.validateForm()) {
+            let fields = {};
+            fields["title"] = "";
+            fields["authorfirstname"] = "";
+            fields["authorlastname"] = "";
+            fields["library"] = "";
+            fields["barcode"]="";
+            this.setState({fields:fields});
+            alert("Form submitted");
+        }
+}
+validateForm() {
+
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+
+    if (!fields["title"]) {
+      formIsValid = false;
+      errors["title"] = "*Please enter book title";
+    }
+
+    if (typeof fields["title"] !== "undefined") {
+      if (!fields["title"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["title"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["authorfirstname"]) {
+      formIsValid = false;
+      errors["authorfirstname"] = "*Please enter author firstname";
+    }
+    if (typeof fields["authorfirstname"] !== "undefined") {
+        if (!fields["authorfirstname"].match(/^[a-zA-Z ]*$/)) {
+          formIsValid = false;
+          errors["authorfirstname"] = "*Please enter alphabet characters only.";
+        }
+      }
+
+    if (!fields["authorlastname"]) {
+      formIsValid = false;
+      errors["authorlastname"] = "*Please enter author lastname";
+    }
+
+    if (typeof fields["authorlastname"] !== "undefined") {
+      if (!fields["authorlastname"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["authorlastname"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["library"]) {
+      formIsValid = false;
+      errors["library"] = "*Please select library";
+    }
+
+    if (typeof fields["library"] !== "undefined") {
+      if (!fields["library"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["library"] = "*Please enter alphabet characters only.";
+      }
+    }
+
+    if (!fields["barcode"]) {
+        formIsValid = false;
+        errors["barcode"] = "*Please enter barcode.";
+      }
+  
+      if (typeof fields["barcode"] !== "undefined") {
+        if (!fields["barcode"].match(/^[0-9]{10}$/)) {
+          formIsValid = false;
+          errors["barcode"] = "*Please enter valid barcode.";
+        }
+      }
+
+    this.setState({
+      errors: errors
+    });
+    return formIsValid;
+
+
+  }
   render() {
     const { classes } = this.props;
 
@@ -106,46 +193,45 @@ closeHandler=() =>{
             </AppBar>
         </div>
         <div className={classes.root}>
-        <form>
+        <form onSubmit= {this.submitEditBook}>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Book Title"
                 id="margin-normal"
                 // id="simple-start-adornment"
-                placeholder="Book Title" type="text" name="title" value={this.state.title}
-                onChange={this.handleChange('title')} 
+                placeholder="Book Title" type="text" name="title" value={this.state.fields.title}
+                onChange={this.handleChange} 
                 />
+                <div className="errorMsg">{this.state.errors.title}</div>
              <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Author Firstname"
                 id="margin-normal"
-                placeholder="Author firstname" type="text" name="author firstname" value={this.state.authorfirstname}
-                onChange={this.handleChange('authorfirstname')} />
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="Author Middlename"
-                id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('authormiddlename')} />
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="Library"
-                id="margin-normal"
-                placeholder="Library" type="text" name="library" value={this.state.library}
-                onChange={this.handleChange('library')} />
+                placeholder="Author firstname" type="text" name="authorfirstname" value={this.state.fields.authorfirstname}
+                onChange={this.handleChange} />
+                 <div className="errorMsg">{this.state.errors.authorfirstname}</div>
+            
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Author Lastname"
                 id="margin-normal"
-                placeholder="Author Lastname" type="text" name="authorlastname" value={this.state.authorlastname}
-                onChange={this.handleChange('authorlastname')} />
+                placeholder="Author Lastname" type="text" name="authorlastname" value={this.state.fields.authorlastname}
+                onChange={this.handleChange} />
+                 <div className="errorMsg">{this.state.errors.authorlastname}</div>
+            <TextField
+                className={classNames(classes.margin, classes.textField)}
+                label="Library"
+                id="margin-normal"
+                placeholder="Library" type="text" name="library" value={this.state.fields.library}
+                onChange={this.handleChange} />
+                 <div className="errorMsg">{this.state.errors.library}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Barcode"
                 id="margin-normal"
-                placeholder="Barcode" type="text" name="barcode" value={this.state.barcode}
-                onChange={this.handleChange('barcode')} />
-           
+                placeholder="Barcode" type="text" name="barcode" value={this.state.fields.barcode}
+                onChange={this.handleChange} />
+                 <div className="errorMsg">{this.state.errors.barcode}</div>
                         
         </form>
         </div>
@@ -155,7 +241,7 @@ closeHandler=() =>{
                 size="small"
                 variant="contained"                                
                 color="secondary"
-                onClick={this.handleEditBtn}>
+                onClick={this.submitEditBook}>
                     Edit
             </Button>
         
