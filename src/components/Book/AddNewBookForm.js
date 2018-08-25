@@ -63,12 +63,17 @@ class AddNewBookForm extends React.Component {
         }
     
         this.handleChange = this.handleChange.bind(this);
-        this.handleAddBookBtn = this.handleAddBookBtn.bind(this);
+        this.submitAddNewBook = this.submitAddNewBook.bind(this);
     
       };
     
-      handleChange = prop => event => {
-        this.setState({ [prop]: event.target.value });
+      handleChange(e) {
+        let fields = this.state.fields;
+    fields[e.target.name] = e.target.value;
+    this.setState({
+      fields
+    });
+
     }
     
       handleMouseDownPassword = event => {
@@ -82,6 +87,19 @@ class AddNewBookForm extends React.Component {
 handleClickShowConfirmPassword = () => {
     this.setState(state => ({ showConfirmPassword: !state.showConfirmPassword }));
 };
+submitAddNewBook(e) {
+    e.preventDefault();
+        if (this.validateForm()) {
+            let fields = {};
+            fields["booktitle"] = "";
+            fields["firstname"] = "";
+            fields["lastname"] = "";
+            fields["library"] = "";
+            fields["Barcode"]="";
+            this.setState({fields:fields});
+            alert("Form submitted");
+        }
+}
 
 handleAddBookBtn(e) {
     //should convert the state fields to json and make api call
@@ -194,13 +212,13 @@ validateForm() {
             </AppBar>
         </div>
         <div className={classes.root}>
-        <form method="post"  name="AddNewBookForm"  onSubmit= {this.handleAddBookBtn}>
+        <form method="post"  name="AddNewBookForm"  onSubmit= {this.submitAddNewBook}>
         <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Book Title"
                 id="margin-normal"
                 placeholder="Book Title" type="text" name="booktitle" value={this.state.fields.booktitle}
-                onChange={this.handleChange('booktitle')} />
+                onChange={this.handleChange} />
                 <div className="errorMsg">{this.state.errors.booktitle}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
@@ -208,7 +226,7 @@ validateForm() {
                 id="margin-normal"
                 // id="simple-start-adornment"
                 placeholder="First Name" type="text" name="firstname" value={this.state.fields.firstname}
-                onChange={this.handleChange('firstname')} 
+                onChange={this.handleChange} 
                 />
                 <div className="errorMsg">{this.state.errors.firstname}</div>
 
@@ -218,14 +236,14 @@ validateForm() {
                 label="Last Name"
                 id="margin-normal"
                 placeholder="Last Name" type="text" name="lastname" value={this.state.fields.lastname}
-                onChange={this.handleChange('lastname')} />
+                onChange={this.handleChange} />
                 <div className="errorMsg">{this.state.errors.lastname}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Library"
                 id="margin-normal"
                 placeholder="Library" type="text" name="library" value={this.state.fields.library}
-                onChange={this.handleChange('library')} />
+                onChange={this.handleChange} />
                 <div className="errorMsg">{this.state.errors.library}</div>
 
             <TextField
@@ -233,7 +251,7 @@ validateForm() {
                 label="Barcode"
                 id="margin-normal"
                 placeholder="Barcode" type="text" name="barcode" value={this.state.fields.barcode}
-                onChange={this.handleChange('barcode')} />
+                onChange={this.handleChange} />
                 <div className="errorMsg">{this.state.errors.barcode}</div>
             
             </form>
@@ -244,7 +262,7 @@ validateForm() {
                 size="small"
                 variant="contained"                                
                 color="secondary"
-                onClick={this.handleAddBookBtn}>
+                onClick={this.submitAddNewBook}>
                     Add 
             </Button>
         
