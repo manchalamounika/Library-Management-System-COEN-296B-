@@ -24,7 +24,7 @@ class Index extends Component{
                 this.setState({data:response.data});
         })
 
-    }
+    } 
     render(){
         const list = (
                 <ReactTable
