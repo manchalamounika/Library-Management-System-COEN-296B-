@@ -1,29 +1,29 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
-import Index from './Index';
-import EditReaderForm from './EditReaderForm'
-
-
+import BookList from './BookList';
+import EditBookForm from './EditBookForm';
 const divStyle = {
     padding: '30px',
 };
 
 
-const EditReader = (props) => {   
+
+
+const EditBook = (props) => {   
     return (
         <div>
             <SplitPane split="vertical" minSize={500} defaultSize={800}>
                 <div>
                     <div style={divStyle}>
-                        <Index />
+                        <BookList />
                     </div>
                 </div>
                 <div>
-                    <EditReaderForm closeBtnHandler={props.closeBtnHandler}/>
+                    <EditBookForm closeBtnHandler={props.closeBtnHandler}/>
                 </div>
             </SplitPane>
         </div>
     )
 
 }
-export default EditReader;
+export default EditBook;
