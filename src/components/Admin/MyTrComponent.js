@@ -20,9 +20,7 @@ class MyTrComponent extends React.Component {
 				}}
                 {...rest}
                 
-				onMouseEnter={() => this.setState({
-					background: 'yellow'
-				})}
+				onMouseEnter={() => console.log(children)}
 				onMouseLeave={() => this.setState({
 					background: null
 				})}

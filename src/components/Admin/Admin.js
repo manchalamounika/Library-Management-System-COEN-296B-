@@ -23,12 +23,12 @@ class Admin extends Component {
         })
     }
     
-      handleClose = (event, reason) => {
-        this.setState({ open: false });
+      handleClose = (event) => {
+        this.setState({ openSnackBar: false });
       };
 
       getEmail = (email) => {
-         this.setState({email, open:true});         
+         this.setState({email, openSnackBar:true});         
       }
     render() {
         

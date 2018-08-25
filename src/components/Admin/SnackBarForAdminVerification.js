@@ -14,7 +14,7 @@ class SnackBarForAdminVerification extends Component{
               horizontal: 'left',
             }}
             open={open}
-            autoHideDuration={4000}
+            autoHideDuration={5000}
             onClose={handleClose}
             ContentProps={{
               'aria-describedby': 'message-id',
