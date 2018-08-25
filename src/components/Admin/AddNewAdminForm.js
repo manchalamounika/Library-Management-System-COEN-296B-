@@ -131,9 +131,7 @@ handleSubmit=(e) =>{
             }
         )
         this.props.getEmail(this.state.email);
-    }
-      console.log('user name is ' + result.user.getUsername());
-      console.log('call result: ' + JSON.stringify(result));         
+    }             
     });
      
   }
