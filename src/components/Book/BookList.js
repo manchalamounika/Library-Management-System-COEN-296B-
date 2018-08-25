@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import SplitPane from 'react-split-pane';
 import "react-table/react-table.css";

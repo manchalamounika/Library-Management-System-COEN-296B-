@@ -11,6 +11,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -34,13 +35,7 @@ const styles = theme => ({
 
 
 class AddNewBookForm extends React.Component {
-     state = {
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    email: ''
-}
-
+     state = {}
 
 handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
@@ -50,7 +45,20 @@ handleMouseDownPassword = event => {
     event.preventDefault();
 };
 
-handleAddBookBtn =() =>{
+handleAddBookBtn =(event,state) =>{
+    event.preventDefault();
+    let self = this;
+   // this.props.closeBtnHandler();
+   console.log(self.state);
+   let user = self.state;
+    console.log("User:::",user);
+    axios.post('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book', user)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      }).catch(e=>{
+          console.log(e);
+      })
     this.props.closeBtnHandler();
 }
 
@@ -81,71 +89,54 @@ closeHandler=() =>{
         <form>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
-                label="First Name"
+                label="Title"
                 id="margin-normal"
                 // id="simple-start-adornment"
-                placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
-                onChange={this.handleChange('firstname')} 
+                placeholder="Title" type="text" name="title" value={this.state.firstname}
+                onChange={this.handleChange('title')} 
+                />
+            <TextField
+                className={classNames(classes.margin, classes.textField)}
+                label="Book Id"
+                id="margin-normal"
+                // id="simple-start-adornment"
+                placeholder="Book ID" type="text" name="bookId" value={this.state.firstname}
+                onChange={this.handleChange('bookId')} 
+                />
+            <TextField
+                className={classNames(classes.margin, classes.textField)}
+                label="Author First Name"
+                id="margin-normal"
+                // id="simple-start-adornment"
+                placeholder="First Name" type="text" name="authorfirstname" value={this.state.firstname}
+                onChange={this.handleChange('firstName')} 
                 />
 
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Middle Name"
                 id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('middlename')} />
+                placeholder="Author Middle Name" type="text" name="authormiddlename" value={this.state.middlename}
+                onChange={this.handleChange('middleName')} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Last Name"
                 id="margin-normal"
-                placeholder="Last Name" type="text" name="lastname" value={this.state.lastname}
-                onChange={this.handleChange('lastname')} />
+                placeholder="Author Last Name" type="text" name="lastname" value={this.state.lastname}
+                onChange={this.handleChange('lastName')} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
-                label="Email"
+                label="Barcode"
                 id="margin-normal"
-                placeholder="Email" type="text" name="email" value={this.state.email}
-                onChange={this.handleChange('email')} />
+                placeholder="Email" type="text" name="barcode" value={this.state.email}
+                onChange={this.handleChange('barCode')} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
-                label="User Name"
+                label="Choose Library"
                 id="margin-normal"
-                placeholder="User Name" type="text" name="username" value={this.state.username}
-                onChange={this.handleChange('username')} />
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="Password"
-                id="margin-normal"
-                placeholder="Password" name="password" value={this.state.password}
-                type={this.state.showPassword ? 'text' : 'password'}
-                onChange={this.handleChange('password')}
-                InputProps={{
-                    endAdornment: <InputAdornment position="end">
-                        <IconButton
-                            aria-label="Toggle password visibility"
-                            onClick={this.handleClickShowPassword}
-                            onMouseDown={this.handleMouseDownPassword}>
-                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>,
-                }}/>
-                <TextField
-                    className={classNames(classes.margin, classes.textField)}
-                    label="Confirm Password"
-                    id="margin-normal"
-                    placeholder="Confirm Password" name="confirmpassword" value={this.state.confirmpassword}
-                    type={this.state.showConfirmPassword ? 'text' : 'password'}
-                    onChange={this.handleChange('confirmpassword')}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="end">
-                            <IconButton
-                                aria-label="Toggle password visibility"
-                                onClick={this.handleClickShowConfirmPassword}
-                                onMouseDown={this.handleMouseDownPassword}>
-                                {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>,
-                }}/>                    
+                placeholder="Email" type="text" name="library" value={this.state.email}
+                onChange={this.handleChange('libraryName')} />
+                                
         </form>
         </div>
         
