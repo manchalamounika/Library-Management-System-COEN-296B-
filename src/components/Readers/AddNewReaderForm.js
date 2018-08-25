@@ -38,15 +38,12 @@ class AddNewReaderForm extends React.Component {
 
 handleChange = prop => event => {
     console.log(prop);
-    //var temp= "\""+prop+"\"";
-    //console.log(temp);
     this.setState({ [prop] : event.target.value });
 }
 
 handleAddReaderBtn =(event,state) =>{
     event.preventDefault();
     let self = this;
-   // this.props.closeBtnHandler();
    console.log(self.state);
    let user = self.state;
     console.log("User:::",user);
@@ -57,6 +54,7 @@ handleAddReaderBtn =(event,state) =>{
       }).catch(e=>{
           console.log(e);
       })
+      this.props.closeBtnHandler();
 }
 
 closeHandler=() =>{
