@@ -1,9 +1,5 @@
 import React, { Component } from 'react';
 import TextField from '@material-ui/core/TextField';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -59,28 +55,27 @@ const styles = theme => ({
 
 
 class AddNewBookForm extends React.Component {
-     state = {
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    email: '',
-    username: '',
-    password: '',
-    confirmpassword: '',
-    showPassword: false,
-    showConfirmPassword: false,
-}
-
-
-handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-}
-
-handleMouseDownPassword = event => {
+    constructor() {
+        super();
+        this.state = {
+          fields: {},
+          errors: {}
+        }
+    
+        this.handleChange = this.handleChange.bind(this);
+        this.handleAddBookBtn = this.handleAddBookBtn.bind(this);
+    
+      };
+    
+      handleChange = prop => event => {
+        this.setState({ [prop]: event.target.value });
+    }
+    
+      handleMouseDownPassword = event => {
     event.preventDefault();
-};
+    };
 
-handleClickShowPassword = () => {
+        handleClickShowPassword = () => {
     this.setState(state => ({ showPassword: !state.showPassword }));
 };
 
@@ -88,15 +83,96 @@ handleClickShowConfirmPassword = () => {
     this.setState(state => ({ showConfirmPassword: !state.showConfirmPassword }));
 };
 
-handleAddBookBtn =() =>{
+handleAddBookBtn(e) {
     //should convert the state fields to json and make api call
     //should handle error cases (if form is empty shouldn't submit)
-    this.props.closeBtnHandler();
-}
+    e.preventDefault();
+        if (this.validateForm()) {
+            let fields = {};
+            fields["booktitle"] = "";
+            fields["firstname"] = "";
+            fields["lastname"] = "";
+            fields["library"] = "";
+            fields["Barcode"]="";
+            this.setState({fields:fields});
+            alert("Form submitted");
+        }
+    }
 
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
+validateForm() {
+
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+
+    if (!fields["booktitle"]) {
+      formIsValid = false;
+      errors["booktitle"] = "*Please enter book title";
+    }
+
+    if (typeof fields["booktitle"] !== "undefined") {
+      if (!fields["booktitle"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["booktitle"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["firstname"]) {
+      formIsValid = false;
+      errors["firstname"] = "*Please enter firstname";
+    }
+    if (typeof fields["firstname"] !== "undefined") {
+        if (!fields["firstname"].match(/^[a-zA-Z ]*$/)) {
+          formIsValid = false;
+          errors["firstname"] = "*Please enter alphabet characters only.";
+        }
+      }
+
+    if (!fields["lastname"]) {
+      formIsValid = false;
+      errors["lastname"] = "*Please enter your lastname";
+    }
+
+    if (typeof fields["lastname"] !== "undefined") {
+      if (!fields["lastname"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["lastname"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["library"]) {
+      formIsValid = false;
+      errors["library"] = "*Please enter your username.";
+    }
+
+    if (typeof fields["library"] !== "undefined") {
+      if (!fields["library"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["library"] = "*Please enter alphabet characters only.";
+      }
+    }
+
+    if (!fields["barcode"]) {
+        formIsValid = false;
+        errors["barcode"] = "*Please enter your barcode.";
+      }
+  
+      if (typeof fields["barcode"] !== "undefined") {
+        if (!fields["barcode"].match(/^[0-9]{10}$/)) {
+          formIsValid = false;
+          errors["barcode"] = "*Please enter valid barcode.";
+        }
+      }
+
+    this.setState({
+      errors: errors
+    });
+    return formIsValid;
+
+
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -118,76 +194,50 @@ closeHandler=() =>{
             </AppBar>
         </div>
         <div className={classes.root}>
-        <form>
+        <form method="post"  name="AddNewBookForm"  onSubmit= {this.handleAddBookBtn}>
+        <TextField
+                className={classNames(classes.margin, classes.textField)}
+                label="Book Title"
+                id="margin-normal"
+                placeholder="Book Title" type="text" name="booktitle" value={this.state.fields.booktitle}
+                onChange={this.handleChange('booktitle')} />
+                <div className="errorMsg">{this.state.errors.booktitle}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="First Name"
                 id="margin-normal"
                 // id="simple-start-adornment"
-                placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
+                placeholder="First Name" type="text" name="firstname" value={this.state.fields.firstname}
                 onChange={this.handleChange('firstname')} 
                 />
+                <div className="errorMsg">{this.state.errors.firstname}</div>
 
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="Middle Name"
-                id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('middlename')} />
+            
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Last Name"
                 id="margin-normal"
-                placeholder="Last Name" type="text" name="lastname" value={this.state.lastname}
+                placeholder="Last Name" type="text" name="lastname" value={this.state.fields.lastname}
                 onChange={this.handleChange('lastname')} />
+                <div className="errorMsg">{this.state.errors.lastname}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
-                label="Email"
+                label="Library"
                 id="margin-normal"
-                placeholder="Email" type="text" name="email" value={this.state.email}
-                onChange={this.handleChange('email')} />
+                placeholder="Library" type="text" name="library" value={this.state.fields.library}
+                onChange={this.handleChange('library')} />
+                <div className="errorMsg">{this.state.errors.library}</div>
+
             <TextField
                 className={classNames(classes.margin, classes.textField)}
-                label="User Name"
+                label="Barcode"
                 id="margin-normal"
-                placeholder="User Name" type="text" name="username" value={this.state.username}
-                onChange={this.handleChange('username')} />
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="Password"
-                id="margin-normal"
-                placeholder="Password" name="password" value={this.state.password}
-                type={this.state.showPassword ? 'text' : 'password'}
-                onChange={this.handleChange('password')}
-                InputProps={{
-                    endAdornment: <InputAdornment position="end">
-                        <IconButton
-                            aria-label="Toggle password visibility"
-                            onClick={this.handleClickShowPassword}
-                            onMouseDown={this.handleMouseDownPassword}>
-                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>,
-                }}/>
-                <TextField
-                    className={classNames(classes.margin, classes.textField)}
-                    label="Confirm Password"
-                    id="margin-normal"
-                    placeholder="Confirm Password" name="confirmpassword" value={this.state.confirmpassword}
-                    type={this.state.showConfirmPassword ? 'text' : 'password'}
-                    onChange={this.handleChange('confirmpassword')}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="end">
-                            <IconButton
-                                aria-label="Toggle password visibility"
-                                onClick={this.handleClickShowConfirmPassword}
-                                onMouseDown={this.handleMouseDownPassword}>
-                                {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>,
-                }}/>                    
-        </form>
-        </div>
+                placeholder="Barcode" type="text" name="barcode" value={this.state.fields.barcode}
+                onChange={this.handleChange('barcode')} />
+                <div className="errorMsg">{this.state.errors.barcode}</div>
+            
+            </form>
+            </div>
         
             <Button
             className={classes.button}
@@ -205,7 +255,6 @@ closeHandler=() =>{
     );
   }
 }
-
 AddNewBookForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
