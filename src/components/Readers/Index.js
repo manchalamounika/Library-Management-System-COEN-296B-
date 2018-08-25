@@ -24,6 +24,18 @@ class Index extends Component{
                 this.setState({data:response.data});
         })
 
+    }
+    editReaderBtnHandler = () => {
+        this.setState({
+            splitPane: true,
+        });
+       console.log("Hello");
+       }
+    
+       closeBtnHandler = () => {
+        this.setState({
+            splitPane:false,
+        })
     } 
     render(){
         const list = (
@@ -44,7 +56,7 @@ class Index extends Component{
                         width: 65,
                         Expander: ({ isExpanded, ...rest}) =>
                         <div>
-                           <button onClick={this.editBookBtnHandler}>Edit
+                           <button onClick={this.editReaderBtnHandler}>Edit
                              </button> 
                              </div>,
                         style: {
