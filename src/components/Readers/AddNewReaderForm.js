@@ -55,28 +55,117 @@ const styles = theme => ({
 
 
 class AddNewReaderForm extends React.Component {
-     state = {
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    library: '',
-    barcode: ''
-    }
+    constructor() {
+        super();
+        this.state = {
+          fields: {},
+          errors: {}
+        }
+    
+        this.handleChange = this.handleChange.bind(this);
+        this.submitAddNewReader = this.submitAddNewReader.bind(this);
+    
+      };
+        handleChange(e) {
+        let fields = this.state.fields;
+        fields[e.target.name] = e.target.value;
+        this.setState({
+        fields
+        });
 
-
-handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
-}
-
+        }
+     
 handleAddReaderBtn =() =>{
     //should convert the state fields to json and make api call
     //should handle error cases (if form is empty shouldn't submit)
     this.props.closeBtnHandler();
 }
-
+submitAddNewReader(e) {
+    e.preventDefault();
+        if (this.validateForm()) {
+            let fields = {};
+            fields["firstname"] = "";
+            fields["middlename"] = "";
+            fields["lastname"] = "";
+            fields["library"] = "";
+            fields["barcode"]="";
+            this.setState({fields:fields});
+            alert("Form submitted");
+        }
+}
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
+validateForm() {
+
+    let fields = this.state.fields;
+    let errors = {};
+    let formIsValid = true;
+
+    if (!fields["firstname"]) {
+      formIsValid = false;
+      errors["title"] = "*Please enter first name";
+    }
+
+    if (typeof fields["firstname"] !== "undefined") {
+      if (!fields["firstname"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["firstname"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["middlename"]) {
+      formIsValid = false;
+      errors["middlename"] = "*Please enter middlename";
+    }
+    if (typeof fields["middlename"] !== "undefined") {
+        if (!fields["authorfirstname"].match(/^[a-zA-Z ]*$/)) {
+          formIsValid = false;
+          errors["middlename"] = "*Please enter alphabet characters only.";
+        }
+      }
+
+    if (!fields["lastname"]) {
+      formIsValid = false;
+      errors["lastname"] = "*Please enter lastname";
+    }
+
+    if (typeof fields["lastname"] !== "undefined") {
+      if (!fields["lastname"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["lastname"] = "*Please enter alphabet characters only.";
+      }
+    }
+    if (!fields["library"]) {
+      formIsValid = false;
+      errors["library"] = "*Please select library";
+    }
+
+    if (typeof fields["library"] !== "undefined") {
+      if (!fields["library"].match(/^[a-zA-Z ]*$/)) {
+        formIsValid = false;
+        errors["library"] = "*Please enter alphabet characters only.";
+      }
+    }
+
+    if (!fields["barcode"]) {
+        formIsValid = false;
+        errors["barcode"] = "*Please enter barcode.";
+      }
+  
+      if (typeof fields["barcode"] !== "undefined") {
+        if (!fields["barcode"].match(/^[0-9]{10}$/)) {
+          formIsValid = false;
+          errors["barcode"] = "*Please enter valid barcode.";
+        }
+      }
+
+    this.setState({
+      errors: errors
+    });
+    return formIsValid;
+
+
+  }
   render() {
     const { classes } = this.props;
 
@@ -98,40 +187,45 @@ closeHandler=() =>{
             </AppBar>
         </div>
         <div className={classes.root}>
-        <form>
+        <form onSubmit={this.submitAddNewReader}>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="First Name"
                 id="margin-normal"
                 // id="simple-start-adornment"
-                placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
-                onChange={this.handleChange('firstname')} 
+                placeholder="First Name" type="text" name="firstname" value={this.state.fields.firstname}
+                onChange={this.handleChange} 
                 />
+                 <div className="errorMsg">{this.state.errors.firstname}</div>
 
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Middle Name"
                 id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('middlename')} />
+                placeholder="Middle Name" type="text" name="middlename" value={this.state.fields.middlename}
+                onChange={this.handleChange} />
+                <div className="errorMsg">{this.state.errors.middlename}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Last Name"
                 id="margin-normal"
-                placeholder="Last Name" type="text" name="lastname" value={this.state.lastname}
-                onChange={this.handleChange('lastname')} />
+                placeholder="Last Name" type="text" name="lastname" value={this.state.fields.lastname}
+                onChange={this.handleChange} />
+                 <div className="errorMsg">{this.state.errors.lastname}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="library"
                 id="margin-normal"
-                placeholder="Library" type="text" name="library" value={this.state.library}
-                onChange={this.handleChange('library')} />
+                placeholder="Library" type="text" name="library" value={this.state.fields.library}
+                onChange={this.handleChange} />
+                 <div className="errorMsg">{this.state.errors.library}</div>
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Bar Code"
                 id="margin-normal"
-                placeholder="User Name" type="text" name="barcode" value={this.state.barcode}
-                onChange={this.handleChange('barcode')} />
+                placeholder="User Name" type="text" name="barcode" value={this.state.fields.barcode}
+                onChange={this.handleChange} />
+                 <div className="errorMsg">{this.state.errors.barcode}</div>
         </form>
         </div>
         
@@ -140,7 +234,7 @@ closeHandler=() =>{
                 size="small"
                 variant="contained"                                
                 color="secondary"
-                onClick={this.handleAddReaderBtn}>
+                onClick={this.submitAddNewReader}>
                     Add Reader
             </Button>
         
