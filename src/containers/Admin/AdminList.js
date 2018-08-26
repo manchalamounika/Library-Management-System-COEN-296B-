@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import "react-table/react-table.css";
+import classes from "react-table/react-table.css";
 import * as AWS from 'aws-sdk';
 import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js";
 
@@ -156,6 +156,7 @@ class AdminList extends Component{
             <div className='admin-table'>
             {data && 
             <ReactTable 
+            className={classes}
             data={data}
             columns={[
                 {Header: 'First Name',

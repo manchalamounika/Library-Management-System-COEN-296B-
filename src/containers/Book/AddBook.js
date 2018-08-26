@@ -1,8 +1,8 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
+import Modal from '../../components/UI/Modal/Modal';
 import BookList from './BookList';
 import AddNewBookForm from './AddNewBookForm'
-
 
 const divStyle = {
     padding: '30px',
@@ -12,18 +12,24 @@ const divStyle = {
 const AddBook = (props) => {   
     return (
         <div>
-            <SplitPane split="vertical" minSize={500} defaultSize={800}>
+         
                 <div>
                     <div style={divStyle}>
                         <BookList />
                     </div>
                 </div>
+                <Modal show = {true} >
                 <div>
                     <AddNewBookForm closeBtnHandler={props.closeBtnHandler}/>
                 </div>
-            </SplitPane>
+                </Modal>
+                
+            
         </div>
     )
 
 }
 export default AddBook;
+{/* <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
+                    {orderSummary}
+                </Modal> */}
