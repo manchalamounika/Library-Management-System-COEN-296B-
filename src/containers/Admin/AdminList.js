@@ -4,6 +4,10 @@ import classes from "react-table/react-table.css";
 import * as AWS from 'aws-sdk';
 import DeleteIcon from '@material-ui/icons/Delete';
 import appConfig from "../../config.js";
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
 import Dialog from '@material-ui/core/Dialog';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import DialogContent from '@material-ui/core/DialogContent';

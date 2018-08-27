@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
 import Index from './Index';
-import EditReaderForm from './EditReaderForm'
+import EditReaderForm from '../../components/Readers/EditReaderForm'
 
 
 const divStyle = {
