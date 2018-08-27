@@ -26,7 +26,7 @@ class Book extends Component {
     }
     
     render() {
-        let imgUrl = '/Users/saishree/reactWorkspace/library_managementsystem/src/Backdrop.png';
+        let imgUrl = 'src/Backdrop.png';
         
        
         return (
