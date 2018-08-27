@@ -42,6 +42,11 @@ class Index extends Component{
             splitPane:false,
         })
     }
+<<<<<<< HEAD:src/containers/Readers/Index.js
+=======
+
+
+>>>>>>> a38905a... reader edit:src/components/Readers/Index.js
     render(){
         const list = (
                 <ReactTable
