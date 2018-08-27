@@ -70,7 +70,7 @@ class BookList extends Component{
                 style: {
                   cursor: 'pointer',
                 },
-                 Cell: props => <button onClick={()=>this.editBookBtnHandler(props.value,this.state.data)}>Click me </button>
+                 Cell: props => <button onClick={()=>this.editBookBtnHandler(props.value,this.state.data)}>EDIT </button>
               },
             {   expander:true,
                 width: 65,
