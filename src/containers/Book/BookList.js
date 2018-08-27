@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import "react-table/react-table.css";
+import  classes from "./react-table.css";
 import axios from 'axios';
 
 class BookList extends Component{
@@ -26,6 +26,7 @@ class BookList extends Component{
             <div className='admin-table-container'>
             <div className='admin-table'>
                 <ReactTable 
+                className = {classes.ReactTable}
                 data={this.state.data}
                 columns={[
                     {Header: 'Title',
