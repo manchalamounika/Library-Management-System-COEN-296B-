@@ -42,6 +42,8 @@ class Index extends Component{
             splitPane:false,
         })
     }
+
+
     render(){
         const list = (
                 <ReactTable
