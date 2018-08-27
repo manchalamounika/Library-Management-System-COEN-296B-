@@ -19,7 +19,7 @@ const EditReader = (props) => {
                     </div>
                 </div>
                 <div>
-                    <EditReaderForm closeBtnHandler={props.closeBtnHandler}/>
+                    <EditReaderForm closeBtnHandler={props.closeBtnHandler}  rowId={props.rowId}/>
                 </div>
             </SplitPane>
         </div>
