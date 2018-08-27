@@ -3,7 +3,7 @@ import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import axios from 'axios';
 import EditReader from './EditReader';
-import './test.css';
+
 class Index extends Component{
     constructor(){
         super();
