@@ -34,4 +34,4 @@ class Librarian extends Component {
     }
 }
 
-export default Book;
+export default Librarian;

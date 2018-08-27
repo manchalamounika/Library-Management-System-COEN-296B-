@@ -1,13 +1,11 @@
-import React, { Component } from 'react';
+/* import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import './App.css';
-import Navigation from './components/Navigation'
+import Navigation from './containers/Navigation'
 import Home from './Home'
-import Admin from './components/Admin/Admin'
-import graph from './components/Graph/graph'
-import Book from './components/Book/Book';
-import Reader from './components/Readers/Reader';
-
+import Admin from './containers/Admin/Admin'
+import graph from './containers/Graph/graph'
+import Book from './containers/Book/Book';
+import Reader from './containers/Readers/Reader'
 
 class App extends Component {
   render() {
@@ -15,12 +13,7 @@ class App extends Component {
     return (
      <Router>
        
-        <div 
-      //   style ={ { backgroundImage: "url("+bg+")",backgroundposition: 'center',
-			// backgroundrepeat:  'no-repeat',
-			// backgroundattachment: 'fixed',
-			// backgroundsize:  'cover', height: '120vh'}}
-      >
+        <div>
           <Navigation />
           
           <div className="container" >          
@@ -35,6 +28,40 @@ class App extends Component {
         </div>
       </Router>
   
+    );
+  }
+}
+
+export default App; */
+
+import React, { Component } from 'react';
+import {BrowserRouter} from 'react-router-dom';
+import Layout from './hoc/Layout/Layout';
+import {Route, Switch} from 'react-router-dom';
+import Home from './containers/Home/Home';
+import Books from './containers/Book/Book';
+import Admin from './containers/Admin/Admin';
+import Libraries from './containers/Libraries/Libraries';
+import Readers from './containers/Readers/Reader';
+import Librarians from './containers/Librarians/Librarian';
+
+class App extends Component {
+  render() {
+    return (
+      <BrowserRouter>
+      <div>
+        <Layout>
+          <Switch>
+          <Route path ="/libraries" component={Libraries}/>
+          <Route path ="/" exact component= {Home}/>
+          <Route exact path='/books' render={() => (<Books/>)} />
+          <Route exact path='/admin' render={() => (<Admin/>)} />
+          <Route exact path='/readers' render={() => (<Readers/>)} />
+          <Route exact path='/librarians' render={() => (<Librarians/>)} />
+          </Switch>
+        </Layout>
+      </div>
+      </BrowserRouter>
     );
   }
 }

@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import "react-table/react-table.css";
+import classes from "react-table/react-table.css";
 import * as AWS from 'aws-sdk';
 import DeleteIcon from '@material-ui/icons/Delete';
 import appConfig from "../../config.js";
@@ -182,6 +182,7 @@ let username= this.state.row.original.username;
             <div className='admin-table'>
             {data && 
             <ReactTable 
+            className={classes}
             data={data}
             columns={[
                 {Header: 'First Name',
