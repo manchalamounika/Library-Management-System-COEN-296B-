@@ -9,6 +9,7 @@ class Index extends Component{
         super();
         this.state={
             data: [],
+            datarow :{}
         }
         this.makeData = this.makeData.bind(this);
     }
@@ -24,12 +25,16 @@ class Index extends Component{
                 this.setState({data:response.data});
         })
 
-    } 
-    editReaderBtnHandler = () => {
+    }
+    
+    editReaderBtnHandler = (property,info) => {
+        let rowInfo = info.find((element)=>element.BookBarcode == property);
+        console.log(JSON.stringify(rowInfo)+"===HHHHH+++++++") 
         this.setState({
             splitPane: true,
+            datarow: rowInfo,
         });
-       console.log("Hello");
+       console.log(property,"====>Mounika sss");
        }
     
        closeBtnHandler = () => {
@@ -52,21 +57,15 @@ class Index extends Component{
                     accessor: 'BarCode'},
                     {Header: 'Checkouts ',
                     accessor: 'Checkouts'},
-                    {expander:true, 
-                        width: 65,
-                        Expander: ({ isExpanded, ...rest}) =>
-                        <div>
-                           <button onClick={this.editReaderBtnHandler}>Edit
-                             </button> 
-                             </div>,
+                    {
+                        Header: 'EDIT',
+                        width: 125,
+                        accessor: 'BookBarcode',
                         style: {
-                            cursor: "pointer",
-                            fontSize: 15,
-                            padding: "10",
-                            textAlign: "center",
-                            userSelect: "none"
-                          },
-                    },
+                          cursor: 'pointer',
+                        },
+                         Cell: props => <button onClick={()=>this.editReaderBtnHandler(props.value,this.state.data)}>EDIT</button>
+                      },
                     {   expander:true,
                         width: 65,
                         Expander: ({ isExpanded, ...rest}) =>
@@ -95,7 +94,7 @@ class Index extends Component{
             <div className='admin-table'>
             {this.editReaderBtnHandler} {
                 this.state.splitPane ? 
-    (<EditReader closeBtnHandler={this.closeBtnHandler}/>) :
+    (<EditReader closeBtnHandler={this.closeBtnHandler} rowId={this.state.datarow}/>) :
     list}
             </div>
             </div>

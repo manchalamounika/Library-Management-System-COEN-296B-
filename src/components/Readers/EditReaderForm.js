@@ -7,29 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-
-// const styles = theme => ( {
-//     root: {
-//         flexGrow: 1,        
-//     },   
-//     textField: {
-//         marginLeft: 'theme.spacing.unit',
-//         marginRight: 'theme.spacing.unit',
-//         width: 200,
-//         flexBasis: 200,
-//         // margin: theme.spacing.unit,
-//         // marginTop: theme.spacing.unit * 3,
-//       },
-//       margin: {
-//         margin: theme.spacing.unit,
-//       },
-//       withoutLabel: {
-//         marginTop: theme.spacing.unit * 3,
-//       },
-// });
-
-
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -55,12 +33,14 @@ const styles = theme => ({
 
 
 class EditReaderForm extends React.Component {
-     state = {
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    library: '',
-    checkouts: ''
+    constructor(props){
+        super(props);
+        console.log("Mounika++++++++++++++"+JSON.stringify(this.props.rowId));
+       console.log(props);
+        
+        this.state={
+            data: this.props.rowId,
+        }
     }
 
 
@@ -68,9 +48,17 @@ handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
 }
 
-handleEditReaderBtn =() =>{
-    //should convert the state fields to json and make api call
-    //should handle error cases (if form is empty shouldn't submit)
+handleEditReaderBtn =(event,state) =>{
+    event.preventDefault();
+    let self = this;
+    let user = self.state;
+    axios.put('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader/'+this.state.data['BarCode'], user)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      }).catch(e=>{
+          console.log(e);
+      })
     this.props.closeBtnHandler();
 }
 
@@ -104,34 +92,29 @@ closeHandler=() =>{
                 label="First Name"
                 id="margin-normal"
                 // id="simple-start-adornment"
-                placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
-                onChange={this.handleChange('firstname')} 
+                placeholder="First Name" type="text" name="firstname" defaultValue={this.state.data['FirstName']}
+                onChange={this.handleChange('firstName')} 
                 />
 
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Middle Name"
                 id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('middlename')} />
+                placeholder="Middle Name" type="text" name="middlename" defaultValue={this.state.data['MiddleName']}
+                onChange={this.handleChange('middleName')} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Last Name"
                 id="margin-normal"
-                placeholder="Last Name" type="text" name="lastname" value={this.state.lastname}
-                onChange={this.handleChange('lastname')} />
+                placeholder="Last Name" type="text" name="lastname" defaultValue={this.state.data['LastName']}
+                onChange={this.handleChange('lastName')} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="library"
                 id="margin-normal"
-                placeholder="Library" type="text" name="library" value={this.state.library}
+                placeholder="Library" type="text" name="library" defaultValue={this.state.data['LibraryName']}
                 onChange={this.handleChange('library')} />
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="checkouts"
-                id="margin-normal"
-                placeholder="Checkouts" type="text" name="checkouts" value={this.state.checkouts}
-                onChange={this.handleChange('checkouts')} />
+            
         </form>
         </div>
         
