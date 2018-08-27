@@ -38,9 +38,9 @@ class Book extends Component {
         (<AddBook closeBtnHandler={this.closeBtnHandler}/>) :
         (<BookList />)}
                 </div>
-                
-                
-        
+
+
+
                     );
     }
 }

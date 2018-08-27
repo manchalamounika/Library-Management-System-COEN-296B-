@@ -13,6 +13,7 @@ class BookList extends Component{
         this.state={
             data: [],
             splitPane: false,
+            datarow :{}
         }
         
         
@@ -29,11 +30,14 @@ class BookList extends Component{
        })
     }
     
-    editBookBtnHandler = () => {
+    editBookBtnHandler = (property,info) => {
+        let rowInfo = info.find((element)=>element.BookBarcode == property);
+        console.log(JSON.stringify(rowInfo)+"===HHHHH+++++++") 
         this.setState({
             splitPane: true,
+            datarow: rowInfo,
         });
-       console.log("Hello");
+       console.log(property,"====>Mounika sss");
        }
     
        closeBtnHandler = () => {
@@ -41,12 +45,15 @@ class BookList extends Component{
             splitPane:false,
         })
     }
+
+
     render(){
         const Table = (<div><ReactTable 
         data={this.state.data}
         columns={[
             {Header: 'Title',
-            accessor: 'Title'},
+            accessor: 'Title',
+            className:'Title'},
             {Header: 'First Name',
             accessor: 'FirstName'},
             {Header: 'Last Name',
@@ -89,7 +96,8 @@ class BookList extends Component{
         showPagination={false}
         defaultPageSize={10}
         minRows={5}
-        onFetchData={this.makeData}/>
+        onFetchData={this.makeData} 
+        />
 
    
     </div>

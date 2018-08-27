@@ -7,29 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
-
-
-// const styles = theme => ( {
-//     root: {
-//         flexGrow: 1,        
-//     },   
-//     textField: {
-//         marginLeft: 'theme.spacing.unit',
-//         marginRight: 'theme.spacing.unit',
-//         width: 200,
-//         flexBasis: 200,
-//         // margin: theme.spacing.unit,
-//         // marginTop: theme.spacing.unit * 3,
-//       },
-//       margin: {
-//         margin: theme.spacing.unit,
-//       },
-//       withoutLabel: {
-//         marginTop: theme.spacing.unit * 3,
-//       },
-// });
-
-
+import axios from 'axios';
 
 const styles = theme => ({
   root: {
@@ -55,13 +33,26 @@ const styles = theme => ({
 
 
 class EditBookForm extends React.Component {
-     state = {
-    title: '',
-    authorfirstname: '',
-    authormiddlename:'',
-    authoutlastname: '',
-    library: '',
-    barcode: '',
+    constructor(props){
+        super(props);
+        console.log("Mounika++++++++++++++"+JSON.stringify(this.props.rowId));
+       console.log(props);
+        
+        this.state={
+            data: this.props.rowId,
+        }
+       // this.makeData = this.makeData.bind(this);
+    }
+    makeData = (state,instance) =>{ 
+        console.log(this.props.rowId+"======")       
+        axios.get('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book/'+this.props.rowId,{
+            mode: 'no-cors',
+            method: 'GET',
+       })
+       .then((response)=> {
+               console.log(response);
+               this.setState({data:response.data});
+       })
     }
 
 
@@ -69,16 +60,18 @@ handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
 }
 
-handleMouseDownPassword = event => {
+
+handleEditBtn =(event,state) =>{
     event.preventDefault();
-};
-
-
-
-
-handleEditBtn =() =>{
-    //should convert the state fields to json and make api call
-    //should handle error cases (if form is empty shouldn't submit)
+    let self = this;
+    let user = self.state;
+    axios.put('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book/'+this.state.data['BookBarcode'], user)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      }).catch(e=>{
+          console.log(e);
+      })
     this.props.closeBtnHandler();
 }
 
@@ -111,42 +104,40 @@ closeHandler=() =>{
                 className={classNames(classes.margin, classes.textField)}
                 label="Book Title"
                 id="margin-normal"
-                // id="simple-start-adornment"
-                placeholder="Book Title" type="text" name="title" value={this.state.title}
+                placeholder="Book Title" type="text" name="title" defaultValue={this.state.data['Title']}
                 onChange={this.handleChange('title')} 
                 />
              <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Author Firstname"
                 id="margin-normal"
-                placeholder="Author firstname" type="text" name="author firstname" value={this.state.authorfirstname}
-                onChange={this.handleChange('authorfirstname')} />
+                placeholder="Author firstname" type="text" name="author firstname" value={this.state.data['FirstName']}
+                onChange={this.handleChange('firstName')} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Author Middlename"
                 id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('authormiddlename')} />
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="Library"
-                id="margin-normal"
-                placeholder="Library" type="text" name="library" value={this.state.library}
-                onChange={this.handleChange('library')} />
+                placeholder="Middle Name" type="text" name="middlename" value={this.state.data['MiddleName']}
+                onChange={this.handleChange('middleName')} />
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Author Lastname"
                 id="margin-normal"
-                placeholder="Author Lastname" type="text" name="authorlastname" value={this.state.authorlastname}
-                onChange={this.handleChange('authorlastname')} />
+                placeholder="Author Lastname" type="text" name="authorlastname" value={this.state.data['LastName']}
+                onChange={this.handleChange('lastName')} />
+            <TextField
+                className={classNames(classes.margin, classes.textField)}
+                label="Library"
+                id="margin-normal"
+                placeholder="Library" type="text" name="library" value={this.state.data['LibraryName']}
+                onChange={this.handleChange('libraryName')} />
+            
             <TextField
                 className={classNames(classes.margin, classes.textField)}
                 label="Barcode"
                 id="margin-normal"
-                placeholder="Barcode" type="text" name="barcode" value={this.state.barcode}
-                onChange={this.handleChange('barcode')} />
-           
-                        
+                placeholder="Barcode" type="text" name="barcode" value={this.state.data['BookBarcode']}
+                onChange={this.handleChange('barCode')} />          
         </form>
         </div>
         

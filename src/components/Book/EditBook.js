@@ -6,9 +6,6 @@ const divStyle = {
     padding: '30px',
 };
 
-
-
-
 const EditBook = (props) => {   
     return (
         <div>
@@ -19,7 +16,7 @@ const EditBook = (props) => {
                     </div>
                 </div>
                 <div>
-                    <EditBookForm closeBtnHandler={props.closeBtnHandler}/>
+                    <EditBookForm closeBtnHandler={props.closeBtnHandler} rowId={props.rowId}/>
                 </div>
             </SplitPane>
         </div>
