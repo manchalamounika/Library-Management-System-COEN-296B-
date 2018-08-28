@@ -1,24 +1,21 @@
 import React, { Component } from 'react';
-import SplitPane from 'react-split-pane';
 import Modal from '../../components/UI/Modal/Modal';
 import BookList from './BookList';
 import AddNewBookForm from './AddNewBookForm'
-
+ 
 const divStyle = {
     padding: '30px',
-};
-
+}; 
 
 const AddBook = (props) => {   
     return (
         <div>
-         
                 <div>
                     <div style={divStyle}>
-                        <BookList />
+                        <BookList/>
                     </div>
                 </div>
-                <Modal show = {true} >
+                <Modal show = {props.modal} modalClosed ={props.closeBtnHandler}>
                 <div>
                     <AddNewBookForm closeBtnHandler={props.closeBtnHandler}/>
                 </div>
@@ -30,6 +27,4 @@ const AddBook = (props) => {
 
 }
 export default AddBook;
-{/* <Modal show={this.state.purchasing} modalClosed={this.purchaseCancelHandler}>
-                    {orderSummary}
-                </Modal> */}
+ 

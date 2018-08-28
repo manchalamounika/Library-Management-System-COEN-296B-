@@ -34,19 +34,17 @@ const styles = theme => ({
 });
 
 
-class AddNewReaderForm extends Component {
+class EditLibraryForm extends Component {
 state = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    libraryName: '',
-    barCode:'',
+    libraryname: '',
+    librarycountry:'',
+    libraryvillage: '',
     showFormValidation:false,
     formErrorMessage:'',
     open: false,
 }
 
-handleChange = prop => event => {
+/* handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
 }
 
@@ -54,11 +52,11 @@ handleMouseDownPassword = event => {
     event.preventDefault();
 };
 
-handleAddReaderBtn =(event,state) =>{
+handleEditBookBtn =(event,state) =>{
     event.preventDefault();
     let self = this;
     let user = self.state;
-    axios.post('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader/', user)
+    axios.put('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book/', user)
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -67,22 +65,20 @@ handleAddReaderBtn =(event,state) =>{
       })
     this.props.closeBtnHandler();
 }
-
-handleSubmit=(e) =>{}
-
+ */
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
 
 render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
     return (      
     <div>
         <div >
             <AppBar position="static" color="default" >
                 <Toolbar variant="dense">
                 <Typography variant="title" color="inherit">
-                   Add Book
+                   Edit Book
                 </Typography>
                 <div className="add_admin_close">
                 <a className="close" onClick={this.closeHandler}>
@@ -95,64 +91,48 @@ render() {
         <div className={classes.root}>
         <ValidatorForm
                 ref="form"
-                onSubmit={this.handleAddReaderBtn}>
-                
-            <TextValidator                  
+                onSubmit={this.handleAddBookBtn}>
+                <TextValidator
                 className={classNames(classes.margin, classes.textField)}
-                label="First Name"
+                label="Library name"
+                id="margin-normal"
+                placeholder="name" type="text" name="libraryname" value={this.state.libraryname}
+                /* onChange={this.handleChange('title')} */
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <TextValidator
+                className={classNames(classes.margin, classes.textField)}
+                label="Library village"
+                id="margin-normal"
+                placeholder="village" type="text" name="libraryvillage" value={this.state.libraryvillage}
+                /* onChange={this.handleChange('bookId')} */
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <TextValidator                  
+                className={classNames(classes.margin, classes.textField)}
+                label="Library country"
                 id="margin-normal"                
-                placeholder="First Name" type="text" name="firstName" value={this.state.firstName}
-                onChange={this.handleChange('firstName')} 
+                placeholder="country" type="text" name="librarycountry" value={this.state.librarycountry}
+                /* onChange={this.handleChange('firstName')}  */
                 validators={['required']}
                 errorMessages={['this field is required']}
                 />
-            <TextValidator
-                className={classNames(classes.margin, classes.textField)}
-                label="Middle Name"
-                id="margin-normal"
-                placeholder="Middle Name" type="text" name="middleName" value={this.state.middleName}                
-                onChange={this.handleChange('middleName')} />
-            <TextValidator
-                className={classNames(classes.margin, classes.textField)}
-                label="Last Name"
-                id="margin-normal"
-                placeholder="Last Name" type="text" name="lastName" value={this.state.lastName}
-                onChange={this.handleChange('lastName')}
-                validators={['required']}
-                errorMessages={['this field is required']} />
-                <TextValidator
-                className={classNames(classes.margin, classes.textField)}
-                label="Library"
-                id="margin-normal"
-                placeholder="Choose from Library" type="text" name="libraryName" value={this.state.libraryName}
-                onChange={this.handleChange('libraryName')}
-                validators={['required']}
-                errorMessages={['this field is required']} />
-                <TextValidator
-                className={classNames(classes.margin, classes.textField)}
-                label="Barcode"
-                id="margin-normal"
-                placeholder="Barcode" type="text" name="barCode" value={this.state.barCode}
-                onChange={this.handleChange('barCode')}
-                validators={['required']}
-                errorMessages={['this field is required']} />
                 <Button
                 className={classes.button}
                 size="small"
                 variant="contained"                                
-                color="secondary"
+                color="default"
                 type="submit"
-                > Save </Button>   
-            {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
-          </ValidatorForm>
+                >Save</Button>   
+               {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
+              </ValidatorForm>
         </div>                        
-     </div>             
+    </div>             
     );
   }
 }
-
-AddNewReaderForm.propTypes = {
+EditLibraryForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddNewReaderForm);
+export default withStyles(styles)(EditLibraryForm);

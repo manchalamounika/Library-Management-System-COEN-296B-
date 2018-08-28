@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
@@ -10,11 +10,12 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
+import axios from 'axios';
 import classNames from 'classnames';
 
-const styles = theme => ({
+const styles = theme => ({ 
   root: {
-    padding: '30px',
+    padding: '20px',
     paddingTop: '20px',
   },
   margin: {
@@ -25,7 +26,7 @@ const styles = theme => ({
   },
   textField: {
     flexBasis: 200,
-    width: 500,
+    width: 300,
   },
   button:{
     margin: theme.spacing.unit,
@@ -33,14 +34,19 @@ const styles = theme => ({
 });
 
 
-class AddNewBookForm extends React.Component {
-     state = {
-    firstname: '',
-    middlename: '',
-    lastname: '',
-    email: ''
+class AddNewBookForm extends Component {
+state = {
+    title:'',
+    bookId: '',
+    firstName: '',
+    middleName: '',
+    lastName: '',
+    libraryName: '',
+    barCode:'',
+    showFormValidation:false,
+    formErrorMessage:'',
+    open: false,
 }
-
 
 handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
@@ -50,24 +56,34 @@ handleMouseDownPassword = event => {
     event.preventDefault();
 };
 
-handleAddBookBtn =() =>{
+handleAddBookBtn =(event,state) =>{
+    event.preventDefault();
+    let self = this;
+    let user = self.state;
+    axios.post('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book/', user)
+      .then(res => {
+        console.log(res);
+        console.log(res.data);
+      }).catch(e=>{
+          console.log(e);
+      })
     this.props.closeBtnHandler();
 }
+
+handleSubmit=(e) =>{ }
 
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
   render() {
     const { classes } = this.props;
-
-    return (
-      
+    return (      
     <div>
         <div >
             <AppBar position="static" color="default" >
                 <Toolbar variant="dense">
                 <Typography variant="title" color="inherit">
-                    Add New Book
+                   Add Book
                 </Typography>
                 <div className="add_admin_close">
                 <a className="close" onClick={this.closeHandler}>
@@ -78,90 +94,75 @@ closeHandler=() =>{
             </AppBar>
         </div>
         <div className={classes.root}>
-        <form>
-            <TextField
+        <ValidatorForm
+                ref="form"
+                onSubmit={this.handleAddBookBtn}>
+                <TextValidator
                 className={classNames(classes.margin, classes.textField)}
-                label="First Name"
+                label="Book Title"
                 id="margin-normal"
-                // id="simple-start-adornment"
-                placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
-                onChange={this.handleChange('firstname')} 
+                placeholder="book title" type="text" name="title" value={this.state.title}
+                onChange={this.handleChange('title')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <TextValidator
+                className={classNames(classes.margin, classes.textField)}
+                label="Book Id"
+                id="margin-normal"
+                placeholder="Book Id" type="text" name="bookId" value={this.state.bookId}
+                onChange={this.handleChange('bookId')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <TextValidator                  
+                className={classNames(classes.margin, classes.textField)}
+                label="Author First Name"
+                id="margin-normal"                
+                placeholder="First Name" type="text" name="firstName" value={this.state.firstName}
+                onChange={this.handleChange('firstName')} 
+                validators={['required']}
+                errorMessages={['this field is required']}
                 />
-
-            <TextField
+                <TextValidator
                 className={classNames(classes.margin, classes.textField)}
-                label="Middle Name"
+                label="Author Middle Name"
                 id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
-                onChange={this.handleChange('middlename')} />
-            <TextField
+                placeholder="Middle Name" type="text" name="middleName" value={this.state.middleName}                
+                onChange={this.handleChange('middleName')} />
+            <TextValidator
                 className={classNames(classes.margin, classes.textField)}
-                label="Last Name"
+                label=" Author Last Name"
                 id="margin-normal"
-                placeholder="Last Name" type="text" name="lastname" value={this.state.lastname}
-                onChange={this.handleChange('lastname')} />
-            <TextField
+                placeholder="Last Name" type="text" name="lastName" value={this.state.lastName}
+                onChange={this.handleChange('lastName')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <TextValidator
                 className={classNames(classes.margin, classes.textField)}
-                label="Email"
+                label="Library"
                 id="margin-normal"
-                placeholder="Email" type="text" name="email" value={this.state.email}
-                onChange={this.handleChange('email')} />
-            <TextField
+                placeholder="Choose from Library" type="text" name="libraryName" value={this.state.libraryName}
+                onChange={this.handleChange('libraryName')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <TextValidator
                 className={classNames(classes.margin, classes.textField)}
-                label="User Name"
+                label="Barcode"
                 id="margin-normal"
-                placeholder="User Name" type="text" name="username" value={this.state.username}
-                onChange={this.handleChange('username')} />
-            <TextField
-                className={classNames(classes.margin, classes.textField)}
-                label="Password"
-                id="margin-normal"
-                placeholder="Password" name="password" value={this.state.password}
-                type={this.state.showPassword ? 'text' : 'password'}
-                onChange={this.handleChange('password')}
-                InputProps={{
-                    endAdornment: <InputAdornment position="end">
-                        <IconButton
-                            aria-label="Toggle password visibility"
-                            onClick={this.handleClickShowPassword}
-                            onMouseDown={this.handleMouseDownPassword}>
-                            {this.state.showPassword ? <VisibilityOff /> : <Visibility />}
-                        </IconButton>
-                    </InputAdornment>,
-                }}/>
-                <TextField
-                    className={classNames(classes.margin, classes.textField)}
-                    label="Confirm Password"
-                    id="margin-normal"
-                    placeholder="Confirm Password" name="confirmpassword" value={this.state.confirmpassword}
-                    type={this.state.showConfirmPassword ? 'text' : 'password'}
-                    onChange={this.handleChange('confirmpassword')}
-                    InputProps={{
-                        endAdornment: <InputAdornment position="end">
-                            <IconButton
-                                aria-label="Toggle password visibility"
-                                onClick={this.handleClickShowConfirmPassword}
-                                onMouseDown={this.handleMouseDownPassword}>
-                                {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
-                            </IconButton>
-                        </InputAdornment>,
-                }}/>                    
-        </form>
-        </div>
-        
-            <Button
-            className={classes.button}
+                placeholder="Barcode" type="text" name="barCode" value={this.state.barCode}
+                onChange={this.handleChange('barCode')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <Button
+                className={classes.button}
                 size="small"
                 variant="contained"                                
-                color="secondary"
-                onClick={this.handleAddBookBtn}>
-                    Add 
-            </Button>
-        
-
-    </div>
-       
-      
+                color="default"
+                type="submit"
+                >Save</Button>   
+            {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
+        </ValidatorForm>
+        </div>                        
+    </div>             
     );
   }
 }
@@ -170,5 +171,4 @@ AddNewBookForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddNewBookForm);
-
+export default withStyles(styles)(AddNewBookForm); 

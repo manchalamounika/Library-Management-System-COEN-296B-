@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import SplitPane from 'react-split-pane';
-import Index from './Index';
+import Modal from '../../components/UI/Modal/Modal';
+import ReaderList from './ReaderList';
 import AddNewReaderForm from './AddNewReaderForm'
 
 const divStyle = {
@@ -10,16 +10,16 @@ const divStyle = {
 const AddReader = (props) => {   
     return (
         <div>
-            <SplitPane split="vertical" minSize={500} defaultSize={800}>
                 <div>
                     <div style={divStyle}>
-                        <Index />
+                        <ReaderList />
                     </div>
                 </div>
+                <Modal show = {props.modal} modalClosed ={props.closeBtnHandler} >
                 <div>
                     <AddNewReaderForm closeBtnHandler={props.closeBtnHandler}/>
                 </div>
-            </SplitPane>
+                </Modal> 
         </div>
     )
 

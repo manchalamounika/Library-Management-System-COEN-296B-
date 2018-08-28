@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import "react-table/react-table.css";
+import classes from "react-table/react-table.css";
 import * as AWS from 'aws-sdk';
 import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js";
+
+
 
 class AdminList extends Component{
     makeData = () =>{        
@@ -28,7 +30,6 @@ class AdminList extends Component{
     }
     state={
         adminList: [],
-        modal: false,
     }
 
     componentDidMount(){
@@ -151,9 +152,11 @@ class AdminList extends Component{
         const data = this.state.adminList;
 
         return(
-            <div style={{width:'90%',margin:'70px auto'}}>
+            <div className='admin-table-container'>
+            <div className='admin-table'>
             {data && 
             <ReactTable 
+            className={classes}
             data={data}
             columns={[
                 {Header: 'First Name',
@@ -168,6 +171,7 @@ class AdminList extends Component{
             showPagination={true}
             defaultPageSize={10}
             minRows={5}/>}               
+            </div>
             </div>
         )
          

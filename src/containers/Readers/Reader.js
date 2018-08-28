@@ -1,37 +1,78 @@
 import React, { Component } from 'react';
-import SplitPane from 'react-split-pane';
-import Index from './Index'
+import ReaderList from './ReaderList'
 import AddReader from './AddReader';
+import Aux from '../../hoc/Auxi';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles'; 
+import Paper from '@material-ui/core/Paper';
+import Typography from '@material-ui/core/Typography';
+import Button from '@material-ui/core/Button';
+import AddIcon from '@material-ui/icons/Add';
+import Icon from '@material-ui/core/Icon';
 
-class Admin extends Component {
+const styles = theme => ({
+    root: {
+        ...theme.mixins.gutters(),
+        position:'relative',
+        paddingTop: theme.spacing.unit * 3,
+        paddingBottom: theme.spacing.unit * 3,
+        width:'70%',
+        margin: '10px auto',
+        'border-radius':'10px',
+        background:'rgba(255,255,255,0.7)'
+    },
+    button: {
+        margin: theme.spacing.unit,
+        position :'absolute',
+        /* display: 'inline-block', */
+        top : '5px',
+        right:'10px',
+        float: 'right',
+        'border-radius':'10px'
+    },
+    extendedIcon: {
+        marginRight: theme.spacing.unit,
+    },
+});
+
+class Reader extends Component {
     state = {
-        splitPane: false,
+        modal:false,
     }
-
     addReaderBtnHandler = () => {
         this.setState({
-            splitPane: true,
-        })
+            modal:true,
+        });
+       
     }
-
     closeBtnHandler = () => {
         this.setState({
-            splitPane:false,
+           modal:false,   
         })
     }
     render() {
-        let imgUrl = '/Users/saishree/reactWorkspace/library_managementsystem/src/Backdrop.png'
+        const { classes } = this.props;
         return (
-            <div style={{backgroundImage: `url(${imgUrl})`}}>
-                <button onClick={this.addReaderBtnHandler}>Add Reader</button>                
-                {this.state.splitPane ? 
-                    (<AddReader closeBtnHandler={this.closeBtnHandler}/>) :
-                    (<Index />)}
-
-
+            <div>
+              <Paper className={classes.root} elevation={1}>
+                <Typography style={{fontSize:'3em',
+                            position :'absolute',
+                            top : '5px',
+                            left:'20px',
+                            float: 'left',}}variant="headline" component="h1">
+                  Readers
+                </Typography>
+                <Button variant="extendedFab" className={classes.button} onClick={this.addReaderBtnHandler}>
+                <AddIcon className={classes.extendedIcon}/>Add Reader</Button>
+                {this.state.modal ? (<AddReader modal={this.state.modal} closeBtnHandler={this.closeBtnHandler}/>) :(<ReaderList />)} 
+              </Paper>
             </div>
-        )
+          );
     }
 }
 
-export default Admin;
+Reader.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+
+export default withStyles(styles)(Reader);

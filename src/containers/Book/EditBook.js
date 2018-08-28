@@ -1,26 +1,27 @@
 import React, { Component } from 'react';
 import Modal from '../../components/UI/Modal/Modal';
-import AdminList from './AdminList';
-import AddNewAdminForm from './AddNewAdminForm'
+import BookList from './BookList';
+import EditBookForm from './EditBookForm';
+
 const divStyle = {
     padding: '30px',
 };
 
-const AddAdmin = (props) => {   
+const EditBook = (props) => {   
     return (
         <div>
                 <div>
-                    <div style={divStyle}>
-                        <AdminList />
+                    <div>
+                        <BookList />
                     </div>
                 </div>
                 <Modal show = {props.modal} modalClosed ={props.closeBtnHandler}>
                 <div>
-                    <AddNewAdminForm closeBtnHandler={props.closeBtnHandler}/>
+                    <EditBookForm closeBtnHandler={props.closeBtnHandler} rowId={props.rowId}/>
                 </div>
                 </Modal>
         </div>
     )
 
 }
-export default AddAdmin;
+export default EditBook; 

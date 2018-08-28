@@ -1,35 +1,27 @@
 import React, { Component } from 'react';
+import Modal from '../../components/UI/Modal/Modal';
+import ReaderList from './ReaderList';
+import EditReaderForm from './EditReaderForm';
 
-class EditReader extends React.Component {
-    render() {
-        return(
-            <div>
-            <form onSubmit={this.handleSubmit} align="center">
-                <div class="form-group row">
-                <label >First Name:</label><input type="text" /><br/>
+const divStyle = {
+    padding: '30px',
+};
+
+const EditReader = (props) => {   
+    return (
+        <div>
+              <div>
+                    <div>
+                        <ReaderList/>
+                    </div>
                 </div>
-                <div class="form-group row">
-
-                <label>Last Name:<input type="text" /></label><br/>
+                <Modal show = {props.modal} modalClosed ={props.closeBtnHandler}>
+                <div>
+                    <EditReaderForm closeBtnHandler={props.closeBtnHandler} rowId={props.rowId}/>
                 </div>
-                <div class="form-group row">
+                </Modal>
+        </div>
+    )
 
-                <label>Middle Name:<input type="text" /></label><br/>
-                </div>
-
-                <div class="form-group row">
-
-                <label>Barcode:<input type="text" unselectable="true" /></label><br/>
-                </div>
-
-                <div class="form-group row">
-                <input type="submit" value="Update" />
-                </div>
-                
-            </form>
-            </div>
-       
-		)
-	}
 }
 export default EditReader;

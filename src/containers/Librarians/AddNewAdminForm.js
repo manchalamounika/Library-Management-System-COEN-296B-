@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
-import TextField from '@material-ui/core/TextField';
-import Menu from '@material-ui/core';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import IconButton from '@material-ui/core/IconButton';
 import Visibility from '@material-ui/icons/Visibility';
@@ -12,36 +11,18 @@ import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import classNames from 'classnames';
+import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js";
+import appConfig from "../../config.js";
 
-
-// const styles = theme => ( {
-//     root: {
-//         flexGrow: 1,        
-//     },   
-//     textField: {
-//         marginLeft: 'theme.spacing.unit',
-//         marginRight: 'theme.spacing.unit',
-//         width: 200,
-//         flexBasis: 200,
-//         // margin: theme.spacing.unit,
-//         // marginTop: theme.spacing.unit * 3,
-//       },
-//       margin: {
-//         margin: theme.spacing.unit,
-//       },
-//       withoutLabel: {
-//         marginTop: theme.spacing.unit * 3,
-//       },
-// });
-
-
+const userPool = new CognitoUserPool({
+    UserPoolId: appConfig.UserPoolId,
+    ClientId: appConfig.ClientId,
+  });
 
 const styles = theme => ({
   root: {
-    // justifyContent: 'center',
     padding: '30px',
     paddingTop: '20px',
-    // alignContent: 'center',
   },
   margin: {
     margin: theme.spacing.unit,
@@ -59,22 +40,38 @@ const styles = theme => ({
 });
 
 
-class AddNewLibrarianForm extends React.Component {
-     state = {
+class AddNewAdminForm extends Component {
+state = {
     firstname: '',
     middlename: '',
     lastname: '',
+    email: '',
     username: '',
     password: '',
     confirmpassword: '',
     showPassword: false,
     showConfirmPassword: false,
-    Lirary: '',
+    showFormValidation:false,
+    formErrorMessage:'',
+    open: false,
 }
 
+componentDidMount(){
+    ValidatorForm.addValidationRule('isPasswordMatch', (value) =>(
+     value.length ==0 ? true :value !== this.state.password ? false : true
+    ))
+
+    ValidatorForm.addValidationRule('isPasswordLength7', (value)=>(
+        value.length ==0 ? true : value.length>6 ? true:false
+    ))
+}
 
 handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
+}
+
+handleConfirmPasswordChange=()=>{
+    
 }
 
 handleMouseDownPassword = event => {
@@ -89,26 +86,73 @@ handleClickShowConfirmPassword = () => {
     this.setState(state => ({ showConfirmPassword: !state.showConfirmPassword }));
 };
 
-handleAddLibrarianBtn =() =>{
-    //should convert the state fields to json and make api call
-    //should handle error cases (if form is empty shouldn't submit)
-    this.props.closeBtnHandler();
-}
+
+handleSubmit=(e) =>{
+    e.preventDefault();
+    const email = this.state.email.trim();
+    const password = this.state.password.trim();
+    const name = this.state.firstname.trim();
+    const family_name = this.state.lastname.trim();
+    const middle_name = this.state.middlename.trim();
+    const username = this.state.username.trim();
+    
+    const attributeList = [
+      new CognitoUserAttribute({
+        Name: 'name',
+        Value: name,
+      }),
+      new CognitoUserAttribute({
+        Name: 'family_name',
+        Value: family_name,
+      }),
+      new CognitoUserAttribute({
+        Name: 'middle_name',
+        Value: middle_name,
+      }),
+      new CognitoUserAttribute({
+        Name: 'email',
+        Value: email,
+      })
+    ];
+    
+    userPool.signUp(username, password, attributeList, null, (err, result) => {
+        let errorMessage;
+      if (err) {          
+        errorMessage = err.message.includes(':')?err.message.split(":")[1]:err.message;
+        this.setState({formErrorMessage:errorMessage,showFormValidation:true}
+        )
+        return;
+      }
+      else{
+        this.setState({formErrorMessage:'',showFormValidation:false, open: true},
+            () => {
+                !this.state.showFormValidation && this.props.closeBtnHandler()
+                
+            }
+        )
+        this.props.getEmail(this.state.email);
+    }
+      console.log('user name is ' + result.user.getUsername());
+      console.log('call result: ' + JSON.stringify(result));         
+    });
+     
+  }
 
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
+
+
+
   render() {
     const { classes } = this.props;
-
-    return (
-      
+    return (      
     <div>
         <div >
             <AppBar position="static" color="default" >
                 <Toolbar variant="dense">
                 <Typography variant="title" color="inherit">
-                    Add New Librarian
+                    Add New Admin
                 </Typography>
                 <div className="add_admin_close">
                 <a className="close" onClick={this.closeHandler}>
@@ -119,42 +163,57 @@ closeHandler=() =>{
             </AppBar>
         </div>
         <div className={classes.root}>
-        <form>
-            <TextField
+        <ValidatorForm
+                ref="form"
+                onSubmit={this.handleSubmit}>
+            <TextValidator                  
                 className={classNames(classes.margin, classes.textField)}
                 label="First Name"
-                id="margin-normal"
-                // id="simple-start-adornment"
+                id="margin-normal"                
                 placeholder="First Name" type="text" name="firstname" value={this.state.firstname}
                 onChange={this.handleChange('firstname')} 
+                validators={['required']}
+                errorMessages={['this field is required']}
                 />
-
-            <TextField
+            <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Middle Name"
                 id="margin-normal"
-                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}
+                placeholder="Middle Name" type="text" name="middlename" value={this.state.middlename}                
                 onChange={this.handleChange('middlename')} />
-            <TextField
+            <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Last Name"
                 id="margin-normal"
                 placeholder="Last Name" type="text" name="lastname" value={this.state.lastname}
-                onChange={this.handleChange('lastname')} />
-           
-            <TextField
+                onChange={this.handleChange('lastname')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+            <TextValidator
+                className={classNames(classes.margin, classes.textField)}
+                label="Email"
+                id="margin-normal"
+                placeholder="Email" type="text" name="email" value={this.state.email}
+                onChange={this.handleChange('email')}
+                validators={['required','isEmail']}
+                errorMessages={['this field is required', 'email is not valid']} />
+            <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="User Name"
                 id="margin-normal"
                 placeholder="User Name" type="text" name="username" value={this.state.username}
-                onChange={this.handleChange('username')} />
-            <TextField
+                onChange={this.handleChange('username')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+            <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Password"
                 id="margin-normal"
                 placeholder="Password" name="password" value={this.state.password}
                 type={this.state.showPassword ? 'text' : 'password'}
                 onChange={this.handleChange('password')}
+                validators={['required','isPasswordLength7']}
+                errorMessages={['this field is required', 'password length should be greater than 6']}
                 InputProps={{
                     endAdornment: <InputAdornment position="end">
                         <IconButton
@@ -165,13 +224,15 @@ closeHandler=() =>{
                         </IconButton>
                     </InputAdornment>,
                 }}/>
-                <TextField
+                <TextValidator
                     className={classNames(classes.margin, classes.textField)}
                     label="Confirm Password"
                     id="margin-normal"
                     placeholder="Confirm Password" name="confirmpassword" value={this.state.confirmpassword}
                     type={this.state.showConfirmPassword ? 'text' : 'password'}
-                    onChange={this.handleChange('confirmpassword')}
+                    onChange={this.handleChange('confirmpassword')}                    
+                    validators={['required', 'isPasswordMatch']}
+                    errorMessages={['this field is required', 'should match the password entered']}
                     InputProps={{
                         endAdornment: <InputAdornment position="end">
                             <IconButton
@@ -181,30 +242,28 @@ closeHandler=() =>{
                                 {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                         </InputAdornment>,
-                }}/>                    
-        </form>
-        </div>
-        
-            <Button
+                }}/>     
+
+                 <Button
             className={classes.button}
                 size="small"
                 variant="contained"                                
                 color="secondary"
-                onClick={this.handleAddBookBtn}>
+                type="submit"
+                >            
                     Add 
-            </Button>
-        
-
-    </div>
-       
-      
+            </Button>   
+            {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
+        </ValidatorForm>
+        </div>                        
+    </div>             
     );
   }
 }
 
-AddNewLibrarianForm.propTypes = {
+AddNewAdminForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddNewLibrarianForm);
+export default withStyles(styles)(AddNewAdminForm);
 

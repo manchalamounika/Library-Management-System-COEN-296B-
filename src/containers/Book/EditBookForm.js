@@ -34,8 +34,10 @@ const styles = theme => ({
 });
 
 
-class AddNewReaderForm extends Component {
+class EditBookForm extends Component {
 state = {
+    title:'',
+    bookId: '',
     firstName: '',
     middleName: '',
     lastName: '',
@@ -54,11 +56,11 @@ handleMouseDownPassword = event => {
     event.preventDefault();
 };
 
-handleAddReaderBtn =(event,state) =>{
+handleEditBookBtn =(event,state) =>{
     event.preventDefault();
     let self = this;
     let user = self.state;
-    axios.post('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader/', user)
+    axios.put('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book/', user)
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -68,21 +70,19 @@ handleAddReaderBtn =(event,state) =>{
     this.props.closeBtnHandler();
 }
 
-handleSubmit=(e) =>{}
-
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
 
 render() {
-    const { classes } = this.props;
+    const {classes} = this.props;
     return (      
     <div>
         <div >
             <AppBar position="static" color="default" >
                 <Toolbar variant="dense">
                 <Typography variant="title" color="inherit">
-                   Add Book
+                   Edit Book
                 </Typography>
                 <div className="add_admin_close">
                 <a className="close" onClick={this.closeHandler}>
@@ -95,8 +95,23 @@ render() {
         <div className={classes.root}>
         <ValidatorForm
                 ref="form"
-                onSubmit={this.handleAddReaderBtn}>
-                
+                onSubmit={this.handleAddBookBtn}>
+                <TextValidator
+                className={classNames(classes.margin, classes.textField)}
+                label="Book Title"
+                id="margin-normal"
+                placeholder="title" type="text" name="title" value={this.state.title}
+                onChange={this.handleChange('title')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
+                <TextValidator
+                className={classNames(classes.margin, classes.textField)}
+                label="Book Id"
+                id="margin-normal"
+                placeholder="Book Id" type="text" name="bookId" value={this.state.bookId}
+                onChange={this.handleChange('bookId')}
+                validators={['required']}
+                errorMessages={['this field is required']} />
             <TextValidator                  
                 className={classNames(classes.margin, classes.textField)}
                 label="First Name"
@@ -136,23 +151,23 @@ render() {
                 onChange={this.handleChange('barCode')}
                 validators={['required']}
                 errorMessages={['this field is required']} />
-                <Button
-                className={classes.button}
+                <Button className={classes.button}
                 size="small"
                 variant="contained"                                
                 color="secondary"
-                type="submit"
-                > Save </Button>   
-            {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
-          </ValidatorForm>
+                type="submit">            
+                Save
+                </Button>   
+                {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
+            </ValidatorForm>
         </div>                        
-     </div>             
+    </div>             
     );
   }
 }
 
-AddNewReaderForm.propTypes = {
+EditBookForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddNewReaderForm);
+export default withStyles(styles)(EditBookForm); 

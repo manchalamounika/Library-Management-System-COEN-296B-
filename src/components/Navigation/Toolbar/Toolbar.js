@@ -7,11 +7,9 @@ import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
 const toolbar = (props) => (
     <header className = {classes.Toolbar}>
-        
         <DrawerToggle clicked ={props.drawerToggleClicked} />
- 
         {/* //use toolbar in the layout component where will add the clicked method */}
-        <div className={classes.pushLogo}>
+        <div className={classes.DesktopOnly}>
         <Logo/>
         </div>
         <nav className={classes.DesktopOnly}>

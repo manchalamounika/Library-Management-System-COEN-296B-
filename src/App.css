@@ -1,4 +1,4 @@
-.App {
+:global .App {
   text-align: center;
   color:g;
 }
@@ -82,8 +82,15 @@
   padding-top: 30px;
 }
 
-.add_admin_close{
+:global .add_admin_close{
   justify-content: end;
+  position :absolute;
+  float:right;
+  right:5%;
+  font-size: 2em;
+  background :#ccc;
+  padding: 3px 5px;
+  cursor: pointer;
 }
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }

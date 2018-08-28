@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import SplitPane from 'react-split-pane';
-import LibrarianList from './LibrarianList';
-import AddNewLibrarianForm from './AddNewLibrarianForm';
+import AdminList from './AdminList';
+import AddNewAdminForm from './AddNewAdminForm'
 
 
 const divStyle = {
@@ -9,21 +9,21 @@ const divStyle = {
 };
 
 
-const AddLibrarian = (props) => {   
+const AddAdmin = (props) => {   
     return (
         <div>
             <SplitPane split="vertical" minSize={500} defaultSize={800}>
                 <div>
                     <div style={divStyle}>
-                        <LibrarianList />
+                        <AdminList />
                     </div>
                 </div>
                 <div>
-                    <AddNewLibrarianForm closeBtnHandler={props.closeBtnHandler}/>
+                    <AddNewAdminForm closeBtnHandler={props.closeBtnHandler} getEmail={props.getEmail}/>
                 </div>
             </SplitPane>
         </div>
     )
 
 }
-export default AddLibrarian;
+export default AddAdmin;

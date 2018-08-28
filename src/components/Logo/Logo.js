@@ -5,9 +5,11 @@ import NavigationItem from '../Navigation/NavigationItems/NavigationItem/Navigat
 import navclass from '../Navigation/NavigationItems/NavigationItem/NavigationItem.css';
 
 const logo = (props) =>(
-<div className = {classes.Logo} className = {navclass.NavigationItem}>
-    <NavigationItem link='/' /* active */ exact> <img style={{height:'100%'}} src={bookLogo} alt="myBook"/></NavigationItem>
-</div>   
+<div className = {navclass.NavigationItem}>
+       <NavigationItem link='/' /* active */ exact>
+       SCAN
+       </NavigationItem>
+</div>    
 );
 
 export default logo;

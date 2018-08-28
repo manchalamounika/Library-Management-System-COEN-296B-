@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import BookList from './BookList'
-import AddBook from './AddBook';
+import LibraryList from './LibraryList'
+import AddLibrary from './AddLibrary';
 import Aux from '../../hoc/Auxi';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles'; 
@@ -9,7 +9,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
-  
+
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
@@ -35,7 +35,7 @@ const styles = theme => ({
     },
 });
 
-class Book extends Component {
+class Library extends Component {
     state = {
         modal:false,
     }
@@ -60,11 +60,11 @@ class Book extends Component {
                             top : '5px',
                             left:'20px',
                             float: 'left',}}variant="headline" component="h1">
-                  Books
+                  Libraries
                 </Typography>
                 <Button variant="extendedFab" className={classes.button} onClick={this.addBookBtnHandler}>
-                <AddIcon className={classes.extendedIcon}/>Add Book</Button>
-                {this.state.modal ? (<AddBook modal={this.state.modal} closeBtnHandler={this.closeBtnHandler}/>) :(<BookList />)} 
+                <AddIcon className={classes.extendedIcon}/>Add Library</Button>
+                {this.state.modal ? (<AddLibrary modal={this.state.modal} closeBtnHandler={this.closeBtnHandler}/>) :(<LibraryList />)} 
               </Paper>
             </div>
           );
@@ -72,9 +72,8 @@ class Book extends Component {
         }   
 }
 
-Book.propTypes = {
+Library.propTypes = {
     classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(Book);
- 
+export default withStyles(styles)(Library);

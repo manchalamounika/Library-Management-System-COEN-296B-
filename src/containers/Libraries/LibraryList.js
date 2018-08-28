@@ -2,8 +2,8 @@ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import axios from 'axios';
-import EditBook from './EditBook';
-import './BookList.css';
+import EditLibrary from './EditLibrary';
+import './LibraryList.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -17,7 +17,7 @@ const styles = theme => ({
     },
   });
 
-class BookList extends Component{
+class LibraryList extends Component{
     constructor(){
         super();
         this.state={
@@ -25,9 +25,9 @@ class BookList extends Component{
             modal: false,
             datarow :{}
         }
-        this.makeData = this.makeData.bind(this);
+       /*  this.makeData = this.makeData.bind(this); */
     }
-    makeData = (state,instance) =>{        
+   /*  makeData = (state,instance) =>{        
         axios.get('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book',{
             mode: 'no-cors',
             method: 'GET',
@@ -36,7 +36,7 @@ class BookList extends Component{
                console.log(response);
                this.setState({data:response.data});
        })
-    }
+    } */
     editBookBtnHandler = (property,info) => {
         let rowInfo = info.find((element)=>element.BookBarcode == property);
         console.log(JSON.stringify(rowInfo)+"===HHHHH+++++++") 
@@ -57,17 +57,13 @@ class BookList extends Component{
         const Table = (<div style={{width:'90%',margin:'70px auto'}}><ReactTable 
         data={this.state.data}
         columns={[
-            {Header: 'Title',
+            {Header: 'Library Name',
             accessor: 'Title',
             className:'Title'},
-            {Header: 'Author',
+            {Header: 'Library Village',
             accessor: 'FirstName'},
-            {Header: 'Last Name',
-            accessor: 'LastName'},
-            {Header: 'Library ',
+            {Header: 'Library Country ',
             accessor: 'LibraryName'},
-            {Header: 'Barcode ',
-            accessor: 'BookBarcode'},
             {
                 Header: 'Options',
                 width: 200,
@@ -106,7 +102,7 @@ class BookList extends Component{
     );
     return(
         <div>
-            {this.state.modal ? (<EditBook modal={this.state.modal} 
+            {this.state.modal ? (<EditLibrary modal={this.state.modal} 
             closeBtnHandler={this.closeBtnHandler}
             rowId={this.state.datarow}/>) :Table}
         </div>
@@ -114,10 +110,10 @@ class BookList extends Component{
 }
 }
 
-BookList.propTypes = {
+LibraryList.propTypes = {
     classes: PropTypes.object.isRequired,
   };
-export default withStyles(styles)(BookList);
+export default withStyles(styles)(LibraryList);
 
 {/* <div className='admin-table-container'>
         <div className='admin-table'>

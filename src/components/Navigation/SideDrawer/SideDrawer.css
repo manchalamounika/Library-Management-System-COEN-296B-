@@ -6,8 +6,8 @@
     left :0;
     top :0;
     z-index :200;
-    background-color: rgb(37,40,57,0.8);
-    padding-top :25px ;
+    background-color: rgba(226, 226, 226);
+    padding-top :10px ;
     padding-bottom:32px;
     box-sizing : border-box;
     transition :transform 0.3s ease-out;
@@ -32,5 +32,6 @@
     width:28%;
     margin-bottom:20px;
     margin-left :20px;  
+    margin-top:10px;
 }
 

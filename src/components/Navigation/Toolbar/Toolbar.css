@@ -1,17 +1,18 @@
 .Toolbar{
+    color:#ccc;
     height : 55px;
     width : 100%;
     position :fixed;
     top:0;
     left:0;
-    background-color :rgba(37,40,57);
+    background-color :rgb(0,0,0);
     display : flex ; 
     justify-content : space-between;
     align-items :center;
     padding : 0 20px;
     box-sizing : border-box;
     z-index :90;
-    box-shadow : 0px 2px 3px rgb(59, 59, 59);
+    box-shadow : 0px 1px 3px rgb(59, 59, 59);
 }
 
 .Toolbar nav{
@@ -26,11 +27,6 @@
 @media (max-width:749.9px){
     .DesktopOnly{
       display :none;
-    }
-    .pushLogo{
-      position :absolute;
-      right :20px;
-      height:100%;
     }
 }
 

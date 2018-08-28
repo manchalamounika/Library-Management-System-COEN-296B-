@@ -41,9 +41,9 @@ import {Route, Switch} from 'react-router-dom';
 import Home from './containers/Home/Home';
 import Books from './containers/Book/Book';
 import Admin from './containers/Admin/Admin';
-import Libraries from './containers/Libraries/Libraries';
+import Library from './containers/Libraries/Library';
 import Readers from './containers/Readers/Reader';
-import Librarians from './containers/Librarians/Librarian';
+import Librarians from './containers/Librarians/Admin';
 
 class App extends Component {
   render() {
@@ -52,12 +52,12 @@ class App extends Component {
       <div>
         <Layout>
           <Switch>
-          <Route path ="/libraries" component={Libraries}/>
+          <Route path ="/libraries" component={Library}/>
           <Route path ="/" exact component= {Home}/>
           <Route exact path='/books' render={() => (<Books/>)} />
           <Route exact path='/admin' render={() => (<Admin/>)} />
           <Route exact path='/readers' render={() => (<Readers/>)} />
-          <Route exact path='/librarians' render={() => (<Librarians/>)} />
+          <Route exact path='/librarians' render={() => (<Admin/>)} />
           </Switch>
         </Layout>
       </div>

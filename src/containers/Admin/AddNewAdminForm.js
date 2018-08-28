@@ -21,7 +21,7 @@ const userPool = new CognitoUserPool({
 
 const styles = theme => ({
   root: {
-    padding: '30px',
+    padding: '20px',
     paddingTop: '20px',
   },
   margin: {
@@ -32,13 +32,12 @@ const styles = theme => ({
   },
   textField: {
     flexBasis: 200,
-    width: 500,
+    width: '300px',
   },
   button:{
     margin: theme.spacing.unit,
   }
 });
-
 
 class AddNewAdminForm extends Component {
 state = {
@@ -142,8 +141,6 @@ closeHandler=() =>{
     this.props.closeBtnHandler();
 }
 
-
-
   render() {
     const { classes } = this.props;
     return (      
@@ -243,18 +240,15 @@ closeHandler=() =>{
                             </IconButton>
                         </InputAdornment>,
                 }}/>     
-
-                 <Button
-            className={classes.button}
+                <Button
+                className={classes.button}
                 size="small"
                 variant="contained"                                
                 color="secondary"
                 type="submit"
-                >            
-                    Add 
-            </Button>   
+                >Save </Button>   
             {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
-        </ValidatorForm>
+          </ValidatorForm>
         </div>                        
     </div>             
     );

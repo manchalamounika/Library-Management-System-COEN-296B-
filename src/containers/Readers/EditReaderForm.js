@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import axios from 'axios';
 import classNames from 'classnames';
 
+
 const styles = theme => ({
   root: {
     padding: '20px',
@@ -34,7 +35,7 @@ const styles = theme => ({
 });
 
 
-class AddNewReaderForm extends Component {
+class EditReaderForm extends Component {
 state = {
     firstName: '',
     middleName: '',
@@ -46,19 +47,22 @@ state = {
     open: false,
 }
 
+
 handleChange = prop => event => {
     this.setState({ [prop]: event.target.value });
 }
+
+
 
 handleMouseDownPassword = event => {
     event.preventDefault();
 };
 
-handleAddReaderBtn =(event,state) =>{
+handleEditReaderBtn =(event,state) =>{
     event.preventDefault();
     let self = this;
     let user = self.state;
-    axios.post('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader/', user)
+    axios.put('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader/', user)
       .then(res => {
         console.log(res);
         console.log(res.data);
@@ -68,13 +72,17 @@ handleAddReaderBtn =(event,state) =>{
     this.props.closeBtnHandler();
 }
 
-handleSubmit=(e) =>{}
+handleSubmit=(e) =>{
+    
+    
+     
+  }
 
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
 
-render() {
+  render() {
     const { classes } = this.props;
     return (      
     <div>
@@ -82,7 +90,7 @@ render() {
             <AppBar position="static" color="default" >
                 <Toolbar variant="dense">
                 <Typography variant="title" color="inherit">
-                   Add Book
+                   Edit Reader
                 </Typography>
                 <div className="add_admin_close">
                 <a className="close" onClick={this.closeHandler}>
@@ -95,9 +103,8 @@ render() {
         <div className={classes.root}>
         <ValidatorForm
                 ref="form"
-                onSubmit={this.handleAddReaderBtn}>
-                
-            <TextValidator                  
+                onSubmit={this.handleEditReaderBtn}>   
+                <TextValidator                  
                 className={classNames(classes.margin, classes.textField)}
                 label="First Name"
                 id="margin-normal"                
@@ -106,7 +113,7 @@ render() {
                 validators={['required']}
                 errorMessages={['this field is required']}
                 />
-            <TextValidator
+                <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Middle Name"
                 id="margin-normal"
@@ -136,23 +143,23 @@ render() {
                 onChange={this.handleChange('barCode')}
                 validators={['required']}
                 errorMessages={['this field is required']} />
-                <Button
-                className={classes.button}
+                 <Button
+                 className={classes.button}
                 size="small"
                 variant="contained"                                
                 color="secondary"
                 type="submit"
-                > Save </Button>   
+                >Save</Button>   
             {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
-          </ValidatorForm>
+        </ValidatorForm>
         </div>                        
-     </div>             
+    </div>             
     );
   }
 }
 
-AddNewReaderForm.propTypes = {
+EditReaderForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddNewReaderForm);
+export default withStyles(styles)(EditReaderForm);
