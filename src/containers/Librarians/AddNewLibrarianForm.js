@@ -15,8 +15,8 @@ import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js"
 import appConfig from "../../config.js";
 
 const userPool = new CognitoUserPool({
-    UserPoolId: appConfig.LibPoolId,
-    ClientId: appConfig.LibClientId,
+    UserPoolId: 'us-east-2_zFJU1vK2t',
+    ClientId: '4tco3thknv6ei9avcu32nhvhum',
   });
 
 const styles = theme => ({
@@ -48,6 +48,8 @@ state = {
     username: '',
     password: '',
     confirmpassword: '',
+    barcode:'',
+    library:'',
     showPassword: false,
     showConfirmPassword: false,
     showFormValidation:false,
@@ -94,6 +96,8 @@ handleSubmit=(e) =>{
     const family_name = this.state.lastname.trim();
     const middle_name = this.state.middlename.trim();
     const username = this.state.username.trim();
+    const library = this.state.library.trim();
+    const barcode = this.state.barcode.trim();
     
     const attributeList = [
       new CognitoUserAttribute({
@@ -111,6 +115,14 @@ handleSubmit=(e) =>{
       new CognitoUserAttribute({
         Name: 'email',
         Value: email,
+      }),
+      new CognitoUserAttribute({
+        Name: 'custom:Library',
+        Value: library,
+      }),
+      new CognitoUserAttribute({
+        Name: 'preferred_username',
+        Value: barcode,
       })
     ];
     
@@ -238,7 +250,23 @@ closeHandler=() =>{
                                 {this.state.showConfirmPassword ? <VisibilityOff /> : <Visibility />}
                             </IconButton>
                         </InputAdornment>,
-                }}/>     
+                }}/>
+                <TextValidator
+                className={classNames(classes.margin, classes.textField)}
+                label="Library"
+                id="margin-normal"
+                placeholder="Library" type="text" name="library" value={this.state.library}
+                onChange={this.handleChange('library')}
+                validators={['required']}
+                errorMessages={['this field is required']} />     
+                <TextValidator
+                className={classNames(classes.margin, classes.textField)}
+                label="Barcode"
+                id="margin-normal"
+                placeholder="Barcode" type="text" name="barcode" value={this.state.barcode}
+                onChange={this.handleChange('barcode')}
+                validators={['required']}
+                errorMessages={['this field is required']} />   
                 <Button
                 className={classes.button}
                 size="small"
