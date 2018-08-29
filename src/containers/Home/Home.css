@@ -1,9 +1,8 @@
-.homecontainer{
+ .homecontainer{
     text-align: center;
     margin-top: 100px;
   }
-
-.homegrid{
+ .homegrid{
     list-style-type: none;
     padding: 0;
     margin: 0;
@@ -13,7 +12,7 @@
     flex-wrap: wrap;
   }
   
-.homegrid li {
+:global .homegrid li {
     padding: 15px 15px;
     /* text-align: left; */
   }

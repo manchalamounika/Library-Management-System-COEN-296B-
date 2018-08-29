@@ -15,13 +15,13 @@ import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js"
 import appConfig from "../../config.js";
 
 const userPool = new CognitoUserPool({
-    UserPoolId: appConfig.UserPoolId,
-    ClientId: appConfig.ClientId,
+    UserPoolId: appConfig.LibPoolId,
+    ClientId: appConfig.LibClientId,
   });
 
 const styles = theme => ({
   root: {
-    padding: '30px',
+    padding: '20px',
     paddingTop: '20px',
   },
   margin: {
@@ -32,15 +32,14 @@ const styles = theme => ({
   },
   textField: {
     flexBasis: 200,
-    width: 500,
+    width: '300px',
   },
   button:{
     margin: theme.spacing.unit,
   }
 });
 
-
-class AddNewAdminForm extends Component {
+class AddNewLibrarianForm extends Component {
 state = {
     firstname: '',
     middlename: '',
@@ -127,7 +126,6 @@ handleSubmit=(e) =>{
         this.setState({formErrorMessage:'',showFormValidation:false, open: true},
             () => {
                 !this.state.showFormValidation && this.props.closeBtnHandler()
-                
             }
         )
         this.props.getEmail(this.state.email);
@@ -141,8 +139,6 @@ handleSubmit=(e) =>{
 closeHandler=() =>{
     this.props.closeBtnHandler();
 }
-
-
 
   render() {
     const { classes } = this.props;
@@ -243,27 +239,24 @@ closeHandler=() =>{
                             </IconButton>
                         </InputAdornment>,
                 }}/>     
-
-                 <Button
-            className={classes.button}
+                <Button
+                className={classes.button}
                 size="small"
                 variant="contained"                                
                 color="secondary"
                 type="submit"
-                >            
-                    Add 
-            </Button>   
+                >Save </Button>   
             {this.state.showFormValidation && <p style={{color:'red'}}>{this.state.formErrorMessage} </p>}                       
-        </ValidatorForm>
+          </ValidatorForm>
         </div>                        
     </div>             
     );
   }
 }
 
-AddNewAdminForm.propTypes = {
+AddNewLibrarianForm.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(AddNewAdminForm);
+export default withStyles(styles)(AddNewLibrarianForm);
 

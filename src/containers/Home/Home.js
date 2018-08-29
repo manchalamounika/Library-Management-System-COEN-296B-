@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
-import HomeCard from './HomeCard';
-import classes from './Home.css';
+import './Home.css';
 import Aux from '../../hoc/Auxi';
+import HomeCardWrapped from './HomeCard';
 
 class Home extends Component {
   state ={
@@ -14,15 +14,14 @@ class Home extends Component {
   render() {
     return (
       <Aux>
-      <div className={classes.homecontainer}>
-        <ol className={classes.homegrid}>
+      <div className='home-container'>
+      <ol className='home-grid'>
           {this.state.libraries.map((library) => (
-            <li key={library}>
-              <HomeCard library={library}/>
+            <li key={library}>            
+              <HomeCardWrapped library={library}/>
             </li>
           ))}
-        </ol>       
-        
+        </ol>      
       </div>    
       </Aux>  
     )

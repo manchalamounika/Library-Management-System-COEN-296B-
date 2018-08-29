@@ -4,7 +4,7 @@ import IconButton from '@material-ui/core/IconButton';
 import CloseIcon from '@material-ui/icons/Close';
 import Button from '@material-ui/core/Button';
 
-class SnackBarForAdminVerification extends Component{
+class SnackBarForLibrarianVerification extends Component{
     render(){
         const {handleClose, open, email} = this.props;
         return(
@@ -34,4 +34,4 @@ class SnackBarForAdminVerification extends Component{
         )
     }
 }
-export default SnackBarForAdminVerification;
+export default SnackBarForLibrarianVerification;

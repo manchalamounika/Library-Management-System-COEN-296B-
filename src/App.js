@@ -43,8 +43,8 @@ import Books from './containers/Book/Book';
 import Admin from './containers/Admin/Admin';
 import Library from './containers/Libraries/Library';
 import Readers from './containers/Readers/Reader';
-import Librarians from './containers/Librarians/Admin';
-
+import Librarian from './containers/Librarians/Librarian';
+import FullWidthTabs from './containers/Graph/graph';
 class App extends Component {
   render() {
     return (
@@ -57,7 +57,8 @@ class App extends Component {
           <Route exact path='/books' render={() => (<Books/>)} />
           <Route exact path='/admin' render={() => (<Admin/>)} />
           <Route exact path='/readers' render={() => (<Readers/>)} />
-          <Route exact path='/librarians' render={() => (<Admin/>)} />
+          <Route exact path='/librarians' render={() => (<Librarian/>)} />
+          <Route exact path='/statistics' render={() => (<FullWidthTabs/>)} />
           </Switch>
         </Layout>
       </div>

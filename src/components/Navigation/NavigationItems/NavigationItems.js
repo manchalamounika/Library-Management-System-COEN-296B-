@@ -30,7 +30,7 @@ class NavigationItems extends Component{
             <NavigationItem link='/librarians' >Librarians</NavigationItem>
             <NavigationItem link='/readers' >Readers</NavigationItem>
             <NavigationItem link='/admin' >Administrators</NavigationItem>
-            <NavigationItem link='/dsggsf' >Statistics</NavigationItem>
+            <NavigationItem link='/statistics' >Statistics</NavigationItem>
             </ul>
         );
     }

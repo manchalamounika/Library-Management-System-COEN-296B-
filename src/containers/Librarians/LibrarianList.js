@@ -1,12 +1,10 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
-import classes from "react-table/react-table.css";
+import "react-table/react-table.css";
 import * as AWS from 'aws-sdk';
 import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js";
 
-
-
-class AdminList extends Component{
+class LibrarianList extends Component{
     makeData = () =>{        
         return (
             [
@@ -29,7 +27,8 @@ class AdminList extends Component{
         )
     }
     state={
-        adminList: [],
+        LibrarianList: [],
+        modal: false,
     }
 
     componentDidMount(){
@@ -121,7 +120,7 @@ class AdminList extends Component{
 		],
 		Limit: 60,
     };
-    let adminList =[];
+    let LibrarianList =[];
 	cognitoidentityserviceprovider.listUsers(params, function(err, data) {
 		if (err){console.log(err, err.stack)}  // an error occurred
 		else 
@@ -132,31 +131,29 @@ class AdminList extends Component{
                 var family_name = data.Users[user].Attributes.length > 1 ?data.Users[user].Attributes[1].Value:'';
                 var email=data.Users[user].Attributes.length > 2 ?data.Users[user].Attributes[2].Value:'';
                 
-                var adminInfo={
+                var LibrarianInfo={
                     name: name,
                     family_name: family_name,
                     email: email,                                    
                 }   
-                adminList.push(adminInfo); 
+                LibrarianList.push(LibrarianInfo); 
 
                 // console.log("name ===="+name);
                 // console.log("user=="+JSON.stringify(data.Users[user].Attributes[1].Value));        
                 // console.log("family=="+JSON.stringify(data.Users[user].Attributes[2].Value));        
             }                      
-            this.setState({adminList:adminList})             
+            this.setState({LibrarianList:LibrarianList})             
 		}
     }.bind(this));       
 }
     
     render(){
-        const data = this.state.adminList;
+        const data = this.state.LibrarianList;
 
         return(
-            <div className='admin-table-container'>
-            <div className='admin-table'>
+            <div style={{width:'90%',margin:'70px auto'}}>
             {data && 
             <ReactTable 
-            className={classes}
             data={data}
             columns={[
                 {Header: 'First Name',
@@ -172,10 +169,9 @@ class AdminList extends Component{
             defaultPageSize={10}
             minRows={5}/>}               
             </div>
-            </div>
         )
          
     }
 }
 
-export default AdminList;
+export default LibrarianList;
