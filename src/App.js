@@ -48,10 +48,9 @@ render() {
     return (
       <BrowserRouter>
       <div>
-        <Layout>
           <Switch>
+          <Layout>
           <Route exact path='/login' render={() => (<Login/>)} />
-
           <Route exact path='/change_password' render={() => (<Changepassword />)} />
 
           <Route exact path='/' render={(props) => 
@@ -89,8 +88,9 @@ render() {
           <Route exact path='/signout' render={(props) => 
             (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Signout/> : 
             <Login {...props} loginHandle={this.loginHandle}/>)}/>
-          </Switch>
+        
         </Layout>
+        </Switch>
        </div>
       </BrowserRouter>
     );

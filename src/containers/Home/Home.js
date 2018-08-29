@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './Home.css';
+//import './Home.css';
 import Aux from '../../hoc/Auxi';
 import HomeCardWrapped from './HomeCard';
 
@@ -15,9 +15,17 @@ class Home extends Component {
     return (
       <Aux>
       <div className='home-container'>
-      <ol className='home-grid'>
+      <ol className='home-grid'style={{
+      'list-style-type': 'none',
+      padding: '0',
+      margin: '0',
+      'align-content': 'center',
+      'display': 'flex',
+      'justify-content': 'center',
+      'flex-wrap': 'wrap',
+      }}>
           {this.state.libraries.map((library) => (
-            <li key={library}>            
+            <li style={{padding: '20px 20px'}}key={library}>            
               <HomeCardWrapped library={library}/>
             </li>
           ))}

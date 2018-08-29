@@ -3,11 +3,11 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import registerServiceWorker from './registerServiceWorker';
-import { Router } from 'react-router-dom';
+import { Router,Route } from 'react-router-dom';
 import Amplify from "aws-amplify";
 import config from "./config";
 import history from './history';
-
+import Login from './containers/LoginDetails/login';
 
 Amplify.configure({
     Auth: {
@@ -20,7 +20,9 @@ Amplify.configure({
   });
 ReactDOM.render(
     <Router history={history}>
-        <App />
+        <div>
+        <App/>
+        </div>
     </Router>
 , document.getElementById('root'));
 registerServiceWorker();

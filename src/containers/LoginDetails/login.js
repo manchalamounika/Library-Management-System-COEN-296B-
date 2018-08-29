@@ -54,8 +54,6 @@ class Login extends Component {
     event.preventDefault();
     try {
       const data = await Auth.signIn(this.state.username, this.state.password);
-      alert("Logged in ");
-      console.log(data);
       Auth.currentCredentials(credentials => {
         const tokens = Auth.essentialCredentials(credentials);
         console.log(tokens);
@@ -73,7 +71,6 @@ class Login extends Component {
   render() {
     const { classes } = this.props;
     return (
-    <Aux>
     <div style ={{display:'block'}}>
     <div style ={{display :'flex',
                     'min-height':'100vh',
@@ -113,7 +110,6 @@ class Login extends Component {
     </div>
     </div>
     </div>                 
-    </Aux>
     );
   }
 }

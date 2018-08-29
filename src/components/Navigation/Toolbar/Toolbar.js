@@ -14,7 +14,7 @@ const toolbar = (props) => {
         {/* //use toolbar in the layout component where will add the clicked method */}
         <div className={classes.DesktopOnly}>
         <Logo/>
-        </div>
+        </div> 
         <nav className={classes.DesktopOnly}>
         <NavigationItems/>
         </nav>

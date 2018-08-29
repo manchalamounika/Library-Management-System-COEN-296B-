@@ -17,17 +17,17 @@ const styles = theme => ({
         position: 'absolute',
         height: '250px',
         overflow: 'hidden',
-        width: '250px',
+        width: theme.spacing.unit * 50,
         backgroundColor: theme.palette.background.paper,
         boxShadow: theme.shadows[5],
         padding: theme.spacing.unit * 4,
-        textAlign:'center',              
+        textAlign:'center', 
+                
         
     },
     card: {
-        // position: 'relative',
         width: '150px',      
-        height: '150px',      
+        height: '150px',       
         background:'rgba(255,255,255,0.6)',        
       },
     button:{
@@ -64,7 +64,7 @@ class HomeCard extends Component {
                         <br />
                         <Typography component="p" color="textSecondary">
                             Librarians: abc, xyz.
-                                    </Typography>
+                        </Typography>
                     </CardContent>
                 </Card>                
                 <Modal

@@ -32,7 +32,7 @@ class NavigationItems extends Component{
             <NavigationItem link='/admin' >Administrators</NavigationItem>
             <NavigationItem link='/statistics' >Statistics</NavigationItem>
             <NavigationItem link='/signout' >Signout</NavigationItem>
-            <NavigationItem link='/profile' >Profile</NavigationItem>
+            <NavigationItem link='/profile' >Profile</NavigationItem> 
             {/* <a className="nav-link" href="/signout">Signout</a>
             <a className="nav-link" href="/profile">Profile</a> */}
             </ul>
