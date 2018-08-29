@@ -7,6 +7,11 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Paper from '@material-ui/core/Paper';
+import DateSelector from './DateSelector';
+import Dropdown from 'react-dropdown'
+import 'react-dropdown/style.css'
+import Checkouts from './checkouts'
+
 
 function TabContainer({ children, dir }) {
   return (
@@ -27,7 +32,8 @@ const styles = theme => ({
     position:'relative',
     paddingTop: theme.spacing.unit * 3,
     paddingBottom: theme.spacing.unit * 3,
-    width:'70%',
+    width:'80%',
+    height:'1000px',
     margin: '10px auto',
     'border-radius':'10px',
     background:'rgba(255,255,255,0.7)'
@@ -61,17 +67,30 @@ class FullWidthTabs extends React.Component {
             textColor="primary"
             fullWidth
           >
-            <Tab label="Item One" />
-            <Tab label="Item Two" />
-            <Tab label="Item Three" />
+            <Tab label="CHECKOUTS" />
+            <Tab label="POPULAR BOOKS" />
+            <Tab label="ACTIVE READERS" />
           </Tabs>
         </AppBar>
         <SwipeableViews
+        style={{height:'100%',overflow:'-webkit-paged-y'}}
           axis={theme.direction === 'rtl' ? 'x-reverse' : 'x'}
           index={this.state.value}
           onChangeIndex={this.handleChangeIndex}
         >
-          <TabContainer dir={theme.direction}>Item One</TabContainer>
+          <TabContainer dir={theme.direction}>
+          <div>
+          SELECT DATE
+          <DateSelector/>
+          </div>
+          <br/>
+          <div style ={{margin:'10px auto',paddingLeft:'250px'}}>
+        <Checkouts />
+        </div>
+      
+          </TabContainer>
+
+
           <TabContainer dir={theme.direction}>Item Two</TabContainer>
           <TabContainer dir={theme.direction}>Item Three</TabContainer>
         </SwipeableViews>

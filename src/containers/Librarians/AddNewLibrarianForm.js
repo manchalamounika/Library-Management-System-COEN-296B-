@@ -15,8 +15,8 @@ import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js"
 import appConfig from "../../config.js";
 
 const userPool = new CognitoUserPool({
-    UserPoolId: 'us-east-2_zFJU1vK2t',
-    ClientId: '4tco3thknv6ei9avcu32nhvhum',
+    UserPoolId: appConfig.LibPoolId,
+    ClientId: appConfig.LibClientId,
   });
 
 const styles = theme => ({

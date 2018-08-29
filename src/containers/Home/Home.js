@@ -27,6 +27,7 @@ class Home extends Component {
           {this.state.libraries.map((library) => (
             <li style={{padding: '20px 20px'}}key={library}>            
               <HomeCardWrapped library={library}/>
+              {console.log("session token=========="+JSON.stringify(sessionStorage.getItem("cognitoUser")))}
             </li>
           ))}
         </ol>      

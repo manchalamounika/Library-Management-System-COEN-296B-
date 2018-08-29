@@ -57,7 +57,7 @@ class Login extends Component {
       Auth.currentCredentials(credentials => {
         const tokens = Auth.essentialCredentials(credentials);
         console.log(tokens);
-        sessionStorage.setItem("cognitoUser", tokens);
+        sessionStorage.setItem("cognitoUser", JSON.stringify(tokens));       
         
       });
       console.log(this.props);

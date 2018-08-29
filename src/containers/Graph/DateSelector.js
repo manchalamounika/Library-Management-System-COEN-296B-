@@ -39,15 +39,19 @@ export default class DateSelector extends Component {
     <DatePicker 
         selected={this.state.startDate}
         onChange={this.handleChange}
-       />     
-  <Dropdown 
+       />   
+       <br/>
+       <span>
+         SELECT LIBRARY
+       <Dropdown 
+       style={{width: '60%',padding: '100px'}}
 options={options} 
 onChange={this._onSelect} 
 value={defaultOption} 
 placeholder="Select an option" />
-
-
-      <DateSelector  /> 
+         
+       </span>
+ 
 
 </div>
     );
