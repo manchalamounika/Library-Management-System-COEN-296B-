@@ -1,39 +1,3 @@
-/* import React, { Component } from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import Navigation from './containers/Navigation'
-import Home from './Home'
-import Admin from './containers/Admin/Admin'
-import graph from './containers/Graph/graph'
-import Book from './containers/Book/Book';
-import Reader from './containers/Readers/Reader'
-
-class App extends Component {
-  render() {
-//    var bg=require('/src/images/Backdrop.png')
-    return (
-     <Router>
-       
-        <div>
-          <Navigation />
-          
-          <div className="container" >          
-            <Switch>
-                  <Route exact path='/' render={() => (<Home/>)}/>
-                  <Route exact path = '/Statistics' component={graph} />
-                  <Route exact path='/Readers/index' render={() => (<Reader/>)} />
-                  <Route exact path='/Books/index' render={() => (<Book/>)} />
-                  <Route exact path='/addnewadmin' render={() => (<Admin/>)}/>                  
-            </Switch>
-          </div>
-        </div>
-      </Router>
-  
-    );
-  }
-}
-
-export default App; */
-
 import React, { Component } from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
@@ -45,23 +9,89 @@ import Library from './containers/Libraries/Library';
 import Readers from './containers/Readers/Reader';
 import Librarian from './containers/Librarians/Librarian';
 import FullWidthTabs from './containers/Graph/graph';
+import Login from './containers/LoginDetails/login';
+import Changepassword from './containers/LoginDetails/login';
+import Signout from './containers/Authentication/Signout';
+import Profile from './containers/Authentication/Profile';
+
+let loggedIn = false;
+
 class App extends Component {
-  render() {
+
+constructor(props) {
+  super(props);
+  console.log("Constructor loggedIn - "+loggedIn);
+  this.loginHandle = this.loginHandle.bind(this);
+}
+
+componentWillMount = () => {
+  console.log("Component will mount logged in - "+loggedIn);
+}
+
+componentDidMount = () => {
+  console.log("Component did mount logged in - "+loggedIn);
+}
+
+state = {
+  alwaysTrue: true
+}
+
+loginHandle = () => {
+  localStorage.setItem("auth",true);
+  loggedIn = true;
+  this.setState({
+    alwaysTrue: true
+  });
+}
+
+render() {
     return (
       <BrowserRouter>
       <div>
         <Layout>
           <Switch>
-          <Route path ="/libraries" component={Library}/>
-          <Route path ="/" exact component= {Home}/>
-          <Route exact path='/books' render={() => (<Books/>)} />
-          <Route exact path='/admin' render={() => (<Admin/>)} />
-          <Route exact path='/readers' render={() => (<Readers/>)} />
-          <Route exact path='/librarians' render={() => (<Librarian/>)} />
-          <Route exact path='/statistics' render={() => (<FullWidthTabs/>)} />
+          <Route exact path='/login' render={() => (<Login/>)} />
+
+          <Route exact path='/change_password' render={() => (<Changepassword />)} />
+
+          <Route exact path='/' render={(props) => 
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Home/> :
+           <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route exact path='/books'  render={(props) => 
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Books/> :
+           <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route path ="/libraries" render={(props) => 
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Library/> :
+           <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route exact path='/readers' render={(props) => 
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Readers/> :
+           <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route exact path='/librarians' render={(props) => 
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Librarian/> :
+           <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route exact path='/admin' render={(props) => 
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Admin/> :
+           <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route exact path='/statistics' render={(props) => 
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <FullWidthTabs/> :
+           <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route exact path='/profile' render={(props) => 
+            (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Profile/> : 
+            <Login {...props} loginHandle={this.loginHandle}/>)}/>
+
+          <Route exact path='/signout' render={(props) => 
+            (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Signout/> : 
+            <Login {...props} loginHandle={this.loginHandle}/>)}/>
           </Switch>
         </Layout>
-      </div>
+       </div>
       </BrowserRouter>
     );
   }

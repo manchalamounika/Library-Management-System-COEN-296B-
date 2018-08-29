@@ -6,11 +6,16 @@ import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
 
 class Layout extends Component {
     state ={
-        showSideDrawer : false
+        showSideDrawer : false,
+        showToolBar : false
     }
 
     sideDrawerClosedHandler = () => {
         this.setState({showSideDrawer : false});
+    }
+
+    toolBarClosedHandler = () => {
+        this.setState({showToolBar : false});
     }
 
     sideDrawerToggleHandler = () => {
@@ -22,11 +27,12 @@ class Layout extends Component {
     render(){
         return(  
         <Aux>
+            <div >
             <Toolbar drawerToggleClicked = {this.sideDrawerToggleHandler}/>
             <SideDrawer 
             open = {this.state.showSideDrawer}
             closed={this.sideDrawerClosedHandler} />
-            {/* <Home/> */}
+            </div>
             <main className = {classes.Content}>
             {this.props.children}
             </main>   
@@ -37,3 +43,5 @@ class Layout extends Component {
 //the main purpose of aux is to have a wrapping root element
 
 export default Layout;
+
+{/*  */}

@@ -7,8 +7,9 @@ import DrawerToggle from '../SideDrawer/DrawerToggle/DrawerToggle';
 
 
 
-const toolbar = (props) => (
-    <header className = {classes.Toolbar}>
+const toolbar = (props) => {
+    return(
+    <header className = {classes.Toolbar} >
         <DrawerToggle clicked ={props.drawerToggleClicked} />
         {/* //use toolbar in the layout component where will add the clicked method */}
         <div className={classes.DesktopOnly}>
@@ -22,5 +23,7 @@ const toolbar = (props) => (
         </div>
     </header>
 );
+
+}
 
 export default toolbar;
