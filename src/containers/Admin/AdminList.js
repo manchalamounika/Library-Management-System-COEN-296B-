@@ -98,7 +98,7 @@ class AdminList extends Component{
 	var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
 
 	var params = {
-		UserPoolId: 'us-east-2_SF2DCPO5Y',
+		UserPoolId: appConfig.UserPoolId,
 		AttributesToGet: [
         'email',   
         'name',     
