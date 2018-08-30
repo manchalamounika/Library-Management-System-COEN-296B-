@@ -11,7 +11,7 @@ import DateSelector from './DateSelector';
 import Dropdown from 'react-dropdown'
 import 'react-dropdown/style.css'
 import Checkouts from './checkouts'
-
+import LibraryList from '../../containers/Libraries/LibraryList'
 
 function TabContainer({ children, dir }) {
   return (
@@ -91,8 +91,8 @@ class FullWidthTabs extends React.Component {
           </TabContainer>
 
 
-          <TabContainer dir={theme.direction}>Item Two</TabContainer>
-          <TabContainer dir={theme.direction}>Item Three</TabContainer>
+          <TabContainer dir={theme.direction}><LibraryList/></TabContainer>
+          <TabContainer dir={theme.direction}><LibraryList/></TabContainer>
         </SwipeableViews>
       </Paper>
       </div>

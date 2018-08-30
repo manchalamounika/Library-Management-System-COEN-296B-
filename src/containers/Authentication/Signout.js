@@ -8,14 +8,15 @@ export default class Signout extends React.Component {
         super(props);
         localStorage.removeItem("auth");
         sessionStorage.removeItem("cognitoUser");
-        history.push('/');
+       /*  history.push('/'); */
         
     }
 
     render() {
         return (
             <div className="signout">
-                {history.push('/')}
+                <h3>Signout successful</h3>
+                <Link style={{color: 'white'}} to= "/">Click to Sign In</Link>
             </div>
         )
     }
