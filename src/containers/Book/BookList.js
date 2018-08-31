@@ -7,6 +7,8 @@ import './BookList.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const styles = theme => ({
     button: {
@@ -38,6 +40,7 @@ class BookList extends Component{
        })
     }
     editBookBtnHandler = (property,info) => {
+        console.log(JSON.stringify(info)+"-------"+property);
         let rowInfo = info.find((element)=>element.BookBarcode == property);
         console.log(JSON.stringify(rowInfo)+"===HHHHH+++++++") 
         this.setState({
@@ -52,6 +55,35 @@ class BookList extends Component{
         })
     }
 
+    deleteBookHandler = (property,info) => {
+        confirmAlert({
+              title: 'Book Delete',
+              message: 'Are you sure to delete?',
+              buttons: [
+                {
+                  label: 'Confirm',
+                  onClick: () => this.bookDelete(property),
+                },
+                {
+                  label: 'Cancel',
+                  onClick: () => this.closeBtnHandler(),
+                }
+              ]
+            })
+    }
+
+    bookDelete=(property)=>
+    {
+        axios.delete('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book/'+property,{
+        mode: 'no-cors',
+                    method: 'DELETE',}).
+        then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                  }).catch(e=>{
+                      console.log(e);
+                  })
+    }
     render(){
         const { classes } = this.props;
         const Table = (<div style={{width:'90%',margin:'70px auto'}}><ReactTable 
@@ -70,6 +102,7 @@ class BookList extends Component{
             accessor: 'BookBarcode'},
             {
                 Header: 'Options',
+                accessor: 'BookBarcode',
                 width: 200,
                 style: {
                   cursor: 'pointer',
@@ -79,22 +112,9 @@ class BookList extends Component{
                 },
                  Cell: props => <div><Button onClick={()=>this.editBookBtnHandler(props.value,this.state.data)} 
                  color="default" className={classes.button}>Edit</Button>
-                 <Button color="default" className={classes.button}>Delete</Button></div>
-            },
-            /* {   
-                Header: 'DELETE',
-                expander:true,
-                width: 100,
-                Expander: ({ isExpanded, ...rest}) =>
-                <Button color="primary" className={classes.button}>Delete</Button>, 
-                style: {
-                    cursor: "pointer",
-                    fontSize: 15,
-                    padding: "10", 
-                    textAlign: "center",
-                    userSelect: "none"
-                  }, 
-            } */
+                 <Button onClick={()=>this.deleteBookHandler(props.value,this.state.data)} color="default"
+                 className={classes.button}>Delete</Button></div>
+            }
         ]}   
         className="-striped -highlight"
         showPagination={true}
