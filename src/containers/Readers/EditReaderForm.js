@@ -12,6 +12,7 @@ import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
 import axios from 'axios';
 import classNames from 'classnames';
+import { JS } from 'aws-amplify';
 
 
 const styles = theme => ({
@@ -36,23 +37,28 @@ const styles = theme => ({
 
 
 class EditReaderForm extends Component {
-state = {
-    firstName: '',
-    middleName: '',
-    lastName: '',
-    libraryName: '',
-    barCode:'',
-    showFormValidation:false,
-    formErrorMessage:'',
-    open: false,
-}
-
+  constructor(props){
+    super(props);
+    console.log(JSON.stringify(this.props.rowId));
+    this.state={
+      data: this.props.rowId,
+    }
+    this.state.showFormValidation=false;
+      this.state.formErrorMessage='';
+      this.state.open=false;
+      this.state.updatedObj = {
+         firstName: this.props.rowId['FirstName'],
+         middleName: this.props.rowId['MiddleName'],
+         lastName: this.props.rowId['LastName'],
+         libraryName: this.props.rowId['LibraryName'],
+         barCode:this.props.rowId['Barcode']
+      }
+  }
 
 handleChange = prop => event => {
-    this.setState({ [prop]: event.target.value });
+  console.log("updated");
+  this.state.updatedObj[prop] = event.target.value;
 }
-
-
 
 handleMouseDownPassword = event => {
     event.preventDefault();
@@ -61,7 +67,8 @@ handleMouseDownPassword = event => {
 handleEditReaderBtn =(event,state) =>{
     event.preventDefault();
     let self = this;
-    let user = self.state;
+    let user = self.state.updatedObj;
+    console.log("updated--"+JSON.stringify(user));
     axios.put('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader/', user)
       .then(res => {
         console.log(res);
@@ -108,41 +115,30 @@ closeHandler=() =>{
                 className={classNames(classes.margin, classes.textField)}
                 label="First Name"
                 id="margin-normal"                
-                placeholder="First Name" type="text" name="firstName" value={this.state.firstName}
+                placeholder="First Name" type="text" name="firstName" defaultValue={this.state.updatedObj.firstName}
                 onChange={this.handleChange('firstName')} 
-                validators={['required']}
-                errorMessages={['this field is required']}
+                
                 />
                 <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Middle Name"
                 id="margin-normal"
-                placeholder="Middle Name" type="text" name="middleName" value={this.state.middleName}                
+                placeholder="Middle Name" type="text" name="middleName" defaultValue={this.state.updatedObj.middleName}                
                 onChange={this.handleChange('middleName')} />
             <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Last Name"
                 id="margin-normal"
-                placeholder="Last Name" type="text" name="lastName" value={this.state.lastName}
+                placeholder="Last Name" type="text" name="lastName" defaultValue={this.state.updatedObj.lastName}
                 onChange={this.handleChange('lastName')}
-                validators={['required']}
-                errorMessages={['this field is required']} />
+                 />
                 <TextValidator
                 className={classNames(classes.margin, classes.textField)}
                 label="Library"
                 id="margin-normal"
-                placeholder="Choose from Library" type="text" name="libraryName" value={this.state.libraryName}
+                placeholder="Choose from Library" type="text" name="libraryName" defaultValue={this.state.updatedObj.libraryName}
                 onChange={this.handleChange('libraryName')}
-                validators={['required']}
-                errorMessages={['this field is required']} />
-                <TextValidator
-                className={classNames(classes.margin, classes.textField)}
-                label="Barcode"
-                id="margin-normal"
-                placeholder="Barcode" type="text" name="barCode" value={this.state.barCode}
-                onChange={this.handleChange('barCode')}
-                validators={['required']}
-                errorMessages={['this field is required']} />
+                />
                  <Button
                  className={classes.button}
                 size="small"
@@ -159,7 +155,7 @@ closeHandler=() =>{
 }
 
 EditReaderForm.propTypes = {
-  classes: PropTypes.object.isRequired,
+ // classes: PropTypes.object.isRequired,
 };
 
 export default withStyles(styles)(EditReaderForm);
