@@ -24,4 +24,4 @@ const EditBook = (props) => {
     )
 
 }
-export default EditBook; 
+export default EditBook;

@@ -7,6 +7,8 @@ import './ReaderList.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const styles = theme => ({
     button: {
@@ -42,7 +44,7 @@ class ReaderList extends Component{
     }
     
     editReaderBtnHandler = (property,info) => {
-        let rowInfo = info.find((element)=>element.BookBarcode == property);
+        let rowInfo = info.find((element)=>element.BarCode == property);
         console.log(JSON.stringify(rowInfo)+"===HHHHH+++++++") 
         this.setState({
             modal: true,
@@ -56,7 +58,34 @@ class ReaderList extends Component{
             modal:false,
         })
     }
-
+    deleteReaderHandler = (property,info) => {
+        confirmAlert({
+              title: 'Reader Delete',
+              message: 'Are you sure to delete?',
+              buttons: [
+                {
+                  label: 'Confirm',
+                  onClick: () => this.readDelete(property),
+                },
+                {
+                  label: 'Cancel',
+                  onClick: () => this.closeBtnHandler(),
+                }
+              ]
+            })
+    }
+     readDelete=(property)=>
+    {
+        axios.delete('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/reader/'+property,{
+        mode: 'no-cors',
+                    method: 'DELETE',}).
+        then(res => {
+                    console.log(res);
+                    console.log(res.data);
+                  }).catch(e=>{
+                      console.log(e);
+                  })
+    }
 
     render(){
         const { classes } = this.props;
@@ -76,6 +105,7 @@ class ReaderList extends Component{
                     accessor: 'Checkouts'},
                     {
                         Header: 'Options',
+                        accessor: 'BarCode',
                         width: 200,
                         style: {
                           cursor: 'pointer',
@@ -85,7 +115,8 @@ class ReaderList extends Component{
                         },
                          Cell: props => <div><Button onClick={()=>this.editReaderBtnHandler(props.value,this.state.data)} 
                          color="default" className={classes.button}>Edit</Button>
-                         <Button color="default" className={classes.button}>Delete</Button></div>
+                         <Button color="default"  onClick={()=>this.deleteReaderHandler(props.value,this.state.data)} 
+                         className={classes.button}>Delete</Button></div>
                     },
                 ]}
                 className="-striped -highlight"
