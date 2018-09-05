@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, Redirect } from 'react-router-dom';
-import LoginHeader from './login_header';
+//import LoginHeader from './login_header';
 import { Auth } from "aws-amplify";
 import history from '../../history';
 import './login.css';
@@ -26,20 +26,36 @@ export default class Changepassword extends React.Component {
     render() {
         return(
             <div>
-                <LoginHeader />
-                <div className="wrapper">
-                        <div className="main">
-                            <div className="container">
-                                <div className="loginDetails">
-                                    <h1>SCAN Reset password:</h1>
+                {/* <LoginHeader /> */}
+                <div style ={{display:'block'}}>
+                    <div style ={{display :'flex',
+                                    'min-height':'100vh',
+                                    'align-items':'center',
+                                    'flex-direction':'column',
+                                    'justify-content':'flex-start',
+                                    background:'background :linear-gradient(to right,#52688c,#516b86,#588688)',
+                                    backgroundSize:'cover',
+                                    backgroundRepeat:'no-repeat'   }}>
+                    <div style ={{minWidth:'300px',marginTop:'6em',overflow:'hidden',  
+                                    boxShadow: '0px 1px 3px 0px rgba(0,0,0,0.3)',borderRadius:'5px',
+                                    backgroundColor:'white'}}>
+                    <div style = {{margin:'1em',display:'flex',justifyContent:'center'}}>
+                    </div>
+                    <form style = {{marginTop:'0em',display:'block'}}
+                                    onSubmit={this.handleSubmit}>
+                    <div  style = {{color:'#000',display:'flex',marginTop:'1em',justifyContent:'center'}}>
+                    FAVL Libraries
+                    </div>
+                    <div class="main" style={{textAlign:'center'}}>
+                                    <h1 style={{margin:"20px"}}>SCAN Reset password:</h1>
                                     {
                                         this.state.resetPassword &&
                                     <form onSubmit={this.submitHandle}>
                                         <div className="form-group">
-                                            <label htmlFor="emailaddress">Please enter your USERNAME!</label>
-                                            <input type="text" className="form-control" id="emailaddress" placeholder="Enter Email..." />
+                                            <label htmlFor="emailaddress" style={{display:"block"}}>Please enter your USERNAME!</label>
+                                            <input type="text" className="form-control" id="emailaddress" placeholder="Enter Username..." style={{width:"200px"}} />
                                         </div>
-                                        <button type="submit" className="btn btn-light">Submit</button>
+                                        <button type="submit" className="btn btn-primary" style={{margin:"20px"}}>Submit</button>
                                     </form>
                                     }
                                     {
@@ -48,10 +64,10 @@ export default class Changepassword extends React.Component {
                                             <form onSubmit={this.codeHandle}>
                                                 <div className="form-group">
                                                     <p style={{color:"white", "fontWeight":"bold", "textDecoration":"underline"}}>An email with reset code has been sent to your email address, Please enter the code below:</p>
-                                                    <input type="text" placeholder="Enter the code.." id="code" />
-                                                    <input type="text" placeholder="Enter the new Password.." id="newPasswd" />
+                                                    <input type="text" placeholder="Enter the code.." id="code" style={{display:"block", margin:"0 auto",height:"25px"}} />
+                                                    <input type="text" placeholder="Enter the new Password.." id="newPasswd" style={{display:"block",margin:"0 auto",height:"25px"}} />
                                                 </div>
-                                                <button type="submit" className="btn btn-light">Submit</button>
+                                                <button type="submit" className="btn btn-light" style={{margin:"20px"}}>Submit</button>
                                             </form>
                                         
                                         </div>
@@ -70,7 +86,10 @@ export default class Changepassword extends React.Component {
                                             <Link to="/" style={{color: "#7E685A", "fontWeight":"bold", "textDecoration":"underline" }}>Click here to Login</Link>
                                         </div>
                                     } 
-                                </div>
+                                    </div>
+                            </form>
+
+                                
                             </div>
                         </div>
                 </div>
@@ -121,7 +140,7 @@ export default class Changepassword extends React.Component {
                         emailSubmit: false,
                         unsuccessful: true
                     });
-            // history.push('/');
+            history.push('/');
         }); 
     }
 

@@ -10,7 +10,7 @@ import Readers from './containers/Readers/Reader';
 import Librarian from './containers/Librarians/Librarian';
 import FullWidthTabs from './containers/Graph/graph';
 import Login from './containers/LoginDetails/login';
-import Changepassword from './containers/LoginDetails/login';
+import Changepassword from './containers/LoginDetails/change_password';
 import Signout from './containers/Authentication/Signout';
 import Profile from './containers/Authentication/Profile';
 
@@ -46,11 +46,12 @@ loginHandle = () => {
 
 render() {
     return (
-      <BrowserRouter>
+      
       <div>
           <Switch>
           <Layout>
           <Route exact path='/login' render={() => (<Login/>)} />
+
           <Route exact path='/change_password' render={() => (<Changepassword />)} />
 
           <Route exact path='/' render={(props) => 
@@ -92,7 +93,7 @@ render() {
         </Layout>
         </Switch>
        </div>
-      </BrowserRouter>
+      
     );
   }
 }

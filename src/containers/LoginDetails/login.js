@@ -87,7 +87,7 @@ class Login extends Component {
     </div>
     <form style = {{marginTop:'0em',display:'block'}}
                     onSubmit={this.handleSubmit}>
-    <div  style = {{color:'#ccc',display:'flex',marginTop:'1em',justifyContent:'center'}}>
+    <div  style = {{color:'#000',display:'flex',marginTop:'1em',justifyContent:'center'}}>
     FAVL Libraries
     </div>
     <div  style ={{padding:'0 1em 1em 1em'}}>
