@@ -75,14 +75,14 @@ export default class Changepassword extends React.Component {
                                     {
                                         this.state.successful && 
                                         <div className="confirmText">
-                                            <p style={{color:"white", "fontWeight":"bold", "textDecoration":"underline"}}>Thank you, your password has been changed successfully!!</p>
+                                            <p style={{color:"#07889B", "fontWeight":"bold", "textDecoration":"underline"}}>Thank you, your password has been changed successfully!!</p>
                                             <Link to="/" style={{color: "#7E685A", "fontWeight":"bold", "textDecoration":"underline"}}>Click here to Login</Link>
                                         </div>
                                     }
                                     {
                                         this.state.unsuccessful &&
                                         <div className="confirmText">
-                                            <p style={{color:"white", "fontWeight":"bold", "textDecoration":"underline"}}>Sorry, There is some incorrect information while changing password, try again!</p>
+                                            <p style={{color:"#07889B", "fontWeight":"bold", "textDecoration":"underline"}}>Sorry, There is some incorrect information while changing password, try again!</p>
                                             <Link to="/" style={{color: "#7E685A", "fontWeight":"bold", "textDecoration":"underline" }}>Click here to Login</Link>
                                         </div>
                                     } 
