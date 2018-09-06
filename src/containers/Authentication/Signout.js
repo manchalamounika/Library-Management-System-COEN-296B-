@@ -7,7 +7,12 @@ export default class Signout extends React.Component {
     constructor(props) {
         super(props);
         localStorage.removeItem("auth");
+        sessionStorage.removeItem("data");
         sessionStorage.removeItem("cognitoUser");
+        sessionStorage.removeItem("username");
+        sessionStorage.removeItem("name");
+        sessionStorage.removeItem("family_name");
+        sessionStorage.removeItem("email");
        /*  history.push('/'); */
         
     }
