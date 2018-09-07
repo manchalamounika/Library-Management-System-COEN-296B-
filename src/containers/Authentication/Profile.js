@@ -148,11 +148,17 @@ class Profile extends React.Component {
                 confirmation: true,
                 email_change: true
             });
-        } else {
+        } else if(sessionStorage.getItem("name").replace(/['"]+/g, '')!=name || sessionStorage.getItem("family_name").replace(/['"]+/g, '')!=family_name) {
             this.setState({
                 btnInfo: "Edit Details",
                 textDisable: true,
                 confirmation: true
+            });
+        }
+        else {
+            this.setState({
+                btnInfo: "Edit Details",
+                textDisable: true
             });
         }
         }
