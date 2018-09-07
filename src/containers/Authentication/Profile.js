@@ -168,11 +168,10 @@ class Profile extends React.Component {
         });
         try {
         let result = await Auth.verifyCurrentUserAttributeSubmit(email, code);
-        alert(result.message);
         console.log(result.message);
         }
         catch(e) {
-            alert(e.message);
+            console.log(e.message);
         }
     }
 
