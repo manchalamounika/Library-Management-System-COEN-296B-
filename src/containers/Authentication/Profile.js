@@ -48,17 +48,33 @@ class Profile extends React.Component {
         super(props);
         console.log(sessionStorage.getItem("cognitoUser"));
         console.log(sessionStorage.getItem("data"));
+        let firstname = undefined;
+        let lastname = undefined;
+        let email = undefined;
+        let username = undefined;
+        if(sessionStorage.getItem("name"))
+            firstname = sessionStorage.getItem("name").replace(/['"]+/g, '');
+        if(sessionStorage.getItem("family_name"))
+            lastname = sessionStorage.getItem("family_name").replace(/['"]+/g, '');
+        if(sessionStorage.getItem("email"))
+            email = sessionStorage.getItem("email").replace(/['"]+/g, '');
+        if(sessionStorage.getItem("username"))
+            username = sessionStorage.getItem("username").replace(/['"]+/g, '');
 
         this.state={
-            firstname: sessionStorage.getItem("name").replace(/['"]+/g, ''),
-            lastname: sessionStorage.getItem("family_name").replace(/['"]+/g, ''),
-            email: sessionStorage.getItem("email").replace(/['"]+/g, ''),
-            username: sessionStorage.getItem("username").replace(/['"]+/g, ''),
+            firstname:firstname,
+            lastname: lastname,
+            email:email,
+            username,
             btnInfo: "Edit Details",
             textDisable: true,
             confirmation: false,
             email_change: false
         }
+
+        this.handleChange = this.handleChange.bind(this);
+        this.handleChangeEmail = this.handleChangeEmail.bind(this);
+        this.handleSubmit = this.handleSubmit.bind(this);
     }
     
     handleChange = prop => event => {
@@ -147,8 +163,17 @@ class Profile extends React.Component {
         e.preventDefault();
         let email = this.state.email;
         let code = e.target.emailChange.value;
+        this.setState({
+            email_change: false
+        });
+        try {
         let result = await Auth.verifyCurrentUserAttributeSubmit(email, code);
-        console.display("result");
+        alert(result.message);
+        console.log(result.message);
+        }
+        catch(e) {
+            alert(e.message);
+        }
     }
 
 
@@ -263,7 +288,7 @@ class Profile extends React.Component {
                        <p style={{backgroundColor:"red", color: "white", textAlign:"center"}}>The email change has been requested, please enter the code sent to new email address.</p>
                        <form onSubmit={this.handleChangeEmail}>
                            <input type="text" placeholder="Enter the code here..." name="emailChange" />
-                           <button type="submit">Email Change</button>
+                           <button type="submit" style={{display:"block"}}>Email Change</button>
                        </form>
                     </div>
                } 
@@ -271,6 +296,11 @@ class Profile extends React.Component {
                    this.state.confirmation &&
                    <div>
                        <p style={{backgroundColor:"red", color: "white", textAlign:"center"}}>The changes have been saved, please sign out and sign in again to reflect the changes.</p>
+                       <button onClick={() => {
+                           this.setState({
+                            confirmation: false
+                           })
+                       }}>Close</button>
                     </div>
                }                        
            </div>       
