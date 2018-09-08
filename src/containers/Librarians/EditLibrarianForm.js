@@ -13,6 +13,7 @@ import PropTypes from 'prop-types';
 import classNames from 'classnames';
 import {CognitoUserPool,CognitoUserAttribute,} from "amazon-cognito-identity-js";
 import appConfig from "../../config.js";
+import * as AWS from 'aws-sdk';
 
 const userPool = new CognitoUserPool({
     UserPoolId: appConfig.LibPoolId,
@@ -66,6 +67,7 @@ componentDidMount(){
     let username = librarianInfo.username;
     let barcode = librarianInfo.barcode;
     let library = librarianInfo.library;
+    
 
     this.setState({
         firstname:firstname,
@@ -107,6 +109,7 @@ handleClickShowConfirmPassword = () => {
 
 
 handleSubmit=(e) =>{
+    const {handleEditFormClose, handleRefresh} = this.props
     e.preventDefault();
     
     const email = this.state.email.trim();    
@@ -114,57 +117,51 @@ handleSubmit=(e) =>{
     const family_name = this.state.lastname.trim();        
     const library = this.state.library.trim();
     const barcode = this.state.barcode.trim();
+    const middle_name = this.state.middlename.trim();
     
-    const attributeList = [
-      new CognitoUserAttribute({
-        Name: 'name',
-        Value: name,
-      }),
-      new CognitoUserAttribute({
-        Name: 'family_name',
-        Value: family_name,
-      }),    
-      new CognitoUserAttribute({
-        Name: 'email',
-        Value: email,
-      }),
-      new CognitoUserAttribute({
-        Name: 'custom:Library',
-        Value: library,
-      }),
-      new CognitoUserAttribute({
-        Name: 'preferred_username',
-        Value: barcode,
-      })
-    ];
 
-    userPool.updateAttributes(attributeList, function(err, result) {
-        if (err) {
-            alert(err);
-            return;
-        }
-        console.log('call result: ' + result);
-    });
-    
-    // userPool.signUp(username, password, attributeList, null, (err, result) => {
-    //     let errorMessage;
-    //   if (err) {          
-    //     errorMessage = err.message.includes(':')?err.message.split(":")[1]:err.message;
-    //     this.setState({formErrorMessage:errorMessage,showFormValidation:true}
-    //     )
-    //     return;
-    //   }
-    //   else{
-    //     this.setState({formErrorMessage:'',showFormValidation:false, open: true},
-    //         () => {
-    //             !this.state.showFormValidation && this.props.closeBtnHandler()
-    //         }
-    //     )
-    //     this.props.getEmail(this.state.email);
-    // }
-    //   console.log('user name is ' + result.user.getUsername());
-    //   console.log('call result: ' + JSON.stringify(result));         
-    // });
+    var params = {
+        UserAttributes: [
+              {
+                Name: 'name',
+                Value: name,
+              },
+              {
+                Name: 'family_name',
+                Value: family_name,
+              },
+              {
+                Name: 'custom:Library',
+                Value: library,
+              },
+              {
+                Name: 'preferred_username',
+                Value: barcode,
+              },
+              {
+                Name: 'middle_name',
+                Value: middle_name,
+              },
+              {
+                Name: 'email',
+                Value: email,
+              },
+             
+              ],
+              UserPoolId: appConfig.LibPoolId,
+              Username: this.state.username
+          };
+      var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+
+      
+      
+      cognitoidentityserviceprovider.adminUpdateUserAttributes(params, function(err, data) {
+        if (err) console.log(err, err.stack); // an error occurred
+        else {
+            handleEditFormClose();
+            
+        }          
+      });
      
   }
     render(){

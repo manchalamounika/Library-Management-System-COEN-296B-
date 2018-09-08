@@ -20,27 +20,6 @@ const userPool = new CognitoUserPool({
   });
 
 class LibrarianList extends Component{
-    makeData = () =>{        
-        return (
-            [
-                {firstName: 'abc',
-                lastName: 'abc',
-                email: 'abc@com'},
-    
-                {firstName: 'qwe',
-                lastName: 'qwe',
-                email: 'qwe@com'},
-    
-                {firstName: 'asd',
-                lastName: 'asd',
-                email: 'asd@com'},
-    
-                {firstName: 'yui',
-                lastName: 'yui',
-                email: 'yui@com'},
-            ]
-        )
-    }
     state={
         LibrarianList: [],
         modal: false,
@@ -51,35 +30,17 @@ class LibrarianList extends Component{
     }
 
     componentDidMount(){
-        var cognitoUser = userPool.getCurrentUser();
-               
-	
-	// if (cognitoUser != null) {
-    //     cognitoUser.getSession(function(err, result) {
-    //         if (result) {
-    //             console.log('You are now logged in.');
-
-    //             // Add the User's Id Token to the Cognito credentials login map.
-    //             AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-    //                 IdentityPoolId: 'us-east-2:81073ee5-eca0-499a-a0ea-8edab1debd6b',
-    //                 Logins: {
-    //                     'cognito-idp.us-east-2.amazonaws.com/us-east-2_SF2DCPO5Y': result.getIdToken().getJwtToken()
-    //                 }
-    //             });
-    //         }
-    //     });
-    // }
-
+    let token = sessionStorage.getItem("cognitoUser");    
     AWS.config.credentials = new AWS.CognitoIdentityCredentials({
         IdentityPoolId: 'us-east-2:81073ee5-eca0-499a-a0ea-8edab1debd6b',
         Logins: {
-            'cognito-idp.us-east-2.amazonaws.com/us-east-2_SF2DCPO5Y': "eyJraWQiOiJPZCtrcitlVFMwckRcL2pneTNJXC8zOWhpejkwdCtQZGVFSlVqKzNrUmQ0VWs9IiwiYWxnIjoiUlMyNTYifQ.eyJzdWIiOiJjMjdhMDVhMi00Y2UxLTQxNzMtYmU1MS05YmJjM2ZlNjVhMGEiLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLnVzLWVhc3QtMi5hbWF6b25hd3MuY29tXC91cy1lYXN0LTJfU0YyRENQTzVZIiwiY29nbml0bzp1c2VybmFtZSI6InNhaSIsImF1ZCI6IjYxN2prbmE5cHFlZzhybWd0Zzl1djRlNmo0IiwiZXZlbnRfaWQiOiI1YjBlNzUxZi1hYmUzLTExZTgtYTBiMi1mMTk3Y2JiNDRjOTUiLCJ0b2tlbl91c2UiOiJpZCIsImF1dGhfdGltZSI6MTUzNTU4NTM2MSwibmFtZSI6InNhaSIsImV4cCI6MTUzNTU4ODk2MSwiaWF0IjoxNTM1NTg1MzYxLCJmYW1pbHlfbmFtZSI6ImtzIiwiZW1haWwiOiJTS3Jpc2huYXNldHR5QHNjdS5lZHUifQ.YPMDK7L7xdGrIc_at-zBMrmKYuH0zvL10v-FTT3v01V3apHXl8CwosvsjSUY1Lw5hDmXmffXPjP7JqxmMZFgT3ouquxbOUU86W4IKt0iG0zTwHryMzvwyBZtZaSz4ripOiOmGxqfvbDaDW3iKdBjVHxCle8nE2zFWJcNTewJ_WHoGc8E0fdLCtRwL4bwhg_nMS3gDQxaWYjUqBcMCPdrKtPd0tFFvYVcetZexBfbY9luhSrv2RaFBEZgHB5pSvkgRUpbr7zal_4jBeP3AscjUGpvborejtDXhKlA3OZRojhhulTz0GeO773p7mMk0SLaiRVeHh9elWoGYaAtVSOOlQ"
+            'cognito-idp.us-east-2.amazonaws.com/us-east-2_SF2DCPO5Y': token.slice(1,token.length-1)
         }
     });
-	
-	AWS.config.region = 'us-east-2';
-	
-	AWS.config.credentials.refresh((error) => {
+    
+    AWS.config.region = 'us-east-2';
+    
+    AWS.config.credentials.refresh((error) => {
         if (error) {
             console.error("",error);
         } else {
@@ -87,28 +48,29 @@ class LibrarianList extends Component{
         }
         });
 
-	var cognitoidentity = new AWS.CognitoIdentity();
-	
-	var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+    var cognitoidentity = new AWS.CognitoIdentity();
+    
+    var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
 
     var params = {
-		
-		"Filter": "",
-		Limit: 59,
-		UserPoolId: appConfig.LibPoolId,
-	};
+        
+        "Filter": "",
+        Limit: 59,
+        UserPoolId: appConfig.LibPoolId,
+    };
     let LibrarianList =[];
-	cognitoidentityserviceprovider.listUsers(params, function(err, data) {
-		if (err){console.log(err, err.stack)}  // an error occurred
-		else 
-		{            
-			for (var user in data.Users){                
+    cognitoidentityserviceprovider.listUsers(params, function(err, data) {
+        if (err){console.log(err, err.stack)}  // an error occurred
+        else 
+        {                        
+            for (var user in data.Users){       
+            console.log("printing confusion=======>>>>>"+JSON.stringify(data.Users[user]))         
                 var username = data.Users[user].Username;
                 var library = data.Users[user].Attributes.length > 2? data.Users[user].Attributes[2].Value:'';                             
                 var name = data.Users[user].Attributes.length > 3? data.Users[user].Attributes[3].Value:''; 
                 var barcode = data.Users[user].Attributes.length > 4? data.Users[user].Attributes[4].Value:'';                           
-                var family_name = data.Users[user].Attributes.length > 5 ?data.Users[user].Attributes[5].Value:'';
-                var email=data.Users[user].Attributes.length > 6 ?data.Users[user].Attributes[6].Value:'';
+                var family_name = data.Users[user].Attributes.length > 6 ?data.Users[user].Attributes[6].Value:'';
+                var email=data.Users[user].Attributes.length > 7 ?data.Users[user].Attributes[7].Value:'';
                 
                 var LibrarianInfo={
                     name: name,
@@ -122,7 +84,7 @@ class LibrarianList extends Component{
                        
             }                      
             this.setState({LibrarianList:LibrarianList})             
-		}
+        }
     }.bind(this));       
 }
 
@@ -131,21 +93,21 @@ handleDeleteBtn =(row) =>{
 }
 
 handleEditBtn = (row) =>{
-    	
-	var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
+        
+    var cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
     var username = row.original.username;
     var params = {           
-        "Filter": `username = \"${username}\"`,
-        // "Filter": "username = \"saishreeks\"",
-		Limit: 59,
-		UserPoolId: appConfig.LibPoolId,
+        "Filter": `username = \"${username}\"`,        
+        Limit: 59,
+        UserPoolId: appConfig.LibPoolId,
     };
         
     let LibrarianList =[];
     cognitoidentityserviceprovider.listUsers(params, function(err, data) {
-		if (err){console.log(err, err.stack)}  // an error occurred
-		else 
-		{                           
+        if (err){console.log(err, err.stack)}  // an error occurred
+        else 
+        {                      
+            console.log("data order========"+JSON.stringify(data.Users[0]))     
             var username = data.Users[0].Username;            
             var library = data.Users[0].Attributes.length > 2? data.Users[0].Attributes[2].Value:'';  
             var name = data.Users[0].Attributes.length > 3? data.Users[0].Attributes[3].Value:''; 
@@ -164,7 +126,7 @@ handleEditBtn = (row) =>{
                     
                     this.setState({openEditForm:true, ExistingLibrarianInfo:ExistingLibrarianInfo})
                     
-		}
+        }
     }.bind(this));  
 }
 
@@ -183,13 +145,18 @@ let username= this.state.row.original.username;
       };
       let cognitoidentityserviceprovider = new AWS.CognitoIdentityServiceProvider();
       cognitoidentityserviceprovider.adminDeleteUser(params, function(err, data) {
-        if (err){        	
-        	 alert(err, err.stack); }
+        if (err){           
+             alert(err, err.stack); }
         else {                            
             const deletedLibrarianList = this.state.LibrarianList.filter((librarian) => librarian.username !== username);            
             this.setState({LibrarianList:deletedLibrarianList, openDeleteConfirmation: false})
              };    
       }.bind(this));                           
+}
+
+handleRefresh=()=>{
+    
+    this.forceUpdate();
 }
     
     render(){
@@ -263,7 +230,10 @@ let username= this.state.row.original.username;
             </Dialog>     
             <Modal show = {this.state.openEditForm} 
             modalClosed ={this.handleEditFormClose}>
-            {this.state.openEditForm && <EditLibrarianForm librarianInfo={this.state.ExistingLibrarianInfo}/>}
+            {this.state.openEditForm && 
+            <EditLibrarianForm librarianInfo={this.state.ExistingLibrarianInfo} 
+            handleEditFormClose={this.handleEditFormClose}
+            handleRefresh={this.handleRefresh}/>}
             </Modal>          
             </div>
         )
