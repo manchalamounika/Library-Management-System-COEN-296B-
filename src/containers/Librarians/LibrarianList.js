@@ -63,8 +63,7 @@ class LibrarianList extends Component{
         if (err){console.log(err, err.stack)}  // an error occurred
         else 
         {                        
-            for (var user in data.Users){       
-            console.log("printing confusion=======>>>>>"+JSON.stringify(data.Users[user]))         
+            for (var user in data.Users){                            
                 var username = data.Users[user].Username;
                 var library = data.Users[user].Attributes.length > 2? data.Users[user].Attributes[2].Value:'';                             
                 var name = data.Users[user].Attributes.length > 3? data.Users[user].Attributes[3].Value:''; 
@@ -107,16 +106,18 @@ handleEditBtn = (row) =>{
         if (err){console.log(err, err.stack)}  // an error occurred
         else 
         {                      
-            console.log("data order========"+JSON.stringify(data.Users[0]))     
+            console.log("data order noooowww========"+JSON.stringify(data.Users[0]))     
             var username = data.Users[0].Username;            
             var library = data.Users[0].Attributes.length > 2? data.Users[0].Attributes[2].Value:'';  
             var name = data.Users[0].Attributes.length > 3? data.Users[0].Attributes[3].Value:''; 
             var barcode = data.Users[0].Attributes.length > 4? data.Users[0].Attributes[4].Value:''; 
-            var family_name = data.Users[0].Attributes.length > 5 ?data.Users[0].Attributes[5].Value:'';
-            var email=data.Users[0].Attributes.length > 6 ?data.Users[0].Attributes[6].Value:'';
+            var middle_name = data.Users[0].Attributes.length > 5? data.Users[0].Attributes[5].Value:''; 
+            var family_name = data.Users[0].Attributes.length > 6 ?data.Users[0].Attributes[6].Value:'';
+            var email=data.Users[0].Attributes.length > 7 ?data.Users[0].Attributes[7].Value:'';
 
             var ExistingLibrarianInfo={
                         name: name,
+                        middle_name: middle_name,
                         family_name: family_name,
                         email: email,
                         username:username,
