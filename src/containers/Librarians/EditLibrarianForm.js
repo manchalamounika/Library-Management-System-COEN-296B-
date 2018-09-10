@@ -67,10 +67,12 @@ componentDidMount(){
     let username = librarianInfo.username;
     let barcode = librarianInfo.barcode;
     let library = librarianInfo.library;
+    let middlename = librarianInfo.middle_name;
     
 
     this.setState({
         firstname:firstname,
+        middlename:middlename,
         lastname:lastname,
         email:email,
         username:username,
@@ -79,11 +81,11 @@ componentDidMount(){
     })
 
     ValidatorForm.addValidationRule('isPasswordMatch', (value) =>(
-        value.length ==0 ? true :value !== this.state.password ? false : true
+        value.length ===0 ? true :value !== this.state.password ? false : true
        ))
    
        ValidatorForm.addValidationRule('isPasswordLength7', (value)=>(
-           value.length ==0 ? true : value.length>6 ? true:false
+           value.length === 0 ? true : value.length>6 ? true:false
        ))
 }
 
