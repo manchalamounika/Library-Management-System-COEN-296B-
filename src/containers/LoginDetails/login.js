@@ -63,10 +63,15 @@ class Login extends Component {
     event.preventDefault();
     try {
       const data = await Auth.signIn(this.state.username, this.state.password);
+      sessionStorage.setItem("data", JSON.stringify(data));
+      sessionStorage.setItem("cognitoUser", JSON.stringify(data.signInUserSession.idToken.jwtToken));
+      sessionStorage.setItem("username", JSON.stringify(data.username));
+      sessionStorage.setItem("name", JSON.stringify(data.signInUserSession.idToken.payload.name));
+      sessionStorage.setItem("family_name", JSON.stringify(data.signInUserSession.idToken.payload.family_name));
+      sessionStorage.setItem("email", JSON.stringify(data.signInUserSession.idToken.payload.email));
       Auth.currentCredentials(credentials => {
         const tokens = Auth.essentialCredentials(credentials);
-        console.log(tokens);
-        sessionStorage.setItem("cognitoUser", JSON.stringify(tokens));       
+        console.log(tokens);      
         
       });
       console.log(this.props);
