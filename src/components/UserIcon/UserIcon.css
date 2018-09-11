@@ -1,3 +1,15 @@
+.User{
+    background-color : rgba(37,40,57, 0.6);
+    padding : 8px;
+    height : 80%;
+    border-radius: 5px;
+    box-sizing : border-box; /* so that the 80% height includes the padding */
+}
+
+.User img{
+    height: 100%;
+}
+
 @media(max-width :750px) {
     .NavigationItem li{
         color:black;
@@ -36,10 +48,11 @@
     }
      
     .NavigationItem a{
-        color:black;
+        color:#eee;
         text-decoration: none;
         height:100%;
         padding: 18px 10px;
+        padding-bottom : 16px;
         box-sizing: border-box;
         border-bottom: 2px solid transparent;
     }
@@ -47,8 +60,7 @@
     .NavigationItem a:hover,
     .NavigationItem a:active,
     .NavigationItem a.active{
-        background-color : rgba(103,112,119,0.7);
-        border-bottom : 2px solid rgba(181,181,183);
-        color:#ccc;
+        /* background-color : rgba(103,112,119,0.7); */
+        color:#eee;
     }
 }

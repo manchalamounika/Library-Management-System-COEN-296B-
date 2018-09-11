@@ -5,7 +5,7 @@ import HomeCardWrapped from './HomeCard';
 
 class Home extends Component {
   state ={
-    libraries: ['library 1', 'library 2', 'library 3', 'library 4', 'library 5', 'library 6','library 6','library 6','library 6','library 6','library 6','library 6','library 6','library 6',],
+    libraries: ['library 1', 'library 2', 'library 3', 'library 4', 'library 5', 'library 6'],
     pageCount: 4,
     offset: 0,
 

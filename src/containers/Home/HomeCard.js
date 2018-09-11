@@ -28,7 +28,7 @@ const styles = theme => ({
     card: {
         width: '150px',      
         height: '150px',       
-        background:'rgba(255,255,255,0.6)',        
+        background:'rgba(255,255,255)',        
       },
     button:{
         marginTop:'10px',
