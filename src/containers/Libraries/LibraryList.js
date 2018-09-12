@@ -1,12 +1,14 @@
 import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
-import axios from 'axios';
-import EditLibrary from './EditLibrary';
-import './LibraryList.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
+import EditLibraryForm from './EditLibraryForm';
+import Modal from '../../components/UI/Modal/Modal';
+import '../../components/Table/BookList.css';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
 const styles = theme => ({
     button: {
@@ -73,9 +75,9 @@ class LibraryList extends Component{
                   padding: "10", */
                   textAlign: "center"
                 },
-                 Cell: props => <div><Button onClick={()=>this.editBookBtnHandler(props.value,this.state.data)} 
-                 color="default" className={classes.button}>Edit</Button>
-                 <Button color="default" className={classes.button}>Delete</Button></div>
+                 Cell: props => <div><EditIcon onClick={()=>this.editBookBtnHandler(props.value,this.state.data)} 
+                 color="default" className={classes.button}/>
+                 <DeleteIcon color="default" className={classes.button}/></div>
             },
             /* {   
                 Header: 'DELETE',
@@ -102,9 +104,13 @@ class LibraryList extends Component{
     );
     return(
         <div>
-            {this.state.modal ? (<EditLibrary modal={this.state.modal} 
-            closeBtnHandler={this.closeBtnHandler}
-            rowId={this.state.datarow}/>) :Table}
+            {Table}
+            {this.state.modal ? 
+            (<Modal show = {this.state.modal} modalClosed ={this.closeBtnHandler}>
+            <div>
+            <EditLibraryForm closeBtnHandler={this.closeBtnHandler} rowId={this.state.datarow}/>
+            </div>
+            </Modal>):null}
         </div>
     )    
 }

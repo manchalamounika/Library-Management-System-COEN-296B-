@@ -34,7 +34,7 @@ state = {
 loginHandle = () => {
   localStorage.setItem("auth",true);
   localStorage.removeItem("justOnce")
-  //sessionStorage.setItem("auth",true);
+  sessionStorage.setItem("auth",true);
   loggedIn = true;
   this.setState({
     alwaysTrue: true
