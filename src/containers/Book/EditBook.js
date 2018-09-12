@@ -10,16 +10,16 @@ const divStyle = {
 const EditBook = (props) => {   
     return (
         <div>
-                <div>
-                    <div>
-                        <BookList />
-                    </div>
-                </div>
-                <Modal show = {props.modal} modalClosed ={props.closeBtnHandler}>
-                <div>
-                    <EditBookForm closeBtnHandler={props.closeBtnHandler} rowId={props.rowId}/>
-                </div>
-                </Modal>
+         <div>
+          <div>
+            <BookList />
+          </div>
+          </div>
+        <Modal show = {props.modal} modalClosed ={props.closeBtnHandler}>
+        <div>
+            <EditBookForm closeBtnHandler={props.closeBtnHandler} rowId={props.rowId}/>
+        </div>
+        </Modal>
         </div>
     )
 

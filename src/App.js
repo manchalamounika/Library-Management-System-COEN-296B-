@@ -17,18 +17,11 @@ import {browserHistory} from 'react-router';
 
 let loggedIn = false;
 
-// window.onbeforeunload = function() {
-//   localStorage.removeItem("auth");
-//   return '';
-// };
-
 class App extends Component {
-
-constructor(props) {
-  super(props);
-  this.loginHandle = this.loginHandle.bind(this);
-  
-}
+    constructor(props) {
+      super(props);
+      this.loginHandle = this.loginHandle.bind(this);
+    }
 
 componentDidMount = () => {
   console.log("Component did mount logged in - "+loggedIn);
@@ -41,7 +34,7 @@ state = {
 loginHandle = () => {
   localStorage.setItem("auth",true);
   localStorage.removeItem("justOnce")
-  sessionStorage.setItem("auth",true);
+  //sessionStorage.setItem("auth",true);
   loggedIn = true;
   this.setState({
     alwaysTrue: true
@@ -63,7 +56,6 @@ logoutHandle(props){
 render() {
     return (
       <BrowserRouter>
-      
           <Switch>
           <Layout isLoggedIn = {localStorage.getItem("auth")}>
           <Route exact path='/login' render={() => (<Login/>)} />
@@ -71,35 +63,35 @@ render() {
           <Route exact path='/change_password' render={() => (<Changepassword />)} />
           
           <Route exact path='/' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Home/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Home/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/books'  render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Books/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Books/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route path ="/libraries" render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Library/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Library/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/readers' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Readers/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Readers/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/librarians' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Librarian/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Librarian/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/admin' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Admin/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Admin/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/statistics' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <FullWidthTabs/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <FullWidthTabs/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/profile' render={(props) => 
-            (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Profile/> : 
+            (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Profile/> : 
             <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/login' render={(props) =>  

@@ -21,9 +21,6 @@ class UserIcon extends Component {
     
     handleClose = () => {
         this.setState({ anchorEl: null });
-        /* return(
-            <NavigationItem link='/login' >Signout</NavigationItem>
-        ); */
       };
     
     render(){

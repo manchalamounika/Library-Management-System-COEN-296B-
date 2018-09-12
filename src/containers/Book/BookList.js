@@ -10,6 +10,7 @@ import Button from '@material-ui/core/Button';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
 
+
 const styles = theme => ({
     button: {
       margin: 0,    
@@ -29,6 +30,7 @@ class BookList extends Component{
         }
         this.makeData = this.makeData.bind(this);
     }
+
     makeData = (state,instance) =>{        
         axios.get('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book',{
             mode: 'no-cors',
@@ -39,6 +41,7 @@ class BookList extends Component{
                this.setState({data:response.data});
        })
     }
+
     editBookBtnHandler = (property,info) => {
         console.log(JSON.stringify(info)+"-------"+property);
         let rowInfo = info.find((element)=>element.BookBarcode == property);
@@ -75,8 +78,7 @@ class BookList extends Component{
     bookDelete=(property)=>
     {
         axios.delete('https://p0kvnd5htd.execute-api.us-east-2.amazonaws.com/test/book/'+property,{
-        mode: 'no-cors',
-                    method: 'DELETE',}).
+        mode: 'no-cors',method: 'DELETE',}).
         then(res => {
                     console.log(res);
                     console.log(res.data);
@@ -86,49 +88,54 @@ class BookList extends Component{
     }
     render(){
         const { classes } = this.props;
-        const Table = (<div style={{width:'90%',margin:'70px auto'}}><ReactTable 
-        data={this.state.data}
-        columns={[
-            {Header: 'Title',
-            accessor: 'Title',
-            className:'Title'},
-            {Header: 'Author',
-            accessor: 'FirstName'},
-            {Header: 'Last Name',
-            accessor: 'LastName'},
-            {Header: 'Library ',
-            accessor: 'LibraryName'},
-            {Header: 'Barcode ',
-            accessor: 'BookBarcode'},
-            {
-                Header: 'Options',
-                accessor: 'BookBarcode',
-                width: 200,
-                style: {
-                  cursor: 'pointer',
-                  /* fontSize: 15,
-                  padding: "10", */
-                  textAlign: "center"
-                },
-                 Cell: props => <div><Button onClick={()=>this.editBookBtnHandler(props.value,this.state.data)} 
-                 color="default" className={classes.button}>Edit</Button>
-                 <Button onClick={()=>this.deleteBookHandler(props.value,this.state.data)} color="default"
-                 className={classes.button}>Delete</Button></div>
-            }
-        ]}   
-        className="-striped -highlight"
-        showPagination={true}
-        defaultPageSize={10}
-        minRows={5}
-        onFetchData={this.makeData} 
-        />
-    </div>
-    );
-    return(
+        const Table = (<div style={{width:'90%',margin:'70px auto'}}>
+        <ReactTable
+                data={this.state.data}
+                columns={[
+                        {Header: 'Title',
+                        accessor: 'Title',
+                        className:'Title'},
+            
+                        {Header: 'FirstName',
+                        accessor: 'FirstName'},
+            
+                        {Header: 'Last Name',
+                        accessor: 'LastName'},
+            
+                        {Header: 'Library ',
+                        accessor: 'LibraryName'},
+            
+                        {Header: 'Barcode ',
+                        accessor: 'BookBarcode'},    
+                    {
+                        Header: 'Options',
+                        accessor: 'BarCode',
+                        width: 200,
+                        style: {
+                          cursor: 'pointer',
+                          /* fontSize: 15, 
+                          padding: "10", */
+                          textAlign: "center"
+                        },
+                         Cell: props => <div><Button onClick={()=>this.editBookBtnHandler(props.value,this.state.data)} 
+                         color="default" className={classes.button}>Edit</Button>
+                         <Button color="default"  onClick={()=>this.deleteBookHandler(props.value,this.state.data)} 
+                         className={classes.button}>Delete</Button></div>
+                    },
+                ]}
+                className="-striped -highlight"
+                showPagination={true}
+                defaultPageSize={10}
+                minRows={5}
+                onFetchData={this.makeData}
+                />
+        </div>);
+        return(
         <div>
             {this.state.modal ? (<EditBook modal={this.state.modal} 
             closeBtnHandler={this.closeBtnHandler}
-            rowId={this.state.datarow}/>) :Table}
+            rowId={this.state.datarow}/>) :
+            Table}
         </div>
     )    
 }
