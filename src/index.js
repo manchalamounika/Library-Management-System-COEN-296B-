@@ -21,7 +21,7 @@ Amplify.configure({
 ReactDOM.render(
     <Router history={history}>
         <div>
-        <App/>
+        <App  style={{height :'Auto'}}/>
         </div>
     </Router>
 , document.getElementById('root'));

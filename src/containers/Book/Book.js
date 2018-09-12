@@ -9,14 +9,14 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import Icon from '@material-ui/core/Icon';
-  
+   
 const styles = theme => ({
     root: {
         ...theme.mixins.gutters(),
         position:'relative',
         paddingTop: theme.spacing.unit * 3,
         paddingBottom: theme.spacing.unit * 3,
-        width:'70%',
+        width:'90%',
         margin: '10px auto',
         'border-radius':'10px',
         background:'rgba(255,255,255,0.7)'

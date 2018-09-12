@@ -17,7 +17,7 @@ const styles = theme => ({
         position:'relative',
         paddingTop: theme.spacing.unit * 3,
         paddingBottom: theme.spacing.unit * 3,
-        width:'70%',
+        width:'90%',
         margin: '10px auto',
         'border-radius':'10px',
         background:'rgba(255,255,255,0.7)'

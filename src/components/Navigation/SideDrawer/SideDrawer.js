@@ -1,30 +1,40 @@
 import React from 'react';
-import User from '../../User/User';
-import NavigationItems from '../NavigationItems/NavigationItems';
-import classes from './SideDrawer.css'
-import Backdrop from '../../UI/Backdrop/Backdrop';
 import Aux from '../../../hoc/Auxi';
+import PropTypes from 'prop-types';
+import { withStyles } from '@material-ui/core/styles';
+import Drawer from '@material-ui/core/Drawer';
+import {OptionList} from '../Navbar/OptionList';
+import Media from "react-media";
+
+const drawerWidth = 240;
+
+const styles = theme => ({
+    drawerPaper: {
+      position: 'relative',
+      width: drawerWidth,
+      height : '100vh',
+    },
+    toolbar: theme.mixins.toolbar,
+  });
 
 const sideDrawer = (props)=> {
-    
-    let attachedClasses = [classes.SideDrawer ,classes.Close];
-    if(props.open){
-        attachedClasses = [classes.SideDrawer ,classes.Open];
-    }
-
+    const { classes } = props;
+    if(props.isLoggedIn){
     return(
         <Aux>
-        <Backdrop show={props.open} clicked={props.closed}/>
-        <div className={attachedClasses.join(' ')}>
-        <div className = {classes.User}>
-           <User/>
-        </div> 
-           <nav>
-               <NavigationItems/>
-           </nav>
-        </div>
+        <Media query = "(min-width : 699.1px)">
+        <Drawer variant="permanent" classes={{paper: classes.drawerPaper,}}>
+        <div className={classes.toolbar} />
+        {OptionList}
+        </Drawer>
+        </Media>
         </Aux>
-    );
+    );}
+    else return (<div></div>);
 }
 
-export default sideDrawer;
+sideDrawer.propTypes = {
+    classes: PropTypes.object.isRequired,
+};
+  
+export default withStyles(styles)(sideDrawer);

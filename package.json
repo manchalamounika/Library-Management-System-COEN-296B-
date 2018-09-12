@@ -55,6 +55,7 @@
     "react-dom": "^16.4.2",
     "react-dropdown": "^1.6.2",
     "react-material-ui-form-validator": "^2.0.1",
+    "react-media": "^1.8.0",
     "react-plotly.js": "^2.2.0",
     "react-plotlyjs": "^0.4.4",
     "react-router": "^4.3.1",

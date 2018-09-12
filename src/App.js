@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component,history} from 'react';
 import {BrowserRouter} from 'react-router-dom';
 import Layout from './hoc/Layout/Layout';
-import {Route, Switch} from 'react-router-dom';
+import {Route, Switch, withRouter, Redirect} from 'react-router-dom';
 import Home from './containers/Home/Home';
 import Books from './containers/Book/Book';
 import Admin from './containers/Admin/Admin';
@@ -13,25 +13,15 @@ import Login from './containers/LoginDetails/login';
 import Changepassword from './containers/LoginDetails/change_password';
 import Signout from './containers/Authentication/Signout';
 import Profile from './containers/Authentication/Profile';
+import {browserHistory} from 'react-router';
 
 let loggedIn = false;
 
-// window.onbeforeunload = function() {
-//   localStorage.removeItem("auth");
-//   return '';
-// };
-
 class App extends Component {
-
-constructor(props) {
-  super(props);
-  console.log("Constructor loggedIn - "+loggedIn);
-  this.loginHandle = this.loginHandle.bind(this);
-}
-
-componentWillMount = () => {
-  console.log("Component will mount logged in - "+loggedIn);
-}
+    constructor(props) {
+      super(props);
+      this.loginHandle = this.loginHandle.bind(this);
+    }
 
 componentDidMount = () => {
   console.log("Component did mount logged in - "+loggedIn);
@@ -42,65 +32,76 @@ state = {
 }
 
 loginHandle = () => {
-  sessionStorage.setItem("auth",true);
+  localStorage.setItem("auth",true);
+  localStorage.removeItem("justOnce")
+  //sessionStorage.setItem("auth",true);
   loggedIn = true;
   this.setState({
     alwaysTrue: true
   });
 }
 
+logoutHandle(props){
+  localStorage.removeItem("auth");
+  sessionStorage.removeItem("cognitoUser");
+  if (!localStorage.justOnce) {
+    localStorage.setItem("justOnce", "true");
+    window.location.reload();
+  }
+  return(<Layout isLoggedIn = {localStorage.getItem("auth")}>
+  <Login {...props} loginHandle={this.loginHandle} />
+  <Redirect to="/" />
+  </Layout>);
+}
 render() {
     return (
-      
-      <div>
+      <BrowserRouter>
           <Switch>
-          <Layout>
+          <Layout isLoggedIn = {localStorage.getItem("auth")}>
           <Route exact path='/login' render={() => (<Login/>)} />
 
           <Route exact path='/change_password' render={() => (<Changepassword />)} />
-
+          
           <Route exact path='/' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Home/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Home/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/books'  render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Books/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Books/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route path ="/libraries" render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Library/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Library/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/readers' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Readers/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Readers/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/librarians' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Librarian/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Librarian/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/admin' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Admin/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Admin/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/statistics' render={(props) => 
-           (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <FullWidthTabs/> :
+           (this.state.alwaysTrue&&localStorage.getItem("auth") ? <FullWidthTabs/> :
            <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
           <Route exact path='/profile' render={(props) => 
-            (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Profile/> : 
+            (this.state.alwaysTrue&&localStorage.getItem("auth") ? <Profile/> : 
             <Login {...props} loginHandle={this.loginHandle}/>)}/>
 
-          <Route exact path='/signout' render={(props) => 
-            (this.state.alwaysTrue&&sessionStorage.getItem("auth") ? <Signout/> : 
-            <Login {...props} loginHandle={this.loginHandle}/>)}/>
-        
-        </Layout>
+          <Route exact path='/login' render={(props) =>  
+           this.logoutHandle()}/> 
+          </Layout>
+          
         </Switch>
-       </div>
-      
+      </BrowserRouter>
     );
   }
 }
 
-export default App;
+export default withRouter(App);
