@@ -1,16 +1,8 @@
 import React, { Component } from 'react';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
-import InputAdornment from '@material-ui/core/InputAdornment';
-import IconButton from '@material-ui/core/IconButton';
-import Visibility from '@material-ui/icons/Visibility';
-import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import Button from '@material-ui/core/Button';
-import AppBar from '@material-ui/core/AppBar';
-import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import { withStyles } from '@material-ui/core/styles';
 import PropTypes from 'prop-types';
-import axios from 'axios';
 import classNames from 'classnames';
 
 const styles = theme => ({
@@ -76,20 +68,6 @@ closeHandler=() =>{
     const { classes } = this.props;
     return (      
     <div>
-        <div >
-            <AppBar position="static" color="default" >
-                <Toolbar variant="dense">
-                <Typography variant="title" color="inherit">
-                   Add Library
-                </Typography>
-                <div className="add_admin_close">
-                <a className="close" onClick={this.closeHandler}>
-                        &times;
-                </a>
-                </div>
-                </Toolbar>
-            </AppBar>
-        </div>
         <div className={classes.root}>
         <ValidatorForm
                 ref="form"

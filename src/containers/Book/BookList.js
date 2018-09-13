@@ -2,15 +2,16 @@ import React, { Component } from 'react';
 import ReactTable from 'react-table';
 import "react-table/react-table.css";
 import axios from 'axios';
-import EditBook from './EditBook';
-import './BookList.css';
+import '../../components/Table/BookList.css';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
 import { confirmAlert } from 'react-confirm-alert';
 import 'react-confirm-alert/src/react-confirm-alert.css';
-
-
+import Modal from '../../components/UI/Modal/Modal';
+import EditBookForm from './EditBookForm';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 const styles = theme => ({
     button: {
       margin: 0,    
@@ -88,7 +89,7 @@ class BookList extends Component{
     }
     render(){
         const { classes } = this.props;
-        const Table = (<div style={{width:'90%',margin:'70px auto'}}>
+        const Table = (<div style={{width:'95%',margin:'70px auto'}}>
         <ReactTable
                 data={this.state.data}
                 columns={[
@@ -117,10 +118,10 @@ class BookList extends Component{
                           padding: "10", */
                           textAlign: "center"
                         },
-                         Cell: props => <div><Button onClick={()=>this.editBookBtnHandler(props.value,this.state.data)} 
-                         color="default" className={classes.button}>Edit</Button>
-                         <Button color="default"  onClick={()=>this.deleteBookHandler(props.value,this.state.data)} 
-                         className={classes.button}>Delete</Button></div>
+                         Cell: props => <div><EditIcon onClick={()=>this.editBookBtnHandler(props.value,this.state.data)} 
+                         color="default" className={classes.button}/>
+                         <DeleteIcon color="default"  onClick={()=>this.deleteBookHandler(props.value,this.state.data)} 
+                         className={classes.button}/></div>
                     },
                 ]}
                 className="-striped -highlight"
@@ -132,10 +133,13 @@ class BookList extends Component{
         </div>);
         return(
         <div>
-            {this.state.modal ? (<EditBook modal={this.state.modal} 
-            closeBtnHandler={this.closeBtnHandler}
-            rowId={this.state.datarow}/>) :
-            Table}
+            {Table}
+            {this.state.modal ? 
+            (<Modal show = {this.state.modal} modalClosed ={this.closeBtnHandler}>
+            <div>
+            <EditBookForm closeBtnHandler={this.closeBtnHandler} rowId={this.state.datarow}/>
+            </div>
+            </Modal>):null}
         </div>
     )    
 }

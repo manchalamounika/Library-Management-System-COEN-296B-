@@ -1,79 +1,43 @@
 import React, { Component } from 'react';
 import LibraryList from './LibraryList'
-import AddLibrary from './AddLibrary';
-import Aux from '../../hoc/Auxi';
-import PropTypes from 'prop-types';
-import { withStyles } from '@material-ui/core/styles'; 
-import Paper from '@material-ui/core/Paper';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
-import Icon from '@material-ui/core/Icon';
-
-const styles = theme => ({
-    root: {
-        ...theme.mixins.gutters(),
-        position:'relative',
-        paddingTop: theme.spacing.unit * 3,
-        paddingBottom: theme.spacing.unit * 3,
-        width:'90%',
-        margin: '10px auto',
-        'border-radius':'10px',
-        background:'rgba(255,255,255,0.7)'
-    },
-    button: {
-        margin: theme.spacing.unit,
-        position :'absolute',
-        /* display: 'inline-block', */
-        top : '5px',
-        right:'10px',
-        float: 'right',
-        'border-radius':'10px'
-    },
-    extendedIcon: {
-        marginRight: theme.spacing.unit,
-    },
-});
+import TablePaper from '../../components/UI/TablePaper/TablePaper';
+import Modal from '../../components/UI/Modal/Modal';
+import AddNewLibraryForm from './AddNewLibraryForm'
+import AddButton from '../../components/UI/Buttons/AddButton';
+import Form from '../../components/Form/Form'; 
 
 class Library extends Component {
     state = {
-        modal:false,
+        open:false,
     }
-    addBookBtnHandler = () => {
-        this.setState({
-            modal:true,
-        });
-       
-    }
-    closeBtnHandler = () => {
-        this.setState({
-           modal:false,   
-        })
-    }
+    handleClickOpen = () => {
+        this.setState({ open: true });
+      };
+      
+    handleClose = () => {
+        this.setState({ open: false });
+      };
+
     render() {
-        const { classes } = this.props;
         return (
             <div>
-              <Paper className={classes.root} elevation={1}>
-                <Typography style={{fontSize:'3em',
-                            position :'absolute',
-                            top : '5px',
-                            left:'20px',
-                            float: 'left',}}variant="headline" component="h1">
-                  Libraries
-                </Typography>
-                <Button variant="extendedFab" className={classes.button} onClick={this.addBookBtnHandler}>
-                <AddIcon className={classes.extendedIcon}/>Add Library</Button>
-                {this.state.modal ? (<AddLibrary modal={this.state.modal} closeBtnHandler={this.closeBtnHandler}/>) :(<LibraryList />)} 
-              </Paper>
+              <TablePaper title = {'Libraries'}>
+                <AddButton buttonName = {'Add Library'} onClick={this.handleClickOpen}/>
+                <div><LibraryList /></div>
+                {this.state.open ?
+                <Form open={this.state.open} onClose= {this.handleClose}
+                      formTitle={'Library'}>
+                    <AddNewLibraryForm closeBtnHandler={this.handleClose}/>
+                </Form> : null}
+              {/*   {this.state.modal ? (<Modal show = {this.state.modal} modalClosed ={this.closeBtnHandler} >
+                <div>
+                    <AddNewLibraryForm closeBtnHandler={this.closeBtnHandler}/>
+                </div>
+                </Modal> ):(null)} */}</TablePaper>
             </div>
           );
 
         }   
 }
 
-Library.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
-
-export default withStyles(styles)(Library);
+export default Library;

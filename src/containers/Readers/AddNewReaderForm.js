@@ -78,7 +78,7 @@ render() {
     const { classes } = this.props;
     return (      
     <div>
-        <div >
+        <div>
             <AppBar position="static" color="default" >
                 <Toolbar variant="dense">
                 <Typography variant="title" color="inherit">
